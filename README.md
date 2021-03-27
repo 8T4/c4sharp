@@ -1,10 +1,12 @@
+
+<div style="text-align: center">
 <picture>
   <source
-    srcset="dark.png"
+    srcset="https://raw.githubusercontent.com/8T4/c4sharp/main/docs/images/8t4-c4-brand-pb.png"
     media="(prefers-color-scheme: dark)">
-  <img src="default.png" alt= "moving car">
+  <img src="https://raw.githubusercontent.com/8T4/c4sharp/main/docs/images/8t4-c4-brand-ts.png" alt= "logo" height="400">
 </picture>
-
+</div>
 
 # C4Sharp
 
