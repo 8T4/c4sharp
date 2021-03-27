@@ -1,0 +1,14 @@
+﻿namespace C4Sharp.Models.Diagrams
+{
+    /// <summary>
+    /// The Component diagram shows how a container is made up of a number of "components", what each of those
+    /// components are, their responsibilities and the technology/implementation details.
+    /// <see href="https://c4model.com/#ComponentDiagram"/>
+    /// </summary>
+    public class ComponentDiagram: CoreDiagram
+    {
+        public ComponentDiagram() : base("C4_Component")
+        {
+        }
+    }
+}
