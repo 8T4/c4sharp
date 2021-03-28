@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using C4Sharp.Models;
 using C4Sharp.Models.Diagrams;
-using C4Sharp.Models.Puml;
+using C4Sharp.Models.Plantuml;
 using C4Sharp.Models.Relationships;
 using Xunit;
 using static C4Sharp.Tests.C4Model.Persons;
@@ -50,8 +50,8 @@ namespace C4Sharp.Tests.C4Model.Samples
                 }
             };
 
-            PumlFile.Save(diagram);
-            PumlFile.ExportToPng(diagram);
+            PlantumlFile.Save(diagram);
+            PlantumlFile.ExportToPng(diagram);
 
             Assert.True(File.Exists($"c4/{diagram.Slug()}.puml"));            
         }        
