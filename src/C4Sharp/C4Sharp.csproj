@@ -2,7 +2,20 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Title>C4Sharp - simple .NET superset of C4-PlantUML</Title>
+        <Authors>yanjustino, leisiamedeiros</Authors>
+        <Description>C4Sharp (C4S) is a simple .NET superset of C4-PlantUML to generate C4 diagrams as code (C#). It's used for building Context, Container, Component and Deployment diagrams.</Description>
+        <PackageProjectUrl>https://github.com/orgs/8T4/teams/c4sharp</PackageProjectUrl>
+        <PackageIcon>logo.png</PackageIcon>
+        <RepositoryUrl>https://github.com/8T4/c4sharp</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>c4, diagrams</PackageTags>
     </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="bin\logo.png" Pack="true" PackagePath="\"/>
+    </ItemGroup>    
 
     <!-- Embedded Resource For C4 Plunt UML and Plantuml   -->
     <ItemGroup>
@@ -30,5 +43,8 @@
         <EmbeddedResource Include="bin\plantuml.jar">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </EmbeddedResource>
+    </ItemGroup>
+    <ItemGroup>
+      <Content Include="bin\logo.png" />
     </ItemGroup>
 </Project>

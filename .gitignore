@@ -31,6 +31,11 @@ bld/
 [Ll]og/
 [Ll]ogs/
 
+# Project
+![Bb]in/*.puml
+![Bb]in/plantuml.jar
+![Bb]in/logo.png
+
 # Rider directory
 .idea/
 
