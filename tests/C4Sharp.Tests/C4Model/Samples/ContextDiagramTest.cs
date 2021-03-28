@@ -2,8 +2,8 @@
 using C4Sharp.Models;
 using C4Sharp.Models.Diagrams;
 using C4Sharp.Models.Plantuml;
-using C4Sharp.Models.Relationships;
 using Xunit;
+using static C4Sharp.Models.Relationships.Position;
 using static C4Sharp.Tests.C4Model.Persons;
 using static C4Sharp.Tests.C4Model.Systems;
 
@@ -24,12 +24,12 @@ namespace C4Sharp.Tests.C4Model.Samples
                     Mainframe,
                     MailSystem
                 },
-                Relationships = new Relationship[]
+                Relationships = new []
                 {
-                    new Relationship(Customer, BankingSystem, "Uses"),
-                    new RelateBack(Customer, MailSystem, "Sends e-mails to"),
-                    new RelateNeighbor(BankingSystem, MailSystem, "Sends e-mails", "SMTP"),
-                    new Relationship(BankingSystem, Mainframe, "Uses"),
+                    Customer > BankingSystem,
+                    (Customer < MailSystem)["Sends e-mails to"],
+                    (BankingSystem > MailSystem)["Sends e-mails", "SMTP"][Neighbor],
+                    BankingSystem > Mainframe,
                 }
             };
 

@@ -35,25 +35,25 @@ namespace C4Sharp.Tests.C4Model.Samples
                 },
                 Relationships = new Relationship[]
                 {
-                    new Relationship(Customer, WebApp, "Uses", "HTTPS"),
-                    new Relationship(Customer, Spa, "Uses", "HTTPS"),
-                    new Relationship(Customer, MobileApp, "Uses"),
+                    (Customer > WebApp)["Uses", "HTTPS"],
+                    (Customer > Spa)["Uses", "HTTPS"],
+                    (Customer > MobileApp)["Uses"],
 
-                    new RelateNeighbor(WebApp, Spa, "Delivers"),
-                    new Relationship(Spa, BackendApi, "Uses", "async, JSON/HTTPS"),
-                    new Relationship(MobileApp, BackendApi, "Uses", "async, JSON/HTTPS"),
-                    new RelateBackNeighbor(Database, BackendApi, "Reads from and writes to", "sync, JDBC"),
-
-                    new RelateBack(Customer, MailSystem, "Sends e-mails to"),
-                    new RelateBack(MailSystem, BackendApi, "Sends e-mails using", "sync, SMTP"),
-                    new RelateNeighbor(BackendApi, BankingSystem, "Uses", "sync/async, XML/HTTPS")                    
+                    (WebApp > Spa)["Delivers"][Position.Neighbor],
+                    (Spa > BackendApi)["Uses", "async, JSON/HTTPS"],
+                    (MobileApp > BackendApi)["Uses", "async, JSON/HTTPS"],
+                    (Database < BackendApi)["Uses", "async, JSON/HTTPS"][Position.Neighbor],
+                    
+                    (Customer < MailSystem)["Sends e-mails to"],
+                    (MailSystem < BackendApi)["Sends e-mails using", "sync, SMTP"],
+                    (BackendApi > BankingSystem)["Uses", "sync/async, XML/HTTPS"][Position.Neighbor]
                 }
             };
 
             PlantumlFile.Save(diagram);
             PlantumlFile.ExportToPng(diagram);
 
-            Assert.True(File.Exists($"c4/{diagram.Slug()}.puml"));            
-        }        
+            Assert.True(File.Exists($"c4/{diagram.Slug()}.puml"));
+        }
     }
 }

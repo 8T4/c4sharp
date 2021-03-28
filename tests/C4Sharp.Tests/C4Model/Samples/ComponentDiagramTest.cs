@@ -23,16 +23,16 @@ namespace C4Sharp.Tests.C4Model.Samples
                     Security,
                     MainframeFacade
                 },
-                new Relationship[]
+                new []
                 {
-                    new Relationship(Sign, Security, "Uses"),
-                    new Relationship(Accounts, MainframeFacade, "Uses"),
-                    new Relationship(Security, Database, "Read & write to", "JDBC"),
-                    new Relationship(MainframeFacade, Mainframe, "Uses", "XML/HTTPS")                    
+                    Sign > Security,
+                    Accounts > MainframeFacade,
+                    (Security > Database) ["Read & write to", "JDBC"],
+                    (MainframeFacade > Mainframe)["Uses", "XML/HTTPS"]
                 }
             );
-            
-            
+
+
             var diagram = new ComponentDiagram()
             {
                 Title = "Component diagram for Internet Banking System - API Application",
@@ -44,19 +44,18 @@ namespace C4Sharp.Tests.C4Model.Samples
                     Mainframe,
                     boundary,
                 },
-                Relationships = new Relationship[]
+                Relationships = new[]
                 {
-                    new Relationship(Spa, Sign, "Uses", "JSON/HTTPS"),
-                    new Relationship(Spa, Accounts, "Uses", "JSON/HTTPS"),
-
-                    new Relationship(MobileApp, Sign, "Uses", "JSON/HTTPS"),
-                    new Relationship(MobileApp, Accounts, "Uses", "JSON/HTTPS")
+                    (Spa > Sign)["Uses", "JSON/HTTPS"],
+                    (Spa > Accounts)["Uses", "JSON/HTTPS"],
+                    (MobileApp > Sign)["Uses", "JSON/HTTPS"],
+                    (MobileApp > Accounts)["Uses", "JSON/HTTPS"],
                 }
             };
-            
+
             PlantumlFile.Save(diagram);
             PlantumlFile.ExportToPng(diagram);
-            
+
             Assert.True(File.Exists($"c4/{diagram.Slug()}.puml"));
         }
     }

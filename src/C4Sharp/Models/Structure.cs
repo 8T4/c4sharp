@@ -1,4 +1,6 @@
-﻿namespace C4Sharp.Models
+﻿using C4Sharp.Models.Relationships;
+
+namespace C4Sharp.Models
 {
     /// <summary>
     /// In order to create these maps of your code, we first need a common set of abstractions to create a ubiquitous
@@ -15,5 +17,17 @@
 
         protected Structure(string alias, string label, string description = default) =>
             (Alias, Label, Description) = (alias, label, description);
+
+        public static Relationship operator >(Structure a, Structure b) =>
+            new Relationship(a, b, "uses");
+        
+        public static Relationship operator >= (Structure a, Structure b) =>
+            new Relationship(a, Direction.Bidirectional, b, "uses");
+
+        public static Relationship operator <=(Structure a, Structure b) =>
+            new Relationship(a, Direction.Bidirectional, b, "uses");
+
+        public static Relationship operator < (Structure a, Structure b) =>
+            new Relationship(a, Direction.Back, b, "uses");
     }
 }

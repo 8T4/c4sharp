@@ -1,52 +1,105 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace C4Sharp.Models.Relationships
 {
     public class Relationship
     {
-        public string From { get; }
-        public string To { get; }
-        public string Label { get; }
-        public string Protocol { get; }
-        public RelationshipDirection Direction { get; }
-        public bool IsBidirectional { get; }
-
-        public Relationship(string @from, string to, string label, string protocol = "", bool isBidirectional = false, RelationshipDirection direction = RelationshipDirection.None)
+        private string From { get; }
+        private string To { get; }
+        private string Label { get; set; }
+        private string Protocol { get; set; }
+        private Position Position { get; set; }
+        private Direction Direction { get; }
+        
+        public Relationship this[string label]
         {
-            From = @from;
-            To = to;
-            Label = label;
-            Protocol = protocol;
-            IsBidirectional = isBidirectional;
-            Direction = direction;
+            get
+            {
+                this.Label = label;
+                return this;
+            }
         }
         
-        public Relationship(Structure @from, Structure to, string label, string protocol = "", bool isBidirectional = false, RelationshipDirection direction = RelationshipDirection.None)
+        public Relationship this[Position position]
+        {
+            get
+            {
+                this.Position = position;
+                return this;
+            }
+        }        
+        
+        public Relationship this[string label, string protocol]
+        {
+            get
+            {
+                this.Label = label;
+                this.Protocol = protocol;
+                return this;
+            }
+        }        
+
+        public Relationship(Structure @from, Direction direction, Structure to, string label,
+            string protocol, Position position = Position.None)
         {
             From = @from.Alias;
             To = to.Alias;
             Label = label;
-            Protocol = protocol;
-            IsBidirectional = isBidirectional;
             Direction = direction;
+            Protocol = protocol;
+            Position = position;
+        }
+
+        public Relationship(Structure @from, Structure to, string label, Position position = Position.None)
+            : this(from, Direction.Forward, to, label, string.Empty, position)
+        {
+        }
+        
+        public Relationship(Structure @from, Structure to, string label, string protocol, Position position = Position.None)
+            : this(from, Direction.Forward, to, label, protocol, position)
+        {
+        }        
+        
+        public Relationship(Structure @from, Direction direction, Structure to, string label)
+            : this(from, direction, to, label, string.Empty, Position.None)
+        {
+        }       
+        
+        public Relationship(Structure @from, Direction direction, Structure to, string label, Position position = Position.None)
+            : this(from, direction, to, label, string.Empty, position)
+        {
+        }         
+        
+        public Relationship(Structure @from, Direction direction, Structure to, string label, string protocol)
+            : this(from, direction, to, label, protocol, Position.None)
+        {
         }
 
         public override string ToString()
         {
             var direction = Direction switch
             {
-                RelationshipDirection.Down => "Rel_D",
-                RelationshipDirection.Up => "Rel_U",
-                RelationshipDirection.Left => "Rel_L",
-                RelationshipDirection.Right => "Rel_R",
-                RelationshipDirection.None => "Rel",
-                _ => throw new ArgumentOutOfRangeException()
+                Direction.Back => "Rel_Back",
+                Direction.Forward => "Rel",
+                Direction.Bidirectional => "BiRel",
+                _ => "Rel"
+            };
+
+            direction += Position switch
+            {
+                Position.Down => "_D",
+                Position.Up => "_U",
+                Position.Left => "_L",
+                Position.Right => "_R",
+                Position.Neighbor => "_Neighbor",
+                Position.None => "",
+                _ => ""
             };
 
             return string.IsNullOrEmpty(Protocol)
-                ? $"{(IsBidirectional ? "Bi" : "")}{direction}({From}, {To}, \"{Label}\")"
-                : $"{(IsBidirectional ? "Bi" : "")}{direction}({From}, {To}, \"{Label}\", \"{Protocol}\" )";
-        }        
-
+                ? $"{direction}({From}, {To}, \"{Label}\")"
+                : $"{direction}({From}, {To}, \"{Label}\", \"{Protocol}\" )";
+        }
     }
 }

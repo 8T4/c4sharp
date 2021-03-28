@@ -1,19 +1,20 @@
-
-<div style="text-align: center">
-<picture>
-  <source
-    src="https://raw.githubusercontent.com/8T4/c4sharp/main/docs/images/8t4-c4-brand-pb.png"
-    media="(prefers-color-scheme: dark)">
-  <img src="https://raw.githubusercontent.com/8T4/c4sharp/main/docs/images/8t4-c4-brand.png" alt= "logo" height="200">
-</picture>
-</div>
-
 # C4Sharp
+___
 
-C4Sharp (C4S) is a simple .NET superset of C4-PlantUML to generate C4 diagrams as code (C#). 
+C4Sharp (C4S) is a simple .NET superset of [C4-PlantUML](https://github.com/plantuml-stdlib/C4-PlantUML) to generate [C4 Model diagrams](https://c4model.com/) as code (C#). 
 It's used for building Context, Container, Component and Deployment diagrams.
 
-### Diagrams
+## Getting Started
+
+### Install C4Sharp
+
+install
+
+You need these things to run PlantUML:
+- [Java](https://www.java.com/en/download/)
+- [Graphviz](https://plantuml.com/graphviz-dot) 
+
+### Coding a C4 diagram
 
 To build C4 Diagrams in C4S it's simple. Just use this following structure for all
 diagrams:
@@ -26,7 +27,9 @@ var diagram = new <Diagram Type>
     Relationships = new Relationship[]{ }
 };
 ```
-For example to create a Context Diagram you could type this code:
+
+For example, with C4S you can create a _C4 Context Diagram_, 
+you could use this code:
 
 ```c#
 var diagram = new ContextDiagram
@@ -39,18 +42,21 @@ var diagram = new ContextDiagram
         Mainframe,
         MailSystem
     },
-    Relationships = new Relationship[]
+    Relationships = new []
     {
-        new Relationship(Customer, BankingSystem, "Uses"),
-        new RelateBack(Customer, MailSystem, "Sends e-mails to"),
-        new RelateNeighbor(BankingSystem, MailSystem, "Sends e-mails", "SMTP"),
-        new Relationship(BankingSystem, Mainframe, "Uses"),
+        Customer > BankingSystem,
+        (Customer < MailSystem)["Sends e-mails to"],
+        (BankingSystem > MailSystem)["Sends e-mails", "SMTP"][Neighbor],
+        BankingSystem > Mainframe,
     }
 };
 
 PlantumlFile.Save(diagram);
 PlantumlFile.ExportToPng(diagram);
 ```
+> **ABOUT**  
+> A System Context diagram is a good starting point for diagramming and documenting a software system, allowing you to step back and see the big picture. Draw a diagram showing your system as a box in the centre, surrounded by its users and the other systems that it interacts with.
+
 This code results two files:
 
 - ./c4/System_Context_diagram_for_Internet_Banking_System_C4_Context.puml
@@ -61,5 +67,6 @@ The result will be:
 <div style="text-align: center">
 
 ![context-example](docs/images/context-example.png)
-
 </div>
+
+See more samples [here](https://github.com/8T4/c4sharp/tree/main/tests/C4Sharp.Tests/C4Model/Samples)
