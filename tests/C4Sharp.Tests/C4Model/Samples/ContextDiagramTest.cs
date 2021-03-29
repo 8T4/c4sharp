@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using C4Sharp.Models;
 using C4Sharp.Models.Diagrams;
+using C4Sharp.Models.Diagrams.Core;
 using C4Sharp.Models.Plantuml;
 using Xunit;
 using static C4Sharp.Models.Relationships.Position;

@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using C4Sharp.Models;
 using C4Sharp.Models.Diagrams;
+using C4Sharp.Models.Diagrams.Core;
 using C4Sharp.Models.Plantuml;
 using C4Sharp.Models.Relationships;
 using Xunit;
@@ -22,14 +23,17 @@ namespace C4Sharp.Tests.C4Model.Samples
                 Structures = new Structure[]
                 {
                     Customer,
-                    new SoftwareSystemBoundary("c1", "Internet Banking", new[]
+                    new SoftwareSystemBoundary("c1", "Internet Banking")
                     {
-                        WebApp,
-                        Spa,
-                        MobileApp,
-                        Database,
-                        BackendApi
-                    }),
+                        Containers = new[]
+                        {
+                            WebApp,
+                            Spa,
+                            MobileApp,
+                            SqlDatabase,
+                            BackendApi
+                        }
+                    },
                     BankingSystem,
                     MailSystem,
                 },
@@ -42,17 +46,15 @@ namespace C4Sharp.Tests.C4Model.Samples
                     (WebApp > Spa)["Delivers"][Position.Neighbor],
                     (Spa > BackendApi)["Uses", "async, JSON/HTTPS"],
                     (MobileApp > BackendApi)["Uses", "async, JSON/HTTPS"],
-                    (Database < BackendApi)["Uses", "async, JSON/HTTPS"][Position.Neighbor],
-                    
+                    (SqlDatabase < BackendApi)["Uses", "async, JSON/HTTPS"][Position.Neighbor],
+
                     (Customer < MailSystem)["Sends e-mails to"],
                     (MailSystem < BackendApi)["Sends e-mails using", "sync, SMTP"],
                     (BackendApi > BankingSystem)["Uses", "sync/async, XML/HTTPS"][Position.Neighbor]
                 }
             };
-
             PlantumlFile.Save(diagram);
             PlantumlFile.ExportToPng(diagram);
-
             Assert.True(File.Exists($"c4/{diagram.Slug()}.puml"));
         }
     }

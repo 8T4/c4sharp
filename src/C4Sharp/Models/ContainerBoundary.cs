@@ -9,20 +9,11 @@ namespace C4Sharp.Models
     /// </summary>
     public class ContainerBoundary: Structure
     {
-        private ICollection<Component> Components { get; }
-        private ICollection<Relationship> Relationships { get; }
+        public ICollection<Component> Components { get; set; } = null;
+        public ICollection<Relationship> Relationships { get; set; } = null;
         
-        
-        public ContainerBoundary(string alias, string label, ICollection<Component> components) : base(alias, label)
+        public ContainerBoundary(string alias, string label) : base(alias, label)
         {
-            Components = components ?? new List<Component>();
-            Relationships = new List<Relationship>();
-        }
-
-        public ContainerBoundary(string alias, string label, ICollection<Component> components, ICollection<Relationship> relationships) : base(alias, label)
-        {
-            Components = components ?? new List<Component>();
-            Relationships = relationships ?? new List<Relationship>();
         }
         
         public override string ToString()

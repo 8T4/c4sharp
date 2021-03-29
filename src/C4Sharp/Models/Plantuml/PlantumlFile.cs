@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using C4Sharp.Models.Diagrams;
 
 namespace C4Sharp.Models.Plantuml
@@ -10,16 +12,25 @@ namespace C4Sharp.Models.Plantuml
     /// </summary>
     public static class PlantumlFile
     {
-        public static void Save(CoreDiagram diagram)
+        public static void Save(Diagram diagram)
         {
             Directory.CreateDirectory("c4");
-
             var stream = GeneratePumlFileStream(diagram);
 
             File.WriteAllText($"c4/{diagram.Slug()}.puml", stream);
         }
+        
+        public static Task SaveAsync(Diagram diagram, CancellationToken cancellationToken = default)
+        {
+            if (cancellationToken.IsCancellationRequested)
+                return Task.FromCanceled(cancellationToken);
+            
+            Save(diagram);
 
-        private static string GeneratePumlFileStream(CoreDiagram diagram)
+            return Task.CompletedTask;
+        }        
+
+        private static string GeneratePumlFileStream(Diagram diagram)
         {
             var path = Path.Join("..","bin", $"{diagram.PumlFileReference}.puml");
             
@@ -42,11 +53,11 @@ namespace C4Sharp.Models.Plantuml
             return stream.ToString();
         }
 
-        public static void ExportToPng(CoreDiagram coreDiagram)
+        public static void ExportToPng(Diagram diagram)
         {
             var dirPath = Directory.GetCurrentDirectory();
             var jarPath = Path.Join(dirPath, "bin", "plantuml.jar");
-            var umlPath = Path.Join(dirPath, "c4", $"{coreDiagram.Slug()}.puml");
+            var umlPath = Path.Join(dirPath, "c4", $"{diagram.Slug()}.puml");
             
             var jar = $"-jar {jarPath} -charset UTF-8";
 

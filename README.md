@@ -1,12 +1,11 @@
 # C4Sharp
-___
 
 C4Sharp (C4S) is a simple .NET superset of [C4-PlantUML](https://github.com/plantuml-stdlib/C4-PlantUML) to generate [C4 Model diagrams](https://c4model.com/) as code (C#). 
 It's used for building Context, Container, Component and Deployment diagrams.
 
 ## Getting Started
 
-### Install C4Sharp
+### Installing C4S
 
 install
 
@@ -44,10 +43,10 @@ var diagram = new ContextDiagram
     },
     Relationships = new []
     {
-        Customer > BankingSystem,
+        (Customer > BankingSystem),
         (Customer < MailSystem)["Sends e-mails to"],
         (BankingSystem > MailSystem)["Sends e-mails", "SMTP"][Neighbor],
-        BankingSystem > Mainframe,
+        (BankingSystem > Mainframe),
     }
 };
 

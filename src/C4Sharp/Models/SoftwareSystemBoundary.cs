@@ -8,11 +8,10 @@ namespace C4Sharp.Models
     /// </summary>
     public class SoftwareSystemBoundary: Structure
     {
-        private ICollection<Container> Containers { get; }
+        public ICollection<Container> Containers { get; set; } = null;
         
-        public SoftwareSystemBoundary(string alias, string label, ICollection<Container> containers) : base(alias, label)
+        public SoftwareSystemBoundary(string alias, string label) : base(alias, label)
         {
-            Containers = containers ?? new List<Container>();
         }
 
         public override string ToString()

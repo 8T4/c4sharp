@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using C4Sharp.Models;
 using C4Sharp.Models.Diagrams;
+using C4Sharp.Models.Diagrams.Core;
 using C4Sharp.Models.Plantuml;
 using C4Sharp.Models.Relationships;
 using Xunit;
@@ -16,21 +17,23 @@ namespace C4Sharp.Tests.C4Model.Samples
         [Fact]
         public void Its_C4_Model_Component_Diagram_Test()
         {
-            var boundary = new ContainerBoundary("c1", "API Application", new[]
+            var boundary = new ContainerBoundary("c1", "API Application")
+            { 
+                Components = new[]
                 {
                     Sign,
                     Accounts,
                     Security,
                     MainframeFacade
                 },
-                new []
+                Relationships = new []
                 {
                     Sign > Security,
                     Accounts > MainframeFacade,
-                    (Security > Database) ["Read & write to", "JDBC"],
+                    (Security > SqlDatabase) ["Read & write to", "JDBC"],
                     (MainframeFacade > Mainframe)["Uses", "XML/HTTPS"]
                 }
-            );
+            };
 
 
             var diagram = new ComponentDiagram()
@@ -40,7 +43,7 @@ namespace C4Sharp.Tests.C4Model.Samples
                 {
                     Spa,
                     MobileApp,
-                    Database,
+                    SqlDatabase,
                     Mainframe,
                     boundary,
                 },
