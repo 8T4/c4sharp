@@ -24,7 +24,7 @@ namespace C4Sharp.Tests.C4Model.Samples
                 {
                     Ubuntu("dn", "bigbank-api***\tx8", ApacheTomCat("apache", BackendApi)),
                     Ubuntu("bigbankdb01", "bigbank-db01", OracleNode("oracle", db1)),
-                    Ubuntu("bigbankdb02", "bigbank-db01", OracleNode("oracle2", db2)),
+                    Ubuntu("bigbankdb02", "bigbank-db02", OracleNode("oracle2", db2)),
                     Ubuntu("bb2", "bigbank-web***\tx4", ApacheTomCat("apache2", WebApp)),
                 }
             };
@@ -41,7 +41,8 @@ namespace C4Sharp.Tests.C4Model.Samples
                 Relationships = new[]
                 {
                     (MobileApp > BackendApi)["Makes API calls to", "json/HTTPS"],
-                    (WebApp > Spa)["Delivers to the customer's web browser"],
+                    (Spa > BackendApi)["Makes API calls to", "json/HTTPS"],
+                    (WebApp > Spa)["Delivers to the customer's web browser"][Position.Up],
                     (BackendApi > db1)["Writes to", "JDBC"],
                     (BackendApi < db2)["Reads from", "JDBC"],
                     (db1 > db2)["Replicates data to", "JDBC"][Position.Right],
@@ -49,7 +50,7 @@ namespace C4Sharp.Tests.C4Model.Samples
             };
 
             PlantumlFile.Save(diagram);
-            PlantumlFile.ExportToPng(diagram);
+            PlantumlFile.Export(diagram);
 
             Assert.True(File.Exists($"c4/{diagram.Slug()}.puml"));
         }

@@ -54,7 +54,7 @@ namespace C4Sharp.Tests.C4Model.Samples
                 }
             };
             PlantumlFile.Save(diagram);
-            PlantumlFile.ExportToPng(diagram);
+            PlantumlFile.Export(diagram);
             Assert.True(File.Exists($"c4/{diagram.Slug()}.puml"));
         }
     }
