@@ -16,6 +16,12 @@
         {
             SoftwareSystemType = softwareSystemType;
         }
+        
+        public SoftwareSystem(string alias, string label,  SoftwareSystemType softwareSystemType = SoftwareSystemType.Internal ) 
+            : base(alias, label)
+        {
+            SoftwareSystemType = softwareSystemType;
+        }        
 
         public override string ToString()
         {
@@ -24,4 +30,6 @@
                 : $"System({Alias}, \"{Label}\", \"{Description}\")";
         }
     }
+    
+    
 }

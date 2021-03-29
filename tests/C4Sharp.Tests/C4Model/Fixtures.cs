@@ -1,4 +1,5 @@
-﻿using C4Sharp.Models;
+﻿using System.Collections.Generic;
+using C4Sharp.Models;
 
 namespace C4Sharp.Tests.C4Model
 {
@@ -130,6 +131,12 @@ namespace C4Sharp.Tests.C4Model
         public static DeploymentNode ApacheTomCat(string alias, Container container) =>
             new(alias, "Apache Tomcat", "Apache Tomcat 8.x")
             {
+                Properties = new Dictionary<string, string>
+                {
+                    ["Java Version"] = "8",
+                    ["Xmx"] = "512M",
+                    ["Xms"] = "1024M",
+                },
                 Container = container
             };
 
