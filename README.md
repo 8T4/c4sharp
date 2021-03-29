@@ -1,18 +1,35 @@
 
 <img src="https://raw.githubusercontent.com/8T4/c4sharp/main/docs/images/8t4-c4-brand-2.png" alt="logo" width='400' >
 
-C4Sharp (C4S) is a simple .NET superset of [C4-PlantUML](https://github.com/plantuml-stdlib/C4-PlantUML) to generate [C4 Model diagrams](https://c4model.com/) as code (C#). 
-It's used for building Context, Container, Component and Deployment diagrams.
+C4Sharp (C4S) is a simple .NET superset of [C4-PlantUML](https://github.com/plantuml-stdlib/C4-PlantUML) to generate [C4 Model diagrams](https://c4model.com/) as code (C#). It's used for building Context, Container, Component and Deployment diagrams.
 
 ## Getting Started
 
-### Installing C4S
+### Instalation
+This package is available through Nuget Packages: https://www.nuget.org/packages/C4Sharp
 
-install
+| Package |  Version | Downloads |
+| ------- | ----- | ----- |
+| `Flunt` | [![NuGet](https://img.shields.io/nuget/v/C4Sharp.svg)](https://www.nuget.org/packages/C4Sharp) | [![Nuget](https://img.shields.io/nuget/dt/C4Sharp.svg)](https://www.nuget.org/packages/C4Sharp) |
 
-You need these things to run PlantUML:
+
+**Nuget**
+```
+Install-Package C4Sharp
+```
+
+**.NET CLI**
+```
+dotnet add package C4Sharp
+```
+
+### Dependencies
+
+You need these things to run C4Sharp:
+- [.NET Standard 2.1](https://docs.microsoft.com/pt-br/dotnet/standard/net-standard)
 - [Java](https://www.java.com/en/download/)
 - [Graphviz](https://plantuml.com/graphviz-dot) 
+
 
 ### Coding a C4 diagram
 
