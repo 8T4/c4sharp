@@ -74,15 +74,15 @@ var diagram = new ContextDiagram
 PlantumlFile.Save(diagram);
 PlantumlFile.Export(diagram);
 ```
-It's executes Save and Export methods, which creates two files:
-- ./c4/System_Context_diagram_for_Internet_Banking_System_C4_Context.puml
-- ./c4/System_Context_diagram_for_Internet_Banking_System_C4_Context.png
-
 The result will be:
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/8T4/c4sharp/main/docs/images/context-example.png" alt="logo" width='450' >
 </p>
+
+It's executes Save and Export methods, which creates two files:
+- ./c4/System_Context_diagram_for_Internet_Banking_System_C4_Context.puml
+- ./c4/System_Context_diagram_for_Internet_Banking_System_C4_Context.png
 
 ## Learn
 
