@@ -33,7 +33,8 @@ You need these things to run C4Sharp:
 
 ### Coding
 
-Use the following structure for all C4S diagrams:
+C4S diagrams have a basic structure containing a Title, a set of C4 structures and their Relationships.
+As shown in following code:
 
 ```c#
 var diagram = new <Diagram Type>
