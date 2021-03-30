@@ -47,10 +47,6 @@ var diagram = new <Diagram Type>
 For example, with C4S you can create a _C4 Context Diagram_ using this code:
 
 ```c#
-/// A System Context diagram is a good starting point for diagramming and 
-/// documenting a software system, allowing you to step back and see the 
-/// big picture. Draw a diagram showing your system as a box in the centre,
-/// surrounded by its users and the other systems that it interacts with.
 
 var diagram = new ContextDiagram
 {
@@ -79,10 +75,6 @@ The result will be:
 <p align="center">
   <img src="https://raw.githubusercontent.com/8T4/c4sharp/main/docs/images/context-example.png" alt="logo" width='450' >
 </p>
-
-It's executes Save and Export methods, which creates two files:
-- ./c4/System_Context_diagram_for_Internet_Banking_System_C4_Context.puml
-- ./c4/System_Context_diagram_for_Internet_Banking_System_C4_Context.png
 
 ## Learn
 
