@@ -31,10 +31,9 @@ You need these things to run C4Sharp:
 - [Graphviz](https://plantuml.com/graphviz-dot) 
 
 
-### Coding a C4 diagram
+### Coding
 
-To build C4 Diagrams in C4S it's simple. Just use this following structure for all
-diagrams:
+Use the following structure for all C4S diagrams:
 
 ```c#
 var diagram = new <Diagram Type>
@@ -45,8 +44,7 @@ var diagram = new <Diagram Type>
 };
 ```
 
-For example, with C4S you can create a _C4 Context Diagram_, 
-you could use this code:
+For example, with C4S you can create a _C4 Context Diagram_ using this code:
 
 ```c#
 /// A System Context diagram is a good starting point for diagramming and 
@@ -76,16 +74,15 @@ var diagram = new ContextDiagram
 PlantumlFile.Save(diagram);
 PlantumlFile.Export(diagram);
 ```
-It's executes _Save()_ and _Export()_, were creates two files:
+It's executes Save and Export methods, which creates two files:
 - ./c4/System_Context_diagram_for_Internet_Banking_System_C4_Context.puml
 - ./c4/System_Context_diagram_for_Internet_Banking_System_C4_Context.png
 
 The result will be:
 
-<div style="text-align: center">
-
-![context-example](docs/images/context-example.png)
-</div>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/8T4/c4sharp/main/docs/images/context-example.png" alt="logo" width='450' >
+</p>
 
 ## Learn
 
