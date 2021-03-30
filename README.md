@@ -1,7 +1,7 @@
 
 <img src="https://raw.githubusercontent.com/8T4/c4sharp/main/docs/images/8t4-c4-brand-2.png" alt="logo" width='400' >
 
-C4Sharp (C4S) is a simple .NET superset of [C4-PlantUML](https://github.com/plantuml-stdlib/C4-PlantUML) to generate [C4 Model diagrams](https://c4model.com/) as code (C#). It's used for building Context, Container, Component and Deployment diagrams.
+C4Sharp (C4S) is a .NET superset of [C4-PlantUML](https://github.com/plantuml-stdlib/C4-PlantUML) through which developers can create, share, and consume [C4 Model diagrams](https://c4model.com/) as code (C#) such as Context, Container, Component and Deployment diagrams.
 
 ## Getting Started
 
