@@ -7,14 +7,15 @@
         <Authors>yanjustino, leisiamedeiros</Authors>
         <Description>C4Sharp (C4S) is a simple .NET superset of C4-PlantUML to generate C4 diagrams as code (C#). It's used for building Context, Container, Component and Deployment diagrams.</Description>
         <PackageProjectUrl>https://github.com/orgs/8T4/teams/c4sharp</PackageProjectUrl>
-        <PackageIcon>logo.png</PackageIcon>
+        <PackageIcon>icon.png</PackageIcon>
         <RepositoryUrl>https://github.com/8T4/c4sharp</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>c4, diagrams</PackageTags>
+        <PackageVersion>1.0.0-beta</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="bin\logo.png" Pack="true" PackagePath="\" />
+        <None Include="bin\icon.png" Pack="true" PackagePath="\" />
     </ItemGroup>    
 
     <!-- Embedded Resource For C4 Plunt UML and Plantuml   -->
@@ -45,6 +46,6 @@
         </EmbeddedResource>
     </ItemGroup>
     <ItemGroup>
-      <Content Include="bin\logo.png" />
+      <Content Include="bin\icon.png" />
     </ItemGroup>
 </Project>

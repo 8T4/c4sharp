@@ -77,30 +77,8 @@ The result will be:
   <img src="https://raw.githubusercontent.com/8T4/c4sharp/main/docs/images/context-example.png" alt="logo" width='450' >
 </p>
 
-## Learn
-
 See more samples [here](https://github.com/8T4/c4sharp/tree/main/tests/C4Sharp.Tests/C4Model/Samples)
-
 
 ## Background
 
-#### PlantUML
-
-> [PlantUML](http://en.plantuml.com/) is an open source project that allows you to create UML diagrams.
-> Diagrams are defined using a simple and intuitive language.
-> Images can be generated in PNG, in SVG or in LaTeX format.
-> PlantUML was created to allow the drawing of UML diagrams, using a simple and human readable text description.
-> Because it does not prevent you from drawing inconsistent diagrams, it is a drawing tool and not a modeling tool.
-> It is the most used text-based diagram drawing tool with [extensive support into wikis and forums, text editors and IDEs, use by different programming languages >and documentation generators](http://en.plantuml.com/running).
-
-#### C4 model
-
-> The [C4 model](https://c4model.com/) for software architecture is an "abstraction-first" approach to diagramming, based upon abstractions that reflect how 
-> software architects and developers think about and build software.
-> The small set of abstractions and diagram types makes the C4 model easy to learn and use.
-> C4 stands for context, containers, components, and code — a set of hierarchical diagrams that you can use to describe your software architecture at different 
-> zoom levels, each useful for different audiences.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+### Plantuml
