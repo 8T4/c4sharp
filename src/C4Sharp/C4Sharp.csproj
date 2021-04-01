@@ -23,7 +23,7 @@
     </ItemGroup>    
 
     <ItemGroup>
-        <None Include="bin\icon.png" />
+        <None Include="bin\icon.png" Pack="true" PackagePath="\" />
     </ItemGroup>    
 
     <!-- Embedded Resource For C4 Plunt UML and Plantuml   -->
@@ -54,6 +54,8 @@
         </EmbeddedResource>
     </ItemGroup>
     <ItemGroup>
-      <Content Include="bin\icon.png" />
+      <Content Include="bin\icon.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 </Project>
