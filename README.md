@@ -77,7 +77,9 @@ The result will be:
   <img src="https://raw.githubusercontent.com/8T4/c4sharp/main/docs/images/context-example.png" alt="logo" width='450' >
 </p>
 
-See more samples [here](https://github.com/8T4/c4sharp/tree/main/tests/C4Sharp.Tests/C4Model/Samples)
+## Learn
+
+To learn more about `C4S` access our [wiki](https://github.com/8T4/c4sharp/wiki).
 
 ## Background
 
