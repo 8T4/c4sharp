@@ -77,8 +77,19 @@ The result will be:
   <img src="https://raw.githubusercontent.com/8T4/c4sharp/main/docs/images/context-example.png" alt="logo" width='450' >
 </p>
 
-See more samples [here](https://github.com/8T4/c4sharp/tree/main/tests/C4Sharp.Tests/C4Model/Samples)
+## Learn
 
-## Background
+To learn more about `C4S` access our [wiki](https://github.com/8T4/c4sharp/wiki).
 
-### Plantuml
+## Guide to contributing to a GitHub project
+This is a guide to contributing to this open source project that uses GitHub. It’s mostly based on how many open sorce projects operate. That’s all there is to it. The fundamentals are:
+
+* Fork the project & clone locally.
+* Create an upstream remote and sync your local copy before you branch.
+* Branch for each separate piece of work.
+* Do the work, write good commit messages, and read the CONTRIBUTING file if there is one.
+* Push to your origin repository.
+* Create a new PR in GitHub.
+* Respond to any code review feedback.
+
+If you want to contribute to an open source project, the best one to pick is one that you are using yourself. The maintainers will appreciate it!
