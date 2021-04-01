@@ -20,34 +20,32 @@ namespace C4Sharp.Models
             Properties = default;
         }
 
-        public override string ToString()
-        {
-            return ToPumlString();
-        }
-
-        private string ToPumlString(int concat = 0)
+        public override string ToString() => GetStream();
+        
+        private string GetStream(int concat = 0)
         {
             var stream = new StringBuilder();
+            var spaces = "".PadLeft(concat);
 
             if (concat == 0)
                 stream.AppendLine();
 
             if (Properties != null)
                 foreach (var (key, value) in Properties)
-                    stream.AppendLine($"AddProperty(\"{key}\", \"{value}\")");
+                    stream.AppendLine($"{spaces}AddProperty(\"{key}\", \"{value}\")");
 
             stream.AppendLine(Tags is null
-                ? $"{"".PadLeft(concat)}Deployment_Node({Alias}, \"{Label}\", \"{Description}\") {{"
-                : $"{"".PadLeft(concat)}Deployment_Node({Alias}, \"{Label}\", \"{Description}\", $tags=\"{string.Join(',', Tags)}\") {{");
+                ? $"{spaces}Deployment_Node({Alias}, \"{Label}\", \"{Description}\") {{"
+                : $"{spaces}Deployment_Node({Alias}, \"{Label}\", \"{Description}\", $tags=\"{string.Join(',', Tags)}\") {{");
 
             if (Nodes != null)
                 foreach (var node in Nodes)
-                    stream.AppendLine($"{node.ToPumlString(concat + TAB_SIZE)}");
+                    stream.AppendLine($"{node.GetStream(concat + TAB_SIZE)}");
 
             if (Container != null)
                 stream.AppendLine("".PadLeft(concat + TAB_SIZE) + Container.ToString());
 
-            stream.Append("".PadLeft(concat) + "}");
+            stream.Append(spaces + "}");
 
             return stream.ToString();
         }

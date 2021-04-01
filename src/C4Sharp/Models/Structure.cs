@@ -15,12 +15,12 @@ namespace C4Sharp.Models
         public string Alias { get; }
         protected string Label { get; }
         protected string Description { get; }
-        protected ICollection<string> Tags { get; }
+        protected string[] Tags { get; private set; }
 
-        protected Structure(string alias, string label,  string description = default, ICollection<string> tags = default)
-        {
-            (Alias, Label, Description, Tags) = (alias, label, description, tags);
-        }
+        protected Structure(string alias, string label, string description = default) =>
+            (Alias, Label, Description) = (alias, label, description);
+
+        public void AddTag(params string[] tags) => Tags = tags;
 
         public static Relationship operator >(Structure a, Structure b) =>
             new Relationship(a, b, "uses");
