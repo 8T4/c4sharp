@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using C4Sharp.Models;
-using C4Sharp.Models.Diagrams;
 using C4Sharp.Models.Diagrams.Core;
 using C4Sharp.Models.Plantuml;
 using C4Sharp.Models.Relationships;
@@ -37,7 +36,7 @@ namespace C4Sharp.Tests.C4Model.Samples
                     BankingSystem,
                     MailSystem,
                 },
-                Relationships = new Relationship[]
+                Relationships = new[]
                 {
                     (Customer > WebApp)["Uses", "HTTPS"],
                     (Customer > Spa)["Uses", "HTTPS"],

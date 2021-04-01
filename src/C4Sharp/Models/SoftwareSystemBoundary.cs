@@ -8,7 +8,7 @@ namespace C4Sharp.Models
     /// </summary>
     public class SoftwareSystemBoundary: Structure
     {
-        public ICollection<Container> Containers { get; set; } = null;
+        public ICollection<Container> Containers { get; set; }
         
         public SoftwareSystemBoundary(string alias, string label) : base(alias, label)
         {
@@ -21,7 +21,7 @@ namespace C4Sharp.Models
             stream.AppendLine($"System_Boundary({Alias}, \"{Label}\") {{");
 
             foreach (var container in Containers)
-                stream.AppendLine($"    {container.ToString()}");
+                stream.AppendLine($"    {container}");
 
             stream.AppendLine("}");
 

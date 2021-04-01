@@ -11,7 +11,7 @@
         <RepositoryUrl>https://github.com/8T4/c4sharp</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>c4, diagrams</PackageTags>
-        <PackageVersion>1.0.0-beta</PackageVersion>
+        <PackageVersion>1.0.1</PackageVersion>
 
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <IncludeSymbols>true</IncludeSymbols>

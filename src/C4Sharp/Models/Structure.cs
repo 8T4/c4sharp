@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using C4Sharp.Models.Relationships;
+﻿using C4Sharp.Models.Relationships;
 
 namespace C4Sharp.Models
 {

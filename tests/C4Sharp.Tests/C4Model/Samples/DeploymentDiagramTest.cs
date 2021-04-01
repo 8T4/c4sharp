@@ -1,6 +1,5 @@
 using System.IO;
 using C4Sharp.Models;
-using C4Sharp.Models.Diagrams.Core;
 using C4Sharp.Models.Diagrams.Supplementary;
 using C4Sharp.Models.Plantuml;
 using C4Sharp.Models.Relationships;

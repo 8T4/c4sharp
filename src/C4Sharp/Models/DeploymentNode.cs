@@ -1,13 +1,11 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace C4Sharp.Models
 {
     public class DeploymentNode : Structure
     {
-        private const int TAB_SIZE = 4;
+        private static int TabSize => 4;
 
         public ICollection<DeploymentNode> Nodes { get; set; }
         public Dictionary<string, string> Properties { get; set; }
@@ -40,10 +38,10 @@ namespace C4Sharp.Models
 
             if (Nodes != null)
                 foreach (var node in Nodes)
-                    stream.AppendLine($"{node.GetStream(concat + TAB_SIZE)}");
+                    stream.AppendLine($"{node.GetStream(concat + TabSize)}");
 
             if (Container != null)
-                stream.AppendLine("".PadLeft(concat + TAB_SIZE) + Container.ToString());
+                stream.AppendLine("".PadLeft(concat + TabSize) + Container);
 
             stream.Append(spaces + "}");
 

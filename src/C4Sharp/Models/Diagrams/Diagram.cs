@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Text;
+using C4Sharp.Extensions;
 using C4Sharp.Models.Relationships;
 
 namespace C4Sharp.Models.Diagrams
@@ -10,14 +11,14 @@ namespace C4Sharp.Models.Diagrams
     /// </summary>
     public abstract class Diagram
     {
-        public string PumlFileReference { get; }
+        private string PumlFileReference { get; }
+        private bool LayoutWithLegend { get; set; }
         public string Title { get; set; }
-        public bool LayoutWithLegend { get; set; }
         public Structure[] Structures { get; set; }
         public Relationship[] Relationships { get; set; }
 
         public string Slug() =>
-            $"{Title.Replace(" ", "_")}_{PumlFileReference}";
+            $"{Title}-{PumlFileReference}".GenerateSlug();
 
         protected Diagram(string pumlFileReference)
         {

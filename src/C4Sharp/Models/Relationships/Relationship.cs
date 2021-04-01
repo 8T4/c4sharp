@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-
-namespace C4Sharp.Models.Relationships
+﻿namespace C4Sharp.Models.Relationships
 {
     public class Relationship
     {
@@ -16,7 +13,7 @@ namespace C4Sharp.Models.Relationships
         {
             get
             {
-                this.Label = label;
+                Label = label;
                 return this;
             }
         }
@@ -25,7 +22,7 @@ namespace C4Sharp.Models.Relationships
         {
             get
             {
-                this.Position = position;
+                Position = position;
                 return this;
             }
         }        
@@ -34,8 +31,8 @@ namespace C4Sharp.Models.Relationships
         {
             get
             {
-                this.Label = label;
-                this.Protocol = protocol;
+                Label = label;
+                Protocol = protocol;
                 return this;
             }
         }        

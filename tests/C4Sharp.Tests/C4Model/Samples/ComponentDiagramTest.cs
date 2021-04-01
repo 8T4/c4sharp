@@ -1,9 +1,7 @@
 ﻿using System.IO;
 using C4Sharp.Models;
-using C4Sharp.Models.Diagrams;
 using C4Sharp.Models.Diagrams.Core;
 using C4Sharp.Models.Plantuml;
-using C4Sharp.Models.Relationships;
 using Xunit;
 using static C4Sharp.Tests.C4Model.Components;
 using static C4Sharp.Tests.C4Model.Containers;
@@ -38,7 +36,7 @@ namespace C4Sharp.Tests.C4Model.Samples
 
             var diagram = new ComponentDiagram()
             {
-                Title = "Component diagram for Internet Banking System - API Application",
+                Title = "Internet Banking System API Application",
                 Structures = new Structure[]
                 {
                     Spa,
