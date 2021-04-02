@@ -23,8 +23,8 @@
             SoftwareSystemType = SoftwareSystemType.Internal;
         }        
         
-        public SoftwareSystem(string alias, string label,  SoftwareSystemType softwareSystemType) 
-            : base(alias, label)
+        public SoftwareSystem(string alias, string label, string description,  SoftwareSystemType softwareSystemType) 
+            : base(alias, label, description)
         {
             SoftwareSystemType = softwareSystemType;
         }
