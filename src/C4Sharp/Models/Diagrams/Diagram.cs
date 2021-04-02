@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Text;
 using C4Sharp.Extensions;
+using C4Sharp.Models.Plantuml;
 using C4Sharp.Models.Relationships;
 
 namespace C4Sharp.Models.Diagrams
@@ -38,12 +39,12 @@ namespace C4Sharp.Models.Diagrams
             stream.AppendLine();
      
             foreach (var structure in Structures)
-                stream.AppendLine(structure.ToString());
+                stream.AppendLine(structure.ToPumlString());
      
             stream.AppendLine();
      
             foreach (var relationship in Relationships)
-                stream.AppendLine(relationship.ToString());
+                stream.AppendLine(relationship.ToPumlString());
      
             stream.AppendLine($"@enduml");
             return stream.ToString();

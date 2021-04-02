@@ -12,9 +12,9 @@ namespace C4Sharp.Models
     public abstract class Structure
     {
         public string Alias { get; }
-        protected string Label { get; }
-        protected string Description { get; }
-        protected string[] Tags { get; private set; }
+        public string Label { get; }
+        public string Description { get; }
+        public string[] Tags { get; private set; }
 
         protected Structure(string alias, string label, string description = default) =>
             (Alias, Label, Description) = (alias, label, description);

@@ -9,10 +9,5 @@
         public Person(string alias, string label, string description) : base(alias, label, description)
         {
         }
-
-        public override string ToString()
-        {
-            return $"Person({Alias}, \"{Label}\", \"{Description}\" )";
-        }
     }
 }

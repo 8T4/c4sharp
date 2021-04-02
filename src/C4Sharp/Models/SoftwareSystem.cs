@@ -9,7 +9,7 @@
     /// </summary>
     public class SoftwareSystem : Structure
     {
-        private SoftwareSystemType SoftwareSystemType { get; }
+        public SoftwareSystemType SoftwareSystemType { get; }
 
         public SoftwareSystem(string alias, string label, string description, SoftwareSystemType softwareSystemType = SoftwareSystemType.Internal ) 
             : base(alias, label, description)
@@ -21,15 +21,6 @@
             : base(alias, label)
         {
             SoftwareSystemType = softwareSystemType;
-        }        
-
-        public override string ToString()
-        {
-            return SoftwareSystemType == SoftwareSystemType.External
-                ? $"System_Ext({Alias}, \"{Label}\", \"{Description}\")"
-                : $"System({Alias}, \"{Label}\", \"{Description}\")";
         }
     }
-    
-    
 }

@@ -4,8 +4,13 @@ using System.Text.RegularExpressions;
 
 namespace C4Sharp.Extensions
 {
-    public static class StringExtensionMethods
+    public static class StringMethods
     {
+        internal static string AddSpaces(this string value, int size)
+        {
+            return value.PadLeft(size, ' ');
+        }
+        
         internal static string GenerateSlug(this string phrase) 
         { 
             var str = phrase.RemoveAccent().ToLower(); 

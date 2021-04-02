@@ -2,12 +2,12 @@
 {
     public class Relationship
     {
-        private string From { get; }
-        private string To { get; }
-        private string Label { get; set; }
-        private string Protocol { get; set; }
-        private Position Position { get; set; }
-        private Direction Direction { get; }
+        public string From { get; }
+        public string To { get; }
+        public string Label { get; set; }
+        public string Protocol { get; set; }
+        public Position Position { get; set; }
+        public Direction Direction { get; }
         
         public Relationship this[string label]
         {
@@ -71,32 +71,6 @@
         public Relationship(Structure @from, Direction direction, Structure to, string label, string protocol)
             : this(from, direction, to, label, protocol, Position.None)
         {
-        }
-
-        public override string ToString()
-        {
-            var direction = Direction switch
-            {
-                Direction.Back => "Rel_Back",
-                Direction.Forward => "Rel",
-                Direction.Bidirectional => "BiRel",
-                _ => "Rel"
-            };
-
-            direction += Position switch
-            {
-                Position.Down => "_D",
-                Position.Up => "_U",
-                Position.Left => "_L",
-                Position.Right => "_R",
-                Position.Neighbor => "_Neighbor",
-                Position.None => "",
-                _ => ""
-            };
-
-            return string.IsNullOrEmpty(Protocol)
-                ? $"{direction}({From}, {To}, \"{Label}\")"
-                : $"{direction}({From}, {To}, \"{Label}\", \"{Protocol}\" )";
         }
     }
 }

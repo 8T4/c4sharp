@@ -12,17 +12,12 @@
     /// </summary>
     public class Component : Structure
     {
-        private string Technology { get; }
+        public string Technology { get; }
 
         public Component(string alias, string label, string description, string technology) 
             : base(alias, label, description)
         {
             Technology = technology;
-        }
-
-        public override string ToString()
-        {
-            return $"Component({Alias}, \"{Label}\", \"{Technology}\", \"{Description}\" )";
         }
     }
 }

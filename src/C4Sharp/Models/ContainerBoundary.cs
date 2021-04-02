@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Text;
+using C4Sharp.Extensions;
 using C4Sharp.Models.Relationships;
+using static C4Sharp.Extensions.StringMethods;
 
 namespace C4Sharp.Models
 {
@@ -14,25 +16,6 @@ namespace C4Sharp.Models
         
         public ContainerBoundary(string alias, string label) : base(alias, label)
         {
-        }
-        
-        public override string ToString()
-        {
-            var stream = new StringBuilder();
-
-            stream.AppendLine();
-            stream.AppendLine($"Container_Boundary({Alias}, \"{Label}\") {{");
-            foreach (var component in Components)
-                stream.AppendLine($"    {component}");
-
-            stream.AppendLine();
-            
-            foreach (var relationship in Relationships)
-                stream.AppendLine($"    {relationship}");            
-
-            stream.AppendLine("}");
-
-            return stream.ToString();
         }
     }
 }

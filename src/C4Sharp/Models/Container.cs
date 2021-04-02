@@ -15,8 +15,8 @@ namespace C4Sharp.Models
     /// </summary>
     public class Container : Structure
     {
-        private string Technology { get; }
-        private ContainerType ContainerType { get; }
+        public string Technology { get; }
+        public ContainerType ContainerType { get; }
         
         public Container(string alias, ContainerType type, string description, string technology) 
             : base(alias, type.GetDescription(), description)
@@ -30,13 +30,6 @@ namespace C4Sharp.Models
         {
             Technology = technology;
             ContainerType = ContainerType.None;
-        }
-
-        public override string ToString()
-        {
-            return ContainerType == ContainerType.Database
-                ? $"ContainerDb({Alias}, \"{Label}\", \"{Technology}\", \"{Description}\" )"
-                : $"Container({Alias}, \"{Label}\", \"{Technology}\", \"{Description}\" )";
         }
     }
 }

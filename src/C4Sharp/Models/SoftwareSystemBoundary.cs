@@ -13,19 +13,5 @@ namespace C4Sharp.Models
         public SoftwareSystemBoundary(string alias, string label) : base(alias, label)
         {
         }
-
-        public override string ToString()
-        {
-            var stream = new StringBuilder();
-            stream.AppendLine();
-            stream.AppendLine($"System_Boundary({Alias}, \"{Label}\") {{");
-
-            foreach (var container in Containers)
-                stream.AppendLine($"    {container}");
-
-            stream.AppendLine("}");
-
-            return stream.ToString();
-        }
     }
 }
