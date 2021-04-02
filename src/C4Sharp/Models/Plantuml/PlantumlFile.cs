@@ -69,8 +69,10 @@ namespace C4Sharp.Models.Plantuml
         public static Task ExportAsync(Diagram diagram, CancellationToken cancellationToken)
         {
             if (cancellationToken.IsCancellationRequested)
+            {
                 return Task.FromCanceled(cancellationToken);
-            
+            }
+
             Export(diagram);
             
             return Task.CompletedTask;

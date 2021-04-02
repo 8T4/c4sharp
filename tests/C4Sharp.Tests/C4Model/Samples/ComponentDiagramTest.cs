@@ -33,8 +33,7 @@ namespace C4Sharp.Tests.C4Model.Samples
                 }
             };
 
-
-            var diagram = new ComponentDiagram()
+            var diagram = new ComponentDiagram
             {
                 Title = "Internet Banking System API Application",
                 Structures = new Structure[]

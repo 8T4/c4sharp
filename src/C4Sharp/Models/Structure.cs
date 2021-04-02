@@ -16,7 +16,10 @@ namespace C4Sharp.Models
         public string Description { get; }
         public string[] Tags { get; private set; }
 
-        protected Structure(string alias, string label, string description = default) =>
+        protected Structure(string alias, string label) =>
+            (Alias, Label, Description) = (alias, label, string.Empty);        
+        
+        protected Structure(string alias, string label, string description) =>
             (Alias, Label, Description) = (alias, label, description);
 
         public void AddTag(params string[] tags) => Tags = tags;

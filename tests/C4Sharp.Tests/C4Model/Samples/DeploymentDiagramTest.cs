@@ -28,7 +28,7 @@ namespace C4Sharp.Tests.C4Model.Samples
                 }
             };
 
-            var diagram = new DeploymentDiagram()
+            var diagram = new DeploymentDiagram
             {
                 Title = "System Context diagram for Internet Banking System",
                 Structures = new Structure[]

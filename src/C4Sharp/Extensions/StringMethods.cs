@@ -13,7 +13,7 @@ namespace C4Sharp.Extensions
         
         internal static string GenerateSlug(this string phrase) 
         { 
-            var str = phrase.RemoveAccent().ToLower(); 
+            var str = phrase.RemoveAccent().ToLower(CultureInfo.InvariantCulture); 
             str = Regex.Replace(str, @"[^a-z0-9\s-]", ""); 
             str = Regex.Replace(str, @"\s+", " ").Trim(); 
             str = Regex.Replace(str, @"\s", "-"); // hyphens   
