@@ -7,9 +7,9 @@ C4Sharp (`C4S`) is a .net library for building [C4 Model diagrams](https://c4mod
 ### Instalation
 This package is available through Nuget Packages: https://www.nuget.org/packages/C4Sharp
 
-| Package |  Version | Downloads |
-| ------- | ----- | ----- |
-| `C4Sharp` | [![NuGet](https://img.shields.io/nuget/v/C4Sharp.svg)](https://www.nuget.org/packages/C4Sharp) | [![Nuget](https://img.shields.io/nuget/dt/C4Sharp.svg)](https://www.nuget.org/packages/C4Sharp) |
+| Package |  Version | Downloads | |
+| ------- | ----- | ----- |----- |
+| `C4Sharp` | [![NuGet](https://img.shields.io/nuget/v/C4Sharp.svg)](https://www.nuget.org/packages/C4Sharp) | [![Nuget](https://img.shields.io/nuget/dt/C4Sharp.svg)](https://www.nuget.org/packages/C4Sharp) | [![Codacy Badge](https://app.codacy.com/project/badge/Grade/51ea16a0d91548cb9e84bd6ab3e8cb9e)](https://www.codacy.com/gh/8T4/c4sharp/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=8T4/c4sharp&amp;utm_campaign=Badge_Grade) |
 
 **Nuget**
 ```shell
