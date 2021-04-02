@@ -10,7 +10,7 @@ Name: Daniel Martins, Rafael Santos, Abraão Honório,
                         
 
 /* SITE */
-Last update: 2021/03/23 
+Last update: 2021/04/02 
 Standards: PUML, CSHARP, C4 Model
 Components: Plantuml, C4Plantuml
-Software: Software used for the development
+Software: .Net Core, Rider IDE from jetbrains, Visual Studio Code, PlantUML, C4-Plant
