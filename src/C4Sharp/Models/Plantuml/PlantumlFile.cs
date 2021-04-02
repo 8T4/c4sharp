@@ -27,10 +27,12 @@ namespace C4Sharp.Models.Plantuml
         /// <param name="diagram">C4 Diagram</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public static Task SaveAsync(Diagram diagram, CancellationToken cancellationToken = default)
+        public static Task SaveAsync(Diagram diagram, CancellationToken cancellationToken)
         {
             if (cancellationToken.IsCancellationRequested)
+            {
                 return Task.FromCanceled(cancellationToken);
+            }
 
             Save(diagram);
             return Task.CompletedTask;

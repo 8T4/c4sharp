@@ -39,13 +39,17 @@ namespace C4Sharp.Models.Diagrams
             stream.AppendLine();
      
             foreach (var structure in Structures)
+            {
                 stream.AppendLine(structure.ToPumlString());
-     
+            }
+
             stream.AppendLine();
      
             foreach (var relationship in Relationships)
+            {
                 stream.AppendLine(relationship.ToPumlString());
-     
+            }
+
             stream.AppendLine($"@enduml");
             return stream.ToString();
         }

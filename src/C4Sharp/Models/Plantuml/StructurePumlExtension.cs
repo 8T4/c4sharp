@@ -39,7 +39,9 @@ namespace C4Sharp.Models.Plantuml
             stream.AppendLine($"System_Boundary({boundary.Alias}, \"{boundary.Label}\") {{");
 
             foreach (var container in boundary.Containers)
+            {
                 stream.AppendLine($"{Tab.Indent()}{container.ToPumlString()}");
+            }
 
             stream.AppendLine("}");
 
@@ -65,12 +67,16 @@ namespace C4Sharp.Models.Plantuml
             stream.AppendLine();
             stream.AppendLine($"Container_Boundary({boundary.Alias}, \"{boundary.Label}\") {{");
             foreach (var component in boundary.Components)
+            {
                 stream.AppendLine($"{Tab.Indent()}{component.ToPumlString()}");
+            }
 
             stream.AppendLine();
             
             foreach (var relationship in boundary.Relationships)
-                stream.AppendLine($"{Tab.Indent()}{relationship.ToPumlString()}");            
+            {
+                stream.AppendLine($"{Tab.Indent()}{relationship.ToPumlString()}");
+            }
 
             stream.AppendLine("}");
 
@@ -83,22 +89,34 @@ namespace C4Sharp.Models.Plantuml
             var spaces = Tab.Indent(concat);
 
             if (concat == 0)
+            {
                 stream.AppendLine();
+            }
 
             if (deployment.Properties != null)
+            {
                 foreach (var (key, value) in deployment.Properties)
+                {
                     stream.AppendLine($"{spaces}AddProperty(\"{key}\", \"{value}\")");
+                }
+            }
 
             stream.AppendLine(deployment.Tags is null
                 ? $"{spaces}Deployment_Node({deployment.Alias}, \"{deployment.Label}\", \"{deployment.Description}\") {{"
                 : $"{spaces}Deployment_Node({deployment.Alias}, \"{deployment.Label}\", \"{deployment.Description}\", $tags=\"{string.Join(',', deployment.Tags)}\") {{");
 
             if (deployment.Nodes != null)
+            {
                 foreach (var node in deployment.Nodes)
+                {
                     stream.AppendLine($"{node.ToPumlString(concat + Tab.TabSize)}");
+                }
+            }
 
             if (deployment.Container != null)
+            {
                 stream.AppendLine(Tab.Indent(concat) + deployment.Container.ToPumlString());
+            }
 
             stream.Append(spaces + "}");
 

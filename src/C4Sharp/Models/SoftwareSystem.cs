@@ -11,13 +11,19 @@
     {
         public SoftwareSystemType SoftwareSystemType { get; }
 
-        public SoftwareSystem(string alias, string label, string description, SoftwareSystemType softwareSystemType = SoftwareSystemType.Internal ) 
+        public SoftwareSystem(string alias, string label) 
+            : base(alias, label)
+        {
+            SoftwareSystemType = SoftwareSystemType.Internal;
+        }             
+        
+        public SoftwareSystem(string alias, string label, string description) 
             : base(alias, label, description)
         {
-            SoftwareSystemType = softwareSystemType;
-        }
+            SoftwareSystemType = SoftwareSystemType.Internal;
+        }        
         
-        public SoftwareSystem(string alias, string label,  SoftwareSystemType softwareSystemType = SoftwareSystemType.Internal ) 
+        public SoftwareSystem(string alias, string label,  SoftwareSystemType softwareSystemType) 
             : base(alias, label)
         {
             SoftwareSystemType = softwareSystemType;

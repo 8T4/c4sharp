@@ -38,7 +38,7 @@
         }        
 
         public Relationship(Structure @from, Direction direction, Structure to, string label,
-            string protocol, Position position = Position.None)
+            string protocol, Position position)
         {
             From = @from.Alias;
             To = to.Alias;
@@ -48,13 +48,13 @@
             Position = position;
         }
 
-        public Relationship(Structure @from, Structure to, string label, Position position = Position.None)
-            : this(from, Direction.Forward, to, label, string.Empty, position)
+        public Relationship(Structure @from, Structure to, string label)
+            : this(from, Direction.Forward, to, label, string.Empty, Position.None)
         {
         }
         
-        public Relationship(Structure @from, Structure to, string label, string protocol, Position position = Position.None)
-            : this(from, Direction.Forward, to, label, protocol, position)
+        public Relationship(Structure @from, Structure to, string label, string protocol)
+            : this(from, Direction.Forward, to, label, protocol, Position.None)
         {
         }        
         
@@ -62,11 +62,6 @@
             : this(from, direction, to, label, string.Empty, Position.None)
         {
         }       
-        
-        public Relationship(Structure @from, Direction direction, Structure to, string label, Position position = Position.None)
-            : this(from, direction, to, label, string.Empty, position)
-        {
-        }         
         
         public Relationship(Structure @from, Direction direction, Structure to, string label, string protocol)
             : this(from, direction, to, label, protocol, Position.None)
