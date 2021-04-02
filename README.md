@@ -9,6 +9,7 @@ This package is available through Nuget Packages: https://www.nuget.org/packages
 
 | Package |  Version | Downloads |
 | ------- | ----- | ----- |
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/054695fcc1024f96a29287a97262fb23)](https://app.codacy.com/gh/8T4/c4sharp?utm_source=github.com&utm_medium=referral&utm_content=8T4/c4sharp&utm_campaign=Badge_Grade_Settings)
 | `C4Sharp` | [![NuGet](https://img.shields.io/nuget/v/C4Sharp.svg)](https://www.nuget.org/packages/C4Sharp) | [![Nuget](https://img.shields.io/nuget/dt/C4Sharp.svg)](https://www.nuget.org/packages/C4Sharp) |
 
 **Nuget**
