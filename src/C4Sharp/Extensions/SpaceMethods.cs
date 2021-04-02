@@ -1,6 +1,9 @@
 namespace C4Sharp.Extensions
 {
-    public static class Tab
+    /// <summary>
+    /// Ident using spaces
+    /// </summary>
+    public static class SpaceMethods
     {
         internal static int TabSize => 4;
 

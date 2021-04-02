@@ -40,7 +40,7 @@ namespace C4Sharp.Models.Plantuml
 
             foreach (var container in boundary.Containers)
             {
-                stream.AppendLine($"{Tab.Indent()}{container.ToPumlString()}");
+                stream.AppendLine($"{SpaceMethods.Indent()}{container.ToPumlString()}");
             }
 
             stream.AppendLine("}");
@@ -68,14 +68,14 @@ namespace C4Sharp.Models.Plantuml
             stream.AppendLine($"Container_Boundary({boundary.Alias}, \"{boundary.Label}\") {{");
             foreach (var component in boundary.Components)
             {
-                stream.AppendLine($"{Tab.Indent()}{component.ToPumlString()}");
+                stream.AppendLine($"{SpaceMethods.Indent()}{component.ToPumlString()}");
             }
 
             stream.AppendLine();
             
             foreach (var relationship in boundary.Relationships)
             {
-                stream.AppendLine($"{Tab.Indent()}{relationship.ToPumlString()}");
+                stream.AppendLine($"{SpaceMethods.Indent()}{relationship.ToPumlString()}");
             }
 
             stream.AppendLine("}");
@@ -86,7 +86,7 @@ namespace C4Sharp.Models.Plantuml
         private static string ToPumlString(this DeploymentNode deployment, int concat = 0)
         {
             var stream = new StringBuilder();
-            var spaces = Tab.Indent(concat);
+            var spaces = SpaceMethods.Indent(concat);
 
             if (concat == 0)
             {
@@ -109,13 +109,13 @@ namespace C4Sharp.Models.Plantuml
             {
                 foreach (var node in deployment.Nodes)
                 {
-                    stream.AppendLine($"{node.ToPumlString(concat + Tab.TabSize)}");
+                    stream.AppendLine($"{node.ToPumlString(concat + SpaceMethods.TabSize)}");
                 }
             }
 
             if (deployment.Container != null)
             {
-                stream.AppendLine(Tab.Indent(concat) + deployment.Container.ToPumlString());
+                stream.AppendLine(SpaceMethods.Indent(concat) + deployment.Container.ToPumlString());
             }
 
             stream.Append(spaces + "}");
