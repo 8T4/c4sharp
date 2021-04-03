@@ -122,23 +122,11 @@ namespace C4Sharp.Models.Plantuml
         /// <summary>
         /// Export Diagram to PNG File
         /// </summary>
-        /// <param name="path">File path</param>
+        /// <param name="pumlPath">File path</param>
         /// <param name="session">Plantuml Session</param>
-        private static void Export(string path, PlantumlSession session)
+        private static void Export(string pumlPath, PlantumlSession session)
         {
-            var jarPath = session.FilePath;
-            var directory = new FileInfo(path);
-
-            var jar = $"-jar {jarPath} -verbose -o \"{directory.Directory.FullName}\" -charset UTF-8";
-
-            var info = new ProcessStartInfo
-            {
-                UseShellExecute = false,
-                FileName = "java",
-                Arguments = $"{jar} {path}"
-            };
-
-            Process.Start(info)?.WaitForExit();
+            session.Execute(pumlPath);
         }
 
         /// <summary>
