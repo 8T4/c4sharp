@@ -81,6 +81,7 @@ To learn more about `C4S` access our [wiki](https://github.com/8T4/c4sharp/wiki)
 ## Thanks
 
 - [Simon Brown](https://twitter.com/simonbrown)
+- [PlantUML Team](https://plantuml.com/)
 - [C4-PlantUML Team](https://github.com/plantuml-stdlib/C4-PlantUML)
 
 ## Guide to contributing to a GitHub project
