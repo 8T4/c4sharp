@@ -65,7 +65,6 @@ var diagram = new ContextDiagram
     }
 };
 
-PlantumlFile.Save(diagram);
 PlantumlFile.Export(diagram);
 ```
 The result will be:
