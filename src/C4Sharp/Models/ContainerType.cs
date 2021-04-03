@@ -9,28 +9,40 @@ namespace C4Sharp.Models
     {
         [Description("Mobile app")]
         Mobile,
+        
         [Description("Server-side web application")]
         WebApplication,
-        [Description("Server-side console applicatio")]
+        
+        [Description("Server-side console application")]
         ServerConsole,
-        [Description("Client-side desktop applicatio")]
+        
+        [Description("Client-side desktop application")]
         ClientDesktop,
+        
         [Description("Serverless function")]
         ServerlessFunction,
+        
         [Description("Blob or content store")]
         Blob,
+        
         [Description("File sytem")]
         FileSystem,
+        
         [Description("Shell script")]
         ShellScript,
+        
         [Description("SPA")]
         Spa,
+        
         [Description("API")]
         Api,
+        
         [Description("Queue")]
         Queue,
+        
         [Description("Database")]
         Database,
+        
         [Description("")]
         None
     }
