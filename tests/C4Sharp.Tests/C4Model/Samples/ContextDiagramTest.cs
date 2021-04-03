@@ -14,28 +14,9 @@ namespace C4Sharp.Tests.C4Model.Samples
         [Fact]
         public void Its_C4_Model_Context_Diagram()
         {
-            var diagram = new ContextDiagram
-            {
-                Title = "System Context diagram for Internet Banking System",
-                Structures = new Structure[]
-                {
-                    Customer,
-                    BankingSystem,
-                    Mainframe,
-                    MailSystem
-                },
-                Relationships = new []
-                {
-                    Customer > BankingSystem,
-                    (Customer < MailSystem)["Sends e-mails to"],
-                    (BankingSystem > MailSystem)["Sends e-mails", "SMTP"][Neighbor],
-                    BankingSystem > Mainframe,
-                }
-            };
-
+            var diagram = DiagramFixture.BuildContextDiagram();
             PlantumlFile.Save(diagram);
-            PlantumlFile.Export(diagram);
-            
+
             Assert.True(File.Exists($"c4/{diagram.Slug()}.puml"));
         }        
     }

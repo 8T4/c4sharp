@@ -15,46 +15,8 @@ namespace C4Sharp.Tests.C4Model.Samples
         [Fact]
         public void Its_C4_Model_Component_Diagram_Test()
         {
-            var boundary = new ContainerBoundary("c1", "API Application")
-            { 
-                Components = new[]
-                {
-                    Sign,
-                    Accounts,
-                    Security,
-                    MainframeFacade
-                },
-                Relationships = new []
-                {
-                    Sign > Security,
-                    Accounts > MainframeFacade,
-                    (Security > SqlDatabase) ["Read & write to", "JDBC"],
-                    (MainframeFacade > Mainframe)["Uses", "XML/HTTPS"]
-                }
-            };
-
-            var diagram = new ComponentDiagram
-            {
-                Title = "Internet Banking System API Application",
-                Structures = new Structure[]
-                {
-                    Spa,
-                    MobileApp,
-                    SqlDatabase,
-                    Mainframe,
-                    boundary,
-                },
-                Relationships = new[]
-                {
-                    (Spa > Sign)["Uses", "JSON/HTTPS"],
-                    (Spa > Accounts)["Uses", "JSON/HTTPS"],
-                    (MobileApp > Sign)["Uses", "JSON/HTTPS"],
-                    (MobileApp > Accounts)["Uses", "JSON/HTTPS"],
-                }
-            };
-
+            var diagram = DiagramFixture.BuildComponentDiagram();
             PlantumlFile.Save(diagram);
-            PlantumlFile.Export(diagram);
 
             Assert.True(File.Exists($"c4/{diagram.Slug()}.puml"));
         }

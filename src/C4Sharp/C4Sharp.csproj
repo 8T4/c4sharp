@@ -49,9 +49,7 @@
         <EmbeddedResource Include="bin\LICENSE.txt">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </EmbeddedResource>
-        <EmbeddedResource Include="bin\plantuml.jar">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </EmbeddedResource>
+        <EmbeddedResource Include="bin\plantuml.jar" />
     </ItemGroup>
     <ItemGroup>
       <Content Include="bin\icon.png">
