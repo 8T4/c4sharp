@@ -65,7 +65,6 @@ var diagram = new ContextDiagram
     }
 };
 
-PlantumlFile.Save(diagram);
 PlantumlFile.Export(diagram);
 ```
 The result will be:
@@ -77,6 +76,12 @@ The result will be:
 ## Learn
 
 To learn more about `C4S` access our [wiki](https://github.com/8T4/c4sharp/wiki).
+
+## Thanks
+
+- [Simon Brown](https://twitter.com/simonbrown)
+- [PlantUML Team](https://plantuml.com/)
+- [C4-PlantUML Team](https://github.com/plantuml-stdlib/C4-PlantUML)
 
 ## Guide to contributing to a GitHub project
 This is a guide to contributing to this open source project that uses GitHub. It’s mostly based on how many open sorce projects operate. That’s all there is to it. The fundamentals are:
