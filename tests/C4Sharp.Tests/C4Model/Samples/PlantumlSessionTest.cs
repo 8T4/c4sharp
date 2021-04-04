@@ -13,7 +13,8 @@ namespace C4Sharp.Tests.C4Model.Samples
             {
                 DiagramFixture.BuildContextDiagram(),
                 DiagramFixture.BuildContainerDiagram(),
-                DiagramFixture.BuildComponentDiagram()
+                DiagramFixture.BuildComponentDiagram(),
+                DiagramFixture.BuildDeploymentDiagram()
             };
 
             using (var session = new PlantumlSession())
