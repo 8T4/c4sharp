@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace C4Sharp.Extensions
 {
-    public static class StringMethods
+    internal static class StringMethods
     {
         internal static string AddSpaces(this string value, int size)
         {

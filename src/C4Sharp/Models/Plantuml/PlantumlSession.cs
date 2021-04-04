@@ -13,7 +13,7 @@ namespace C4Sharp.Models.Plantuml
 
         public PlantumlSession()
         {
-            FilePath = PlantumlStream.LoadPlantUmlEngine();
+            FilePath = PlantumlResource.Load();
             ProcessInfo = new ProcessStartInfo
             {
                 UseShellExecute = false,
@@ -21,14 +21,19 @@ namespace C4Sharp.Models.Plantuml
             };            
         }
 
-        public PlantumlSessionResult Execute(string puml)
+        internal PlantumlResult Execute(string puml)
         {
             var directory = new FileInfo(puml);
 
-            if (directory.Directory != null)
+            try
             {
+                if (directory.Directory == null)
+                {
+                    return new PlantumlResult(false, "Plantuml file not found");
+                }
+
                 var results = new StringBuilder();
-                
+
                 var jar = $"-jar {FilePath} -verbose -o \"{directory.Directory.FullName}\" -charset UTF-8";
                 ProcessInfo.Arguments = $"{jar} {puml}";
                 ProcessInfo.RedirectStandardOutput = true;
@@ -36,23 +41,22 @@ namespace C4Sharp.Models.Plantuml
 
                 var process = new Process {StartInfo = ProcessInfo};
 
-                process.OutputDataReceived += (sender, args) =>
-                {
-                    results.AppendLine(args.Data);
-                };
+                process.OutputDataReceived += (sender, args) => { results.AppendLine(args.Data); };
 
                 process.Start();
                 process.WaitForExit();
 
-                return new PlantumlSessionResult(process.ExitCode == 0, results.ToString());
+                return new PlantumlResult(process.ExitCode == 0, results.ToString());
             }
-
-            return new PlantumlSessionResult(false, "Plantuml file not found");
+            catch (Exception e)
+            {
+                return new PlantumlResult(false, $"{e.Message}\r\n{ e.StackTrace}");
+            }
         }
 
         public void Dispose()
         {
-            PlantumlStream.RemovePlantUmlEngine(FilePath);
+            PlantumlResource.Clear(FilePath);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace C4Sharp.Models.Plantuml
     /// <summary>
     /// PUML File Utils
     /// </summary>
-    public static class PlantumlFile
+    public static partial class PlantumlFile
     {
         /// <summary>
         /// Save puml file on c4/[file name].puml
@@ -25,15 +25,86 @@ namespace C4Sharp.Models.Plantuml
         /// Save puml file
         /// </summary>
         /// <param name="diagram">C4 Diagram</param>
-        /// <param name="path">Path to save</param>
+        /// <param name="path">Output path</param>
         public static string Save(Diagram diagram, string path)
         {
             var filePath = $"{path}/{diagram.Slug()}.puml";
-            File.WriteAllText(filePath, diagram.ToString());
-
+            File.WriteAllText(filePath, diagram.ToPumlString());
             return filePath;
         }
 
+        /// <summary>
+        /// It's creates a PUML file and exports the diagram to PNG File
+        /// </summary>
+        /// <param name="diagram">C4 Diagram</param>
+        public static PlantumlResult Export(Diagram diagram)
+        {
+            using (var session = new PlantumlSession())
+            {
+                Save(diagram);
+                var dirPath = Directory.GetCurrentDirectory();
+                var umlPath = Path.Join(dirPath, "c4", $"{diagram.Slug()}.puml");
+                return Export(umlPath, session);
+            }
+        }
+
+        /// <summary>
+        /// It's creates a PUML file and exports the diagram to PNG File
+        /// </summary>
+        /// <param name="diagram">C4 Diagram</param>
+        /// <param name="session">Plantuml Session</param>
+        public static PlantumlResult Export(Diagram diagram, PlantumlSession session)
+        {
+            Save(diagram);
+            var dirPath = Directory.GetCurrentDirectory();
+            var umlPath = Path.Join(dirPath, "c4", $"{diagram.Slug()}.puml");
+            return Export(umlPath, session);
+        }
+
+        /// <summary>
+        /// It's creates a PUML file and exports the diagram to PNG File
+        /// </summary>
+        /// <param name="diagram"></param>
+        /// <param name="path">Output path</param>
+        public static PlantumlResult Export(Diagram diagram, string path)
+        {
+            using (var session = new PlantumlSession())
+            {
+                Save(diagram, path);
+                var umlPath = Path.Join(path, $"{diagram.Slug()}.puml");
+                return Export(umlPath, session);
+            }
+        }
+
+        /// <summary>
+        /// It's creates a PUML file and exports the diagram to PNG File
+        /// </summary>
+        /// <param name="diagram">C4 Diagram</param>
+        /// <param name="path">Output path</param>
+        /// <param name="session">Plantuml Session</param>
+        public static PlantumlResult Export(Diagram diagram, string path, PlantumlSession session)
+        {
+            Save(diagram, path);
+            var umlPath = Path.Join(path, $"{diagram.Slug()}.puml");
+            return Export(umlPath, session);
+        }
+
+        /// <summary>
+        /// Export Diagram to PNG File
+        /// </summary>
+        /// <param name="pumlPath">PUML file path</param>
+        /// <param name="session">Plantuml Session</param>
+        private static PlantumlResult Export(string pumlPath, PlantumlSession session)
+        {
+            return session.Execute(pumlPath);
+        }
+    }
+
+    /// <summary>
+    /// Async PUML File Utils
+    /// </summary>
+    public static partial class PlantumlFile
+    {
         /// <summary>
         /// Save puml file on c4/[file name].puml 
         /// </summary>
@@ -51,100 +122,27 @@ namespace C4Sharp.Models.Plantuml
         /// Save puml file
         /// </summary>
         /// <param name="diagram">C4 Diagram</param>
-        /// <param name="path">file path</param>
+        /// <param name="path">Output path</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public static Task SaveAsync(Diagram diagram, string path, CancellationToken cancellationToken)
+        public static Task<string> SaveAsync(Diagram diagram, string path, CancellationToken cancellationToken)
         {
             return cancellationToken.IsCancellationRequested
                 ? Task.FromCanceled<string>(cancellationToken)
                 : Task.FromResult(Save(diagram, path));
         }
-
-        /// <summary>
-        /// It's creates a PUML file and exports the diagram to PNG File
-        /// </summary>
-        /// <param name="diagram">C4 Diagram</param>
-        public static void Export(Diagram diagram)
-        {
-            using (var session = new PlantumlSession())
-            {
-                Save(diagram);
-
-                var dirPath = Directory.GetCurrentDirectory();
-                var umlPath = Path.Join(dirPath, "c4", $"{diagram.Slug()}.puml");
-                Export(umlPath, session);
-            }
-        }
-
-        /// <summary>
-        /// It's creates a PUML file and exports the diagram to PNG File
-        /// </summary>
-        /// <param name="diagram">C4 Diagram</param>
-        /// <param name="session">Plantuml Session</param>
-        public static void Export(Diagram diagram, PlantumlSession session)
-        {
-            Save(diagram);
-            var dirPath = Directory.GetCurrentDirectory();
-            var umlPath = Path.Join(dirPath, "c4", $"{diagram.Slug()}.puml");
-            Export(umlPath, session);
-        }
-
-        /// <summary>
-        /// It's creates a PUML file and exports the diagram to PNG File
-        /// </summary>
-        /// <param name="diagram"></param>
-        /// <param name="path">file path</param>
-        public static void Export(Diagram diagram, string path)
-        {
-            using (var session = new PlantumlSession())
-            {
-                Save(diagram, path);
-
-                var umlPath = Path.Join(path, $"{diagram.Slug()}.puml");
-                Export(umlPath, session);
-            }
-        }
-
-        /// <summary>
-        /// It's creates a PUML file and exports the diagram to PNG File
-        /// </summary>
-        /// <param name="diagram">C4 Diagram</param>
-        /// <param name="path">File path</param>
-        /// <param name="session">Plantuml Session</param>
-        public static void Export(Diagram diagram, string path, PlantumlSession session)
-        {
-            Save(diagram, path);
-            var umlPath = Path.Join(path, $"{diagram.Slug()}.puml");
-            Export(umlPath, session);
-        }
-
-        /// <summary>
-        /// Export Diagram to PNG File
-        /// </summary>
-        /// <param name="pumlPath">File path</param>
-        /// <param name="session">Plantuml Session</param>
-        private static void Export(string pumlPath, PlantumlSession session)
-        {
-            session.Execute(pumlPath);
-        }
-
+        
         /// <summary>
         /// Export Diagram to PNG File
         /// </summary>
         /// <param name="diagram"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public static Task ExportAsync(Diagram diagram, CancellationToken cancellationToken)
+        public static Task<PlantumlResult> ExportAsync(Diagram diagram, CancellationToken cancellationToken)
         {
-            if (cancellationToken.IsCancellationRequested)
-            {
-                return Task.FromCanceled(cancellationToken);
-            }
-
-            Export(diagram);
-
-            return Task.CompletedTask;
+            return cancellationToken.IsCancellationRequested 
+                ? Task.FromCanceled<PlantumlResult>(cancellationToken) 
+                : Task.FromResult(Export(diagram));
         }
 
         /// <summary>
@@ -154,56 +152,41 @@ namespace C4Sharp.Models.Plantuml
         /// <param name="session">Plantuml Session</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public static Task ExportAsync(Diagram diagram, PlantumlSession session, CancellationToken cancellationToken)
+        public static Task<PlantumlResult> ExportAsync(Diagram diagram, PlantumlSession session, CancellationToken cancellationToken)
         {
-            if (cancellationToken.IsCancellationRequested)
-            {
-                return Task.FromCanceled(cancellationToken);
-            }
-
-            Export(diagram, session);
-
-            return Task.CompletedTask;
+            return cancellationToken.IsCancellationRequested 
+                ? Task.FromCanceled<PlantumlResult>(cancellationToken) 
+                : Task.FromResult(Export(diagram, session));            
         }
 
         /// <summary>
         /// Export Diagram to PNG File
         /// </summary>
         /// <param name="diagram">C4 Diagram</param>
-        /// <param name="path">file path</param>
+        /// <param name="path">Output path</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public static Task ExportAsync(Diagram diagram, string path, CancellationToken cancellationToken)
+        public static Task<PlantumlResult> ExportAsync(Diagram diagram, string path, CancellationToken cancellationToken)
         {
-            if (cancellationToken.IsCancellationRequested)
-            {
-                return Task.FromCanceled(cancellationToken);
-            }
-
-            Export(diagram, path);
-
-            return Task.CompletedTask;
+            return cancellationToken.IsCancellationRequested 
+                ? Task.FromCanceled<PlantumlResult>(cancellationToken) 
+                : Task.FromResult(Export(diagram, path));
         }
 
         /// <summary>
         /// Export Diagram to PNG File
         /// </summary>
         /// <param name="diagram">C4 Diagram</param>
-        /// <param name="path">File path</param>
+        /// <param name="path">Output path</param>
         /// <param name="session">Plantuml Session</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public static Task ExportAsync(Diagram diagram, string path, PlantumlSession session,
+        public static Task<PlantumlResult> ExportAsync(Diagram diagram, string path, PlantumlSession session,
             CancellationToken cancellationToken)
         {
-            if (cancellationToken.IsCancellationRequested)
-            {
-                return Task.FromCanceled(cancellationToken);
-            }
-
-            Export(diagram, path, session);
-
-            return Task.CompletedTask;
-        }
+            return cancellationToken.IsCancellationRequested 
+                ? Task.FromCanceled<PlantumlResult>(cancellationToken) 
+                : Task.FromResult(Export(diagram, path, session));
+        }        
     }
 }

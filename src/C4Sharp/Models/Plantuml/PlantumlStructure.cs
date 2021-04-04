@@ -3,7 +3,10 @@ using C4Sharp.Extensions;
 
 namespace C4Sharp.Models.Plantuml
 {
-    public static class StructurePumlExtension
+    /// <summary>
+    /// Parser Structure to PlantUML
+    /// </summary>
+    internal static class PlantumlStructure
     {
         public static string ToPumlString(this Structure structure)
         {
@@ -122,6 +125,5 @@ namespace C4Sharp.Models.Plantuml
 
             return stream.ToString();
         }
-
     }
 }

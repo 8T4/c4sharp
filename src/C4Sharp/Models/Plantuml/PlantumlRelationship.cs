@@ -2,7 +2,10 @@ using C4Sharp.Models.Relationships;
 
 namespace C4Sharp.Models.Plantuml
 {
-    public static class RelationshipPumlExtension
+    /// <summary>
+    /// Parser Relationship to PlantUML
+    /// </summary>
+    internal static class PlantumlRelationship
     {
         public static string ToPumlString(this Relationship relationship)
         {

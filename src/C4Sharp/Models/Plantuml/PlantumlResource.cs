@@ -4,9 +4,12 @@ using C4Sharp.Models.Diagrams;
 
 namespace C4Sharp.Models.Plantuml
 {
-    public static class PlantumlStream
+    /// <summary>
+    /// PlantUML Resources
+    /// </summary>    
+    internal static class PlantumlResource
     {
-        public static string LoadPlantUmlEngine()
+        public static string Load()
         {
             var fileName = Path.GetTempFileName();
 
@@ -21,7 +24,7 @@ namespace C4Sharp.Models.Plantuml
             return fileName;
         }
 
-        public static void RemovePlantUmlEngine(string file)
+        public static void Clear(string file)
         {
             File.Delete(file);
         }
@@ -29,16 +32,6 @@ namespace C4Sharp.Models.Plantuml
         private static Stream GetResource()
         {
             return Assembly.GetExecutingAssembly().GetManifestResourceStream($"C4Sharp.bin.plantuml.jar");
-        }
-
-        private static void CopyStream(Stream input, Stream output)
-        {
-            var buffer = new byte[16 * 1024];
-            int read;
-            while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
-            {
-                output.Write(buffer, 0, read);
-            }
         }
     }
 }
