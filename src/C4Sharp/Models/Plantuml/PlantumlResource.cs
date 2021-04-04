@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Reflection;
 using C4Sharp.Models.Diagrams;
@@ -11,27 +12,50 @@ namespace C4Sharp.Models.Plantuml
     {
         public static string Load()
         {
-            var fileName = Path.GetTempFileName();
-
-            using (var resource = GetResource())
+            try
             {
-                using (var file = new FileStream(fileName, FileMode.Create, FileAccess.Write))
-                {
-                    resource.CopyTo(file);
-                }
-            }
+                var fileName = Path.GetTempFileName();
 
-            return fileName;
+                using (var resource = GetResource())
+                {
+                    using (var file = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+                    {
+                        resource.CopyTo(file);
+                    }
+                }
+
+                return fileName;
+            }
+            catch (Exception e)
+            {
+                throw new PlantumlException($"{nameof(PlantumlException)}: Could not load plantuml engine.", e);
+            }
         }
 
         public static void Clear(string file)
         {
-            File.Delete(file);
+            try
+            {
+                File.Delete(file);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
         private static Stream GetResource()
         {
-            return Assembly.GetExecutingAssembly().GetManifestResourceStream($"C4Sharp.bin.plantuml.jar");
+            try
+            {
+                return Assembly
+                    .GetExecutingAssembly()
+                    .GetManifestResourceStream($"C4Sharp.bin.plantuml.jar");
+            }
+            catch (Exception e)
+            {
+                throw new PlantumlException($"{nameof(PlantumlException)}: Could not get resource.", e);
+            }
         }
     }
 }

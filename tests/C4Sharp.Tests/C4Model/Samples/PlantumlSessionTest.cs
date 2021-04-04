@@ -1,3 +1,4 @@
+using C4Sharp.Models.Diagrams;
 using C4Sharp.Models.Plantuml;
 using Xunit;
 
@@ -8,15 +9,16 @@ namespace C4Sharp.Tests.C4Model.Samples
         [Fact]
         public void It_Exports_Core_Diagram()
         {
-            var context = DiagramFixture.BuildContextDiagram();
-            var container = DiagramFixture.BuildContainerDiagram();
-            var component = DiagramFixture.BuildComponentDiagram();
+            var diagrams = new Diagram[]
+            {
+                DiagramFixture.BuildContextDiagram(),
+                DiagramFixture.BuildContainerDiagram(),
+                DiagramFixture.BuildComponentDiagram()
+            };
 
             using (var session = new PlantumlSession())
             {
-                PlantumlFile.Export(context, session);
-                PlantumlFile.Export(container, session);
-                PlantumlFile.Export(component, session);
+                PlantumlFile.Export(diagrams, session);
             }
 
             Assert.True(true);

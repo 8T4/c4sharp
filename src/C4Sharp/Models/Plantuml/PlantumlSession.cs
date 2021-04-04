@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Security;
 using System.Text;
 using C4Sharp.Models.Diagrams;
 
@@ -16,26 +17,42 @@ namespace C4Sharp.Models.Plantuml
             FilePath = PlantumlResource.Load();
             ProcessInfo = new ProcessStartInfo
             {
-                UseShellExecute = false,
                 FileName = "java",
+                UseShellExecute = false,
+                WindowStyle = ProcessWindowStyle.Hidden,
             };            
         }
-
-        internal PlantumlResult Execute(string puml)
+        
+        public PlantumlSession(string username, string password)
         {
-            var directory = new FileInfo(puml);
+            FilePath = PlantumlResource.Load();
+            ProcessInfo = new ProcessStartInfo
+            {
+                FileName = "java",
+                UserName = username,
+                UseShellExecute = false,
+                PasswordInClearText = password,
+                WindowStyle = ProcessWindowStyle.Hidden,
+            };            
+        }        
+        
+        internal void Execute(string path, bool processWholeDirectory)
+        {
+            var directory = processWholeDirectory 
+                ? path
+                : new FileInfo(path)?.Directory?.FullName;
 
             try
             {
-                if (directory.Directory == null)
+                if (string.IsNullOrEmpty(directory))
                 {
-                    return new PlantumlResult(false, "Plantuml file not found");
+                    throw new PlantumlException($"{nameof(PlantumlException)}: puml file not found.");
                 }
 
                 var results = new StringBuilder();
 
-                var jar = $"-jar {FilePath} -verbose -o \"{directory.Directory.FullName}\" -charset UTF-8";
-                ProcessInfo.Arguments = $"{jar} {puml}";
+                var jar = $"-jar {FilePath} -verbose -o \"{directory}\" -charset UTF-8";
+                ProcessInfo.Arguments = $"{jar} {path}";
                 ProcessInfo.RedirectStandardOutput = true;
                 ProcessInfo.StandardOutputEncoding = Encoding.UTF8;
 
@@ -45,12 +62,10 @@ namespace C4Sharp.Models.Plantuml
 
                 process.Start();
                 process.WaitForExit();
-
-                return new PlantumlResult(process.ExitCode == 0, results.ToString());
             }
             catch (Exception e)
             {
-                return new PlantumlResult(false, $"{e.Message}\r\n{ e.StackTrace}");
+                throw new PlantumlException($"{nameof(PlantumlException)}: puml file not found.", e);
             }
         }
 
