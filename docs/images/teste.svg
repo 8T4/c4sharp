@@ -1,0 +1,32 @@
+<svg height="1024" width="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+    <style>
+
+        .title {
+            font: bold 12pt sans-serif;
+        }
+
+        .subtitle {
+            font: 9pt sans-serif;
+        }
+    </style>
+
+    <svg height="168" width="228" xmlns="http://www.w3.org/2000/svg">
+        <rect width="228" height="168" rx="10" fill="#1168BD" />
+
+        <text class="title" x="50%" y="15%" dominant-baseline="middle" text-anchor="middle" fill="white">
+            Teste
+        </text>
+
+        <text class="subtitle" x="50%" y="25%" dominant-baseline="middle" text-anchor="middle" fill="white">
+            [Teste]
+        </text>
+
+        <text class="subtitle" x="50%" y="60%" dominant-baseline="middle" text-anchor="middle" fill="white">
+            <tspan x="50%" dy="0">Nonnon Nonnon Nonnon Nonnon</tspan>
+            <tspan x="50%" dy="1.2em">Nonnon Nonnon Nonnon Nonnon</tspan>
+            <tspan x="50%" dy="1.2em">...</tspan>
+        </text>
+    </svg>
+ 
+
+</svg>
