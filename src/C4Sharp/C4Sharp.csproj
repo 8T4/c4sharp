@@ -52,6 +52,8 @@
         <EmbeddedResource Include="bin\plantuml.jar" />
     </ItemGroup>
     <ItemGroup>
+      <EmbeddedResource Include="bin\software_system.svg" />
+      <EmbeddedResource Include="bin\diagram.svg" />
       <Content Include="bin\icon.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
