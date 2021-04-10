@@ -9,7 +9,7 @@ namespace C4Sharp.Models.Plantuml
     /// </summary>
     internal static class PlantumlDiagram
     {
-        public static string ToPumlString(this Diagram diagram)
+        public static string ExportToPuml(this Diagram diagram)
         {
             var path = Path.Join("..","bin", $"{diagram.Name}.puml");
                  

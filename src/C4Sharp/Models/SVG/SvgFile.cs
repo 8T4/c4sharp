@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using C4Sharp.FileSystem;
 using C4Sharp.Models.Diagrams;
 using C4Sharp.Models.Plantuml;
 
@@ -13,7 +14,7 @@ namespace C4Sharp.Models.SVG
         /// <param name="diagram">C4 Diagram</param>
         public static void Save(Diagram diagram)
         {
-            Save(diagram, "c4");
+            Save(diagram, C4FileSystem.DefaultDirectory);
         }
 
         /// <summary>
@@ -23,16 +24,7 @@ namespace C4Sharp.Models.SVG
         /// <param name="path">Output path</param>
         public static void Save(Diagram diagram, string path)
         {
-            try
-            {
-                Directory.CreateDirectory(path);
-                var filePath = $"{path}/{diagram.Slug()}.svg";
-                File.WriteAllText(filePath, diagram.ToSvg());
-            }
-            catch (Exception e)
-            {
-                throw new PlantumlException($"{nameof(PlantumlException)}: Could not save puml file.", e);
-            }
+            C4FileSystem.Save(diagram, path, C4FileType.Svg);
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using C4Sharp.FileSystem;
 using C4Sharp.Models.Diagrams;
 
 namespace C4Sharp.Models.Plantuml
@@ -19,7 +20,7 @@ namespace C4Sharp.Models.Plantuml
         /// <param name="diagram">C4 Diagram</param>
         public static void Save(Diagram diagram)
         {
-            Save(diagram, "c4");
+            Save(diagram, C4FileSystem.DefaultDirectory);
         }
 
         /// <summary>
@@ -29,16 +30,7 @@ namespace C4Sharp.Models.Plantuml
         /// <param name="path">Output path</param>
         public static void Save(Diagram diagram, string path)
         {
-            try
-            {
-                Directory.CreateDirectory(path);
-                var filePath = $"{path}/{diagram.Slug()}.puml";
-                File.WriteAllText(filePath, diagram.ToPumlString());
-            }
-            catch (Exception e)
-            {
-                throw new PlantumlException($"{nameof(PlantumlException)}: Could not save puml file.", e);
-            }
+            C4FileSystem.Save(diagram, path, C4FileType.Puml);
         }
 
         /// <summary>
@@ -49,7 +41,7 @@ namespace C4Sharp.Models.Plantuml
         {
             Save(diagram);
             var dirPath = Directory.GetCurrentDirectory();
-            var umlPath = Path.Join(dirPath, "c4", $"{diagram.Slug()}.puml");
+            var umlPath = Path.Join(dirPath, C4FileSystem.DefaultDirectory, $"{diagram.Slug()}.puml");
             Export(umlPath, null);
         }
 
@@ -62,7 +54,7 @@ namespace C4Sharp.Models.Plantuml
         {
             Save(diagram);
             var dirPath = Directory.GetCurrentDirectory();
-            var umlPath = Path.Join(dirPath, "c4", $"{diagram.Slug()}.puml");
+            var umlPath = Path.Join(dirPath, C4FileSystem.DefaultDirectory, $"{diagram.Slug()}.puml");
             Export(umlPath, session);
         }
 
@@ -122,7 +114,7 @@ namespace C4Sharp.Models.Plantuml
             }
             
             var dirPath = Directory.GetCurrentDirectory();            
-            var path = Path.Join(dirPath, "c4");    
+            var path = Path.Join(dirPath, C4FileSystem.DefaultDirectory);    
             
             session ??= new PlantumlSession();
             session.Execute(path, true);            

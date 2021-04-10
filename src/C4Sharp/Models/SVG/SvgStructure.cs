@@ -4,73 +4,55 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using C4Sharp.Extensions;
+using C4Sharp.Graphic;
 
 namespace C4Sharp.Models.SVG
 {
     internal static class SvgStructure
     {
-        public static string ToSvg(this Structure structure)
+        public static Shape ToSvg(this Structure structure)
         {
             return structure switch
             {
-                Person person => string.Empty,
+                Person person => person.ToSvg(),
                 SoftwareSystem system => system.ToSvg(),
-                SoftwareSystemBoundary softwareSystemBoundary => string.Empty, 
-                DeploymentNode deploymentNode => string.Empty,
-                Component component => string.Empty,
-                Container container => string.Empty,
-                ContainerBoundary containerBoundary => string.Empty,
-                _ => string.Empty
+                SoftwareSystemBoundary softwareSystemBoundary => null,
+                DeploymentNode deploymentNode => null,
+                Component component => null,
+                Container container => null,
+                ContainerBoundary containerBoundary => null,
+                _ => null
             };
-        }        
-        
-        private static string ToSvg(this SoftwareSystem system)
+        }
+
+        private static Shape ToSvg(this SoftwareSystem system)
         {
-            var resource = ResourceMethods.GetResource("software_system.svg");
+            var phrase = system.Description.ToParagraph(30);
+            var shape = new Shape(system.Alias, "software_system.svg");
 
-            var result = resource
+            return shape
+                .Fill("#1368bd")
+                .Resize(328, 268)
                 .Replace("{alias}", system.Alias)
-                .Replace("{label}", system.Label);
-
-            var phrase = CreateParagraph(system.Description);
-
-            result = result
+                .Replace("{label}", system.Label)
                 .Replace("{line 1}", phrase[0])
                 .Replace("{line 2}", phrase[1])
                 .Replace("{line 3}", phrase[2]);
-
-            return result;
         }
-        
-        private static string[] CreateParagraph(string phrase)
+
+        private static Shape ToSvg(this Person person)
         {
-            var tokens = phrase.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            var result = string.Empty;
-            var index = 0;
-            var vector = new string[3];
+            var phrase = person.Description.ToParagraph(30);
+            var shape = new Shape(person.Alias, "software_system.svg");
 
-            foreach (var token in tokens)
-            {
-                if (index >= 3)
-                {
-                    break;
-                }
-
-                var current = string.Join(' ', result, token);
-                
-                if (current.Length < 20)
-                {
-                    result = current;
-                    vector[index] = current;
-                    continue;
-                }
-
-                result = string.Empty;
-                vector[index] = current;
-                index++;
-            }
-
-            return vector;
+            return shape
+                .Fill("#1368bd")
+                .Resize(328, 268)
+                .Replace("{alias}", person.Alias)
+                .Replace("{label}", person.Label)
+                .Replace("{line 1}", phrase[0])
+                .Replace("{line 2}", phrase[1])
+                .Replace("{line 3}", phrase[2]);
         }
     }
 }

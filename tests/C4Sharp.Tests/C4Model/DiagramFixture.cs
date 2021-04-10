@@ -24,7 +24,7 @@ namespace C4Sharp.Tests.C4Model
                 Title = "System Context diagram for Internet Banking System",
                 Structures = new Structure[]
                 {
-                    //Customer,
+                    Customer,
                     BankingSystem,
                     Mainframe,
                     MailSystem

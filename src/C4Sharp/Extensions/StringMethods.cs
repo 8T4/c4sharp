@@ -1,3 +1,4 @@
+using System;
 using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -35,6 +36,37 @@ namespace C4Sharp.Extensions
             }
 
             return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
+        }        
+        
+        public static string[] ToParagraph(this string phrase, int lineSize)
+        {
+            var tokens = phrase.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            var result = string.Empty;
+            var index = 0;
+            var vector = new string[3];
+
+            foreach (var token in tokens)
+            {
+                if (index >= 3)
+                {
+                    break;
+                }
+
+                var current = string.Join(' ', result, token);
+
+                if (current.Length < lineSize)
+                {
+                    result = current;
+                    vector[index] = current;
+                    continue;
+                }
+
+                result = string.Empty;
+                vector[index] = current;
+                index++;
+            }
+
+            return vector;
         }        
     }
 }

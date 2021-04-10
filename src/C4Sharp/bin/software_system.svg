@@ -1,5 +1,5 @@
-<svg id="{alias}" height="268" width="328" xmlns="http://www.w3.org/2000/svg">
-    <rect width="328" height="268" rx="10" fill="#1368bd" stroke-width="0" />
+<svg id="{id}" x="{left}" y="{top}" height="268" width="328" xmlns="http://www.w3.org/2000/svg">
+    <rect width="{width}" height="{height}" fill="{background}" stroke-width="0" />
 
     <text font-size="12pt" font-weight="bold" x="50%" y="25%" dominant-baseline="middle" text-anchor="middle" fill="white">
         {label}
