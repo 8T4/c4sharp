@@ -1,5 +1,6 @@
 using System.IO;
 using System.Text;
+using C4Sharp.FileSystem;
 using C4Sharp.Models.Diagrams;
 
 namespace C4Sharp.Models.Plantuml
@@ -11,7 +12,7 @@ namespace C4Sharp.Models.Plantuml
     {
         public static string ToPumlString(this Diagram diagram)
         {
-            var path = Path.Join("..","bin", $"{diagram.Name}.puml");
+            var path = Path.Join(C4Directory.ResourcesFolderName, $"{diagram.Name}.puml");
                  
             var stream = new StringBuilder();
             stream.AppendLine($"@startuml {diagram.Slug()}");

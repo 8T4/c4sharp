@@ -1,7 +1,4 @@
-﻿using System.IO;
-using System.Text;
-using C4Sharp.Extensions;
-using C4Sharp.Models.Plantuml;
+﻿using C4Sharp.Extensions;
 using C4Sharp.Models.Relationships;
 
 namespace C4Sharp.Models.Diagrams

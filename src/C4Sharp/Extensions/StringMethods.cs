@@ -6,11 +6,6 @@ namespace C4Sharp.Extensions
 {
     internal static class StringMethods
     {
-        internal static string AddSpaces(this string value, int size)
-        {
-            return value.PadLeft(size, ' ');
-        }
-        
         internal static string GenerateSlug(this string phrase) 
         { 
             var str = phrase.RemoveAccent().ToLower(CultureInfo.InvariantCulture); 
