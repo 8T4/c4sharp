@@ -12,27 +12,23 @@ namespace C4Sharp.FileSystem
 
         public static void LoadResources(Diagram diagram)
         {
-            LoadBaseResourceFile();
-            var path = Path.Join(ResourcesPath, $"{diagram.Name}.puml");
+            LoadResource("C4");
+            LoadResource("C4_Component");
+            LoadResource("C4_Container");
+            LoadResource("C4_Context");
+            LoadResource("C4_Deployment");
+        }
+        
+        public static void LoadResource(string resourceName)
+        {
+            var path = Path.Join(ResourcesPath, $"{resourceName}.puml");
 
             if (File.Exists(path))
                 return;
 
-            var stream = ResourceMethods.GetResource($"{diagram.Name}.puml");
+            var stream = ResourceMethods.GetResource($"{resourceName}.puml");
             Directory.CreateDirectory(ResourcesPath);
             File.WriteAllText(path, stream);
-        }
-
-        private static void LoadBaseResourceFile()
-        {
-            var path = Path.Join(ResourcesPath, $"C4.puml");
-
-            if (File.Exists(path))
-                return;
-
-            var stream = ResourceMethods.GetResource($"C4.puml");
-            Directory.CreateDirectory(ResourcesPath);
-            File.WriteAllText(path, stream);            
         }
     }
 }
