@@ -14,7 +14,7 @@ namespace C4Sharp.Models.SVG
     {
         public static string ExportToSvg(this Diagram diagram)
         {
-            var frame = new Frame(diagram, "diagram.svg");
+            var frame = new Frame(diagram, "template_diagram.svg");
             return frame.ToString();
         }        
     }    

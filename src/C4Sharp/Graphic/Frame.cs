@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using C4Sharp.Extensions;
 using C4Sharp.Models;
 using C4Sharp.Models.Diagrams;
+using C4Sharp.Models.Relationships;
 using C4Sharp.Models.SVG;
 
 namespace C4Sharp.Graphic
@@ -12,19 +14,18 @@ namespace C4Sharp.Graphic
     {
         public int Width { get; set; }
         public int Height { get; set; }
-        public int Padding { get; set; }
         public string Template { get; private set; }
-
-        public string Content => ApplyReplacements();
-        
         public Dictionary<string, Shape> Shapes { get; set; }
+        public string Content => ApplyReplacements();
 
         public Frame(Diagram diagram, string template)
         {
-            Padding = 50;
-            Width = 1024;
-            FillCanvas(diagram.Structures);
+            Height = 0;
+            Width = 0;
+            Shapes = new Dictionary<string, Shape>();
             Template = ResourceMethods.GetResource(template);
+
+            FillCanvas(diagram);
         }
 
         public override string ToString()
@@ -32,30 +33,65 @@ namespace C4Sharp.Graphic
             return ApplyReplacements();
         }
 
-        private void FillCanvas(IEnumerable<Structure> structures)
+        private void FillCanvas(Diagram diagram)
         {
-            Shapes = new Dictionary<string, Shape>();
-
-            var (top, left) = (Padding, Padding);
-
-            foreach (var structure in structures)
+            var (top, left) = (0, 0);
+            var (size, midd) = GetGrid(diagram);
+            var grid = new Shape[size, size];
+            
+            
+            foreach (var shape in Shapes)
+            {
+            }            
+            
+            foreach (var structure in diagram.Structures)
             {
                 var svg = structure.ToSvg();
+
+                left = svg.Width * midd;
+                top = top == 0 ? svg.Marging.top : top;
                 svg.Move(top, left);
 
                 Shapes[structure.Alias] = svg;
 
-                top += svg.Height + (svg.Height/2);
+                top += svg.TotalHeight;
+                Height = top;
+                Width = (svg.TotalWidth) * size;
             }
 
-            Height = top + Padding;
+            foreach (var shape in Shapes)
+            {
+                var rell =
+                    from r in diagram.Relationships
+                    where r.From == shape.Value.Id &&
+                          r.Position == Position.Left
+                    select r;
+
+                var relr =
+                    from r in diagram.Relationships
+                    where r.From == shape.Value.Id &&
+                          (r.Position == Position.Left ||
+                           r.Position == Position.Neighbor)
+                    select r;
+            }
         }
-        
+
+        private (int size, int midd) GetGrid(Diagram diagram)
+        {
+            var size = diagram.Structures.Length % 2 == 0
+                ? diagram.Structures.Length + 1
+                : diagram.Structures.Length;
+
+            var midd = (int) Math.Ceiling((double) size / 2);
+
+            return (size, midd);
+        }
+
         private string ApplyReplacements()
         {
             var content = Template;
             var stream = new StringBuilder();
-     
+
             foreach (var shape in Shapes)
             {
                 stream.AppendLine(shape.Value.Content);
@@ -67,6 +103,6 @@ namespace C4Sharp.Graphic
                 .Replace("{width}", Width.ToString());
 
             return content;
-        }        
+        }
     }
 }

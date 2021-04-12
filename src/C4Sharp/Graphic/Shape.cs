@@ -14,8 +14,10 @@ namespace C4Sharp.Graphic
         public int Width { get; private set; }
         public int Left { get; private set; }
         public int Top { get; private set; }
-        public int Marging { get; private set; }
-        
+        public (int top, int left) Marging { get; private set; }
+
+        public int TotalWidth => Width + Marging.left;
+        public int TotalHeight => Height + Marging.top;
         public string Content => ApplyReplacements();
 
         public Shape(string id, string templateName)
@@ -26,7 +28,7 @@ namespace C4Sharp.Graphic
             Top = 0;
             Height = 0;
             Width = 0;
-            Marging = 0; 
+            Marging = (0,0); 
             Replacements = new Dictionary<string, string>();
             Template = ResourceMethods.GetResource(templateName);
         }
@@ -38,7 +40,7 @@ namespace C4Sharp.Graphic
             Top = 0;
             Height = height;
             Width = width;
-            Marging = 0; 
+            Marging = (height/2, width/2); 
             Replacements = new Dictionary<string, string>();
             Template = ResourceMethods.GetResource(templateName);
         }
@@ -85,6 +87,7 @@ namespace C4Sharp.Graphic
         {
             Width = width;
             Height = height;
+            Marging = (height/2, width/2); 
             return this;
         }        
         

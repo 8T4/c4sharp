@@ -28,31 +28,33 @@ namespace C4Sharp.Models.SVG
         private static Shape ToSvg(this SoftwareSystem system)
         {
             var phrase = system.Description.ToParagraph(30);
-            var shape = new Shape(system.Alias, "software_system.svg");
+            var shape = new Shape(system.Alias, "template_structure.svg");
 
             return shape
-                .Fill("#1368bd")
+                .Fill(system.SoftwareSystemType == SoftwareSystemType.Internal ? "#1368bd" : "Gray")
                 .Resize(328, 268)
-                .Replace("{alias}", system.Alias)
+                .Replace("{id}", system.Alias)
                 .Replace("{label}", system.Label)
-                .Replace("{line 1}", phrase[0])
-                .Replace("{line 2}", phrase[1])
-                .Replace("{line 3}", phrase[2]);
+                .Replace("{type}", "[Software System]")
+                .Replace("{line-1}", phrase[0])
+                .Replace("{line-2}", phrase[1])
+                .Replace("{line-3}", phrase[2]);
         }
 
         private static Shape ToSvg(this Person person)
         {
             var phrase = person.Description.ToParagraph(30);
-            var shape = new Shape(person.Alias, "software_system.svg");
+            var shape = new Shape(person.Alias, "template_person.svg");
 
             return shape
-                .Fill("#1368bd")
+                .Fill("#0f427b")
                 .Resize(328, 268)
-                .Replace("{alias}", person.Alias)
+                .Replace("{id}", person.Alias)
                 .Replace("{label}", person.Label)
-                .Replace("{line 1}", phrase[0])
-                .Replace("{line 2}", phrase[1])
-                .Replace("{line 3}", phrase[2]);
+                .Replace("{type}", "[Person]")
+                .Replace("{line-1}", phrase[0])
+                .Replace("{line-2}", phrase[1])
+                .Replace("{line-3}", phrase[2]);
         }
     }
 }
