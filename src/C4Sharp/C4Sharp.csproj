@@ -11,49 +11,28 @@
         <RepositoryUrl>https://github.com/8T4/c4sharp</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>c4, diagrams</PackageTags>
-        <PackageVersion>1.1.1</PackageVersion>
-
+        <PackageVersion>1.1.2</PackageVersion>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <IncludeSymbols>true</IncludeSymbols>
-        <SymbolPackageFormat>snupkg</SymbolPackageFormat>        
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
-    </ItemGroup>    
+    </ItemGroup>
 
     <ItemGroup>
         <None Include="bin\icon.png" Pack="true" PackagePath="\" />
-    </ItemGroup>    
+    </ItemGroup>
 
     <!-- Embedded Resource For C4 Plunt UML and Plantuml   -->
     <ItemGroup>
-        <EmbeddedResource Include="bin\C4.puml">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </EmbeddedResource>
-        <EmbeddedResource Include="bin\C4_Component.puml">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </EmbeddedResource>
-        <EmbeddedResource Include="bin\C4_Container.puml">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </EmbeddedResource>
-        <EmbeddedResource Include="bin\C4_Context.puml">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </EmbeddedResource>
-        <EmbeddedResource Include="bin\C4_Deployment.puml">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </EmbeddedResource>
-        <EmbeddedResource Include="bin\C4_Dynamic.puml">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </EmbeddedResource>
-        <EmbeddedResource Include="bin\LICENSE.txt">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </EmbeddedResource>
+        <EmbeddedResource Include="bin\C4.puml" />
+        <EmbeddedResource Include="bin\C4_Component.puml" />
+        <EmbeddedResource Include="bin\C4_Container.puml" />
+        <EmbeddedResource Include="bin\C4_Context.puml" />
+        <EmbeddedResource Include="bin\C4_Deployment.puml" />
+        <EmbeddedResource Include="bin\C4_Dynamic.puml" />
         <EmbeddedResource Include="bin\plantuml.jar" />
-    </ItemGroup>
-    <ItemGroup>
-      <Content Include="bin\icon.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
     </ItemGroup>
 </Project>

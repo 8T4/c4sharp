@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Reflection;
+using C4Sharp.Extensions;
 using C4Sharp.Models.Diagrams;
 
 namespace C4Sharp.Models.Plantuml
@@ -16,7 +17,7 @@ namespace C4Sharp.Models.Plantuml
             {
                 var fileName = Path.GetTempFileName();
 
-                using (var resource = GetResource())
+                using (var resource = ResourceMethods.GetPlantumlResource())
                 {
                     using (var file = new FileStream(fileName, FileMode.Create, FileAccess.Write))
                     {
@@ -41,20 +42,6 @@ namespace C4Sharp.Models.Plantuml
             catch (Exception e)
             {
                 Console.WriteLine(e);
-            }
-        }
-
-        private static Stream GetResource()
-        {
-            try
-            {
-                return Assembly
-                    .GetExecutingAssembly()
-                    .GetManifestResourceStream($"C4Sharp.bin.plantuml.jar");
-            }
-            catch (Exception e)
-            {
-                throw new PlantumlException($"{nameof(PlantumlException)}: Could not get resource.", e);
             }
         }
     }
