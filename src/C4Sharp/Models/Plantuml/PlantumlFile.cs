@@ -32,7 +32,7 @@ namespace C4Sharp.Models.Plantuml
         {
             try
             {
-                C4Directory.LoadResources(diagram);
+                C4Directory.LoadResources();
                 Directory.CreateDirectory(path);
                 var filePath = $"{path}/{diagram.Slug()}.puml";
                 File.WriteAllText(filePath, diagram.ToPumlString());

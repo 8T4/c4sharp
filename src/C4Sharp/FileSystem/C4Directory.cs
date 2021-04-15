@@ -1,6 +1,6 @@
+using System;
 using System.IO;
 using C4Sharp.Extensions;
-using C4Sharp.Models.Diagrams;
 
 namespace C4Sharp.FileSystem
 {
@@ -10,7 +10,7 @@ namespace C4Sharp.FileSystem
         public static string ResourcesFolderName => "resources";
         private static string ResourcesPath => Path.Join(DirectoryName, ResourcesFolderName);      
 
-        public static void LoadResources(Diagram diagram)
+        public static void LoadResources()
         {
             LoadResource("C4");
             LoadResource("C4_Component");
@@ -21,14 +21,21 @@ namespace C4Sharp.FileSystem
         
         public static void LoadResource(string resourceName)
         {
-            var path = Path.Join(ResourcesPath, $"{resourceName}.puml");
+            try
+            {
+                var path = Path.Join(ResourcesPath, $"{resourceName}.puml");
 
-            if (File.Exists(path))
-                return;
+                if (File.Exists(path))
+                    return;
 
-            var stream = ResourceMethods.GetResource($"{resourceName}.puml");
-            Directory.CreateDirectory(ResourcesPath);
-            File.WriteAllText(path, stream);
+                var stream = ResourceMethods.GetResource($"{resourceName}.puml");
+                Directory.CreateDirectory(ResourcesPath);
+                File.WriteAllText(path, stream);
+            }
+            catch (Exception e)
+            {
+                throw new C4FileException("An exception occured while the package try loading the resource files", e);
+            }
         }
     }
 }

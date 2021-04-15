@@ -1,4 +1,7 @@
-﻿using C4Sharp.Extensions;
+﻿using System;
+using System.Collections.Generic;
+using C4Sharp.Extensions;
+using C4Sharp.Models.Relationships;
 
 namespace C4Sharp.Models
 {
@@ -15,21 +18,50 @@ namespace C4Sharp.Models
     /// </summary>
     public class Container : Structure
     {
+        private readonly Dictionary<int, Container> _instances = 
+            new Dictionary<int, Container>();
+        
         public string Technology { get; }
         public ContainerType ContainerType { get; }
+        
+        public Container this[int index] => this.NewInstance(index);
         
         public Container(string alias, ContainerType type, string description, string technology) 
             : base(alias, type.GetDescription(), description)
         {
             Technology = technology;
             ContainerType = type;
-        }        
+        }    
+        
+        public Container(string alias, ContainerType type, string description, string technology, Boundary boundary) 
+            : base(alias, type.GetDescription(), description, boundary)
+        {
+            Technology = technology;
+            ContainerType = type;
+        }          
         
         public Container(string alias, string label, string description, string technology) 
             : base(alias, label, description)
         {
             Technology = technology;
             ContainerType = ContainerType.None;
+        }
+        
+        public Container(string alias, string label, string description, string technology, Boundary boundary) 
+            : base(alias, label, description, boundary)
+        {
+            Technology = technology;
+            ContainerType = ContainerType.None;
+        }
+
+        public Container NewInstance(int code)
+        {
+            if (_instances.ContainsKey(code))
+                return _instances[code];
+            
+            var container = new Container($"{Alias}{code}", ContainerType, Description, Technology, Boundary);
+            _instances[code] = container;
+            return container;
         }
     }
 }
