@@ -57,8 +57,10 @@ namespace C4Sharp.Models
         public Container NewInstance(int code)
         {
             if (_instances.ContainsKey(code))
+            {
                 return _instances[code];
-            
+            }
+
             var container = new Container($"{Alias}{code}", ContainerType, Description, Technology, Boundary);
             _instances[code] = container;
             return container;

@@ -1,8 +1,6 @@
 using System;
 using System.IO;
-using System.Reflection;
 using C4Sharp.Extensions;
-using C4Sharp.Models.Diagrams;
 
 namespace C4Sharp.Models.Plantuml
 {
@@ -39,9 +37,9 @@ namespace C4Sharp.Models.Plantuml
             {
                 File.Delete(file);
             }
-            catch (Exception e)
+            catch
             {
-                Console.WriteLine(e);
+                // ignored
             }
         }
     }

@@ -26,7 +26,9 @@ namespace C4Sharp.FileSystem
                 var path = Path.Join(ResourcesPath, $"{resourceName}.puml");
 
                 if (File.Exists(path))
+                {
                     return;
+                }
 
                 var stream = ResourceMethods.GetResource($"{resourceName}.puml");
                 Directory.CreateDirectory(ResourcesPath);
