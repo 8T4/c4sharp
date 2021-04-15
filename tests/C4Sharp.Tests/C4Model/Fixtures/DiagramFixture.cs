@@ -1,15 +1,12 @@
-using System.IO;
 using C4Sharp.Models;
 using C4Sharp.Models.Diagrams.Core;
 using C4Sharp.Models.Diagrams.Supplementary;
-using C4Sharp.Models.Plantuml;
 using C4Sharp.Models.Relationships;
-using Xunit;
 
-namespace C4Sharp.Tests.C4Model
+namespace C4Sharp.Tests.C4Model.Fixtures
 {
     using static Position;
-    using static Persons;
+    using static People;
     using static Systems;
     using static Containers;
     using static Components;
@@ -126,16 +123,13 @@ namespace C4Sharp.Tests.C4Model
         
         public static DeploymentDiagram BuildDeploymentDiagram()
         {
-            var db1 = OracleDatabaseInstance("db01");
-            var db2 = OracleDatabaseInstance("db02");
-            
             var bigBankPlc = new DeploymentNode("plc", "Big Bank plc", "Big Bank plc data center")
             {
                 Nodes = new[]
                 {
                     Ubuntu("dn", "bigbank-api***\tx8", ApacheTomCat("apache", BackendApi)),
-                    Ubuntu("bigbankdb01", "bigbank-db01", OracleNode("oracle", db1)),
-                    Ubuntu("bigbankdb02", "bigbank-db02", OracleNode("oracle2", db2)),
+                    Ubuntu("bigbankdb01", "bigbank-db01", OracleNode("oracle", OracleDatabase[1])),
+                    Ubuntu("bigbankdb02", "bigbank-db02", OracleNode("oracle2", OracleDatabase[2])),
                     Ubuntu("bb2", "bigbank-web***\tx4", ApacheTomCat("apache2", WebApp)),
                 }
             };
@@ -154,9 +148,9 @@ namespace C4Sharp.Tests.C4Model
                     (MobileApp > BackendApi)["Makes API calls to", "json/HTTPS"],
                     (Spa > BackendApi)["Makes API calls to", "json/HTTPS"],
                     (WebApp > Spa)["Delivers to the customer's web browser"][Up],
-                    (BackendApi > db1)["Writes to", "JDBC"],
-                    (BackendApi < db2)["Reads from", "JDBC"],
-                    (db1 > db2)["Replicates data to", "JDBC"][Right],
+                    (BackendApi > OracleDatabase[1])["Writes to", "JDBC"],
+                    (BackendApi < OracleDatabase[2])["Reads from", "JDBC"],
+                    (OracleDatabase[1] > OracleDatabase[2])["Replicates data to", "JDBC"][Right],
                 }
             };
         }        

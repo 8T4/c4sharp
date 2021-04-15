@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using C4Sharp.Models.Plantuml;
+using C4Sharp.Tests.C4Model.Fixtures;
 using Xunit;
 
 namespace C4Sharp.Tests.C4Model.Samples

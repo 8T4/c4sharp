@@ -1,5 +1,7 @@
+using System.Diagnostics;
 using System.Text;
 using C4Sharp.Extensions;
+using C4Sharp.Models.Relationships;
 
 namespace C4Sharp.Models.Plantuml
 {
@@ -25,12 +27,17 @@ namespace C4Sharp.Models.Plantuml
         
         private static string ToPumlString(this Person person)
         {
-            return $"Person({person.Alias}, \"{person.Label}\", \"{person.Description}\" )";
+            return person.Boundary == Boundary.External
+                ? $"Person_Ext({person.Alias}, \"{person.Label}\", \"{person.Description}\" )"
+                : $"Person({person.Alias}, \"{person.Label}\", \"{person.Description}\" )";
         }        
         
         private static string ToPumlString(this SoftwareSystem system)
         {
-            return system.SoftwareSystemType == SoftwareSystemType.External
+            var isExternal = system.SoftwareSystemType == SoftwareSystemType.External ||
+                             system.Boundary == Boundary.External;
+            
+            return isExternal
                 ? $"System_Ext({system.Alias}, \"{system.Label}\", \"{system.Description}\")"
                 : $"System({system.Alias}, \"{system.Label}\", \"{system.Description}\")";
         }        
@@ -53,14 +60,25 @@ namespace C4Sharp.Models.Plantuml
         
         private static string ToPumlString(this Component component)
         {
-            return $"Component({component.Alias}, \"{component.Label}\", \"{component.Technology}\", \"{component.Description}\" )";
+            return component.Boundary == Boundary.External
+                ? $"Component_Ext({component.Alias}, \"{component.Label}\", \"{component.Technology}\", \"{component.Description}\" )"
+                : $"Component({component.Alias}, \"{component.Label}\", \"{component.Technology}\", \"{component.Description}\" )";
         }     
         
         private static string ToPumlString(this Container container)
         {
-            return container.ContainerType == ContainerType.Database
-                ? $"ContainerDb({container.Alias}, \"{container.Label}\", \"{container.Technology}\", \"{container.Description}\" )"
-                : $"Container({container.Alias}, \"{container.Label}\", \"{container.Technology}\", \"{container.Description}\" )";
+            var external = container.Boundary == Boundary.External
+                ? "_Ext"
+                : string.Empty;
+
+            var value = container.ContainerType switch
+            {
+                ContainerType.Database => $"ContainerDb{external}",
+                ContainerType.Queue => $"ContainerQueue{external}",
+                _ => $"Container{external}"
+            };
+
+            return  $"{value}({container.Alias}, \"{container.Label}\", \"{container.Technology}\", \"{container.Description}\" )";
         }
 
         private static string ToPumlString(this ContainerBoundary boundary)

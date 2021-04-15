@@ -15,12 +15,16 @@ namespace C4Sharp.Models
         public string Label { get; }
         public string Description { get; }
         public string[] Tags { get; private set; }
+        public Boundary Boundary { get; }
 
         protected Structure(string alias, string label) =>
-            (Alias, Label, Description) = (alias, label, string.Empty);        
-        
+            (Alias, Label, Description, Boundary) = (alias, label, string.Empty, Boundary.Internal);
+
         protected Structure(string alias, string label, string description) =>
-            (Alias, Label, Description) = (alias, label, description);
+            (Alias, Label, Description, Boundary) = (alias, label, description, Boundary.Internal);
+
+        protected Structure(string alias, string label, string description, Boundary boundary) =>
+            (Alias, Label, Description, Boundary) = (alias, label, description, boundary);
 
         public void AddTag(params string[] tags) => Tags = tags;
 

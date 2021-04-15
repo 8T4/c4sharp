@@ -1,4 +1,7 @@
-﻿namespace C4Sharp.Models
+﻿using System;
+using C4Sharp.Models.Relationships;
+
+namespace C4Sharp.Models
 {
     /// <summary>
     /// A software system is the highest level of abstraction and describes something that delivers value to its users,
@@ -23,10 +26,16 @@
             SoftwareSystemType = SoftwareSystemType.Internal;
         }        
         
-        public SoftwareSystem(string alias, string label, string description,  SoftwareSystemType softwareSystemType) 
+        [Obsolete("Uses Boundary enumeration insted SoftwareSystemType")]
+        public SoftwareSystem(string alias, string label, string description, SoftwareSystemType softwareSystemType) 
             : base(alias, label, description)
         {
             SoftwareSystemType = softwareSystemType;
         }
+        
+        public SoftwareSystem(string alias, string label, string description,  Boundary boundary) 
+            : base(alias, label, description, boundary)
+        {
+        }        
     }
 }

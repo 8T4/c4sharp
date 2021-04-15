@@ -10,7 +10,8 @@ namespace C4Sharp.Models
     {
         public ICollection<Container> Containers { get; set; }
         
-        public SoftwareSystemBoundary(string alias, string label) : base(alias, label)
+        public SoftwareSystemBoundary(string alias, string label) 
+            : base(alias, label)
         {
         }
     }
