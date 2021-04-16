@@ -1,7 +1,7 @@
 using C4Sharp.Models;
 using C4Sharp.Models.Relationships;
 
-namespace C4Sharp.Tests.C4Model.Fixtures
+namespace C4Sharp.Sample.Structures
 {
     public static class Systems
     {
@@ -25,14 +25,6 @@ namespace C4Sharp.Tests.C4Model.Fixtures
             alias: "MailSystem",
             label: "E-mail system",
             description: "The internal Microsoft Exchange e-mail system.",
-            boundary: Boundary.External
-        );
-
-        private static SoftwareSystem _zabbix;
-        public static SoftwareSystem Zabbix => _zabbix ??= new SoftwareSystem(
-            alias: "Zabbix",
-            label: "Zabbix",
-            description: "enterprise-level platform to monitor large-scale IT environments",
             boundary: Boundary.External
         );
     }

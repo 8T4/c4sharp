@@ -1,6 +1,6 @@
 using C4Sharp.Models;
 
-namespace C4Sharp.Tests.C4Model.Fixtures
+namespace C4Sharp.Sample.Structures
 {
     public static class Containers
     {
@@ -43,14 +43,7 @@ namespace C4Sharp.Tests.C4Model.Fixtures
             type: ContainerType.Database,
             description: "Stores user registration information, hashed auth credentials, access logs, etc.",
             technology: "Oracle Database"
-        );  
-        
-        public static Container OracleDatabaseInstance(string alias) => new(
-            alias: alias,
-            type: ContainerType.Database,
-            description: "Stores user registration information, hashed auth credentials, access logs, etc.",
-            technology: "Oracle Database"
-        );         
+        );
 
         private static Container _backendApi;
         public static Container BackendApi => _backendApi ??= new Container(

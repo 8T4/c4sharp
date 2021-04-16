@@ -1,6 +1,6 @@
 ﻿using C4Sharp.Models;
 
-namespace C4Sharp.Tests.C4Model.Fixtures
+namespace C4Sharp.Sample.Structures
 {
     public static class People
     {
@@ -10,6 +10,5 @@ namespace C4Sharp.Tests.C4Model.Fixtures
             label: "Personal Banking Customer",
             description: "A customer of the bank, with personal bank accounts."
         );
-        
     }
 }
