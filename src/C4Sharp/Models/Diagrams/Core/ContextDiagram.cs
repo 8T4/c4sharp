@@ -8,6 +8,9 @@
     /// </summary>
     public class ContextDiagram: Diagram
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public ContextDiagram() : base("C4_Context")
         {
 

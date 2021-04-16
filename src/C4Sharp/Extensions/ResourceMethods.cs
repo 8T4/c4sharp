@@ -5,8 +5,16 @@ using C4Sharp.Models.Plantuml;
 
 namespace C4Sharp.Extensions
 {
+    /// <summary>
+    /// Methods to manipulate resource
+    /// </summary>
     internal static class ResourceMethods
     {
+        /// <summary>
+        /// Get Stream from plantuml.jar file
+        /// </summary>
+        /// <returns>Stream</returns>
+        /// <exception cref="PlantumlException"></exception>
         public static Stream GetPlantumlResource()
         {
             try
@@ -21,6 +29,12 @@ namespace C4Sharp.Extensions
             }
         }        
         
+        /// <summary>
+        /// Get resource string content from resource file
+        /// </summary>
+        /// <param name="name">file name</param>
+        /// <returns>resource content</returns>
+        /// <exception cref="PlantumlException"></exception>
         public static string GetResource(string name)
         {
             try
@@ -29,7 +43,7 @@ namespace C4Sharp.Extensions
                 var resourceName = $"C4Sharp.bin.{name}";
 
                 using var stream = assembly.GetManifestResourceStream(resourceName);
-                using var reader = new StreamReader(stream);
+                using var reader = new StreamReader(stream ?? throw new InvalidOperationException());
                 return reader.ReadToEnd();
             }
             catch (Exception e)

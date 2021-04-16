@@ -17,26 +17,72 @@ namespace C4Sharp.Models
         public string[] Tags { get; private set; }
         public Boundary Boundary { get; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="alias">Should be unique</param>
+        /// <param name="label"></param>
         protected Structure(string alias, string label) =>
             (Alias, Label, Description, Boundary) = (alias, label, string.Empty, Boundary.Internal);
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="alias">Should be unique</param>
+        /// <param name="label"></param>
+        /// <param name="description"></param>
         protected Structure(string alias, string label, string description) =>
             (Alias, Label, Description, Boundary) = (alias, label, description, Boundary.Internal);
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="alias">Should be unique</param>
+        /// <param name="label"></param>
+        /// <param name="description"></param>
+        /// <param name="boundary"></param>
         protected Structure(string alias, string label, string description, Boundary boundary) =>
             (Alias, Label, Description, Boundary) = (alias, label, description, boundary);
 
+        /// <summary>
+        /// Add Tags
+        /// </summary>
+        /// <param name="tags"></param>
         public void AddTag(params string[] tags) => Tags = tags;
 
+        /// <summary>
+        /// Forward relationship
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
         public static Relationship operator >(Structure a, Structure b) =>
             new Relationship(a, b, "uses");
 
+        /// <summary>
+        /// Bidirectional relationship
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
         public static Relationship operator >=(Structure a, Structure b) =>
             new Relationship(a, Direction.Bidirectional, b, "uses");
 
+        /// <summary>
+        /// Bidirectional relationship
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
         public static Relationship operator <=(Structure a, Structure b) =>
             new Relationship(a, Direction.Bidirectional, b, "uses");
 
+        /// <summary>
+        /// Back relationship
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
         public static Relationship operator <(Structure a, Structure b) =>
             new Relationship(a, Direction.Back, b, "uses");
     }

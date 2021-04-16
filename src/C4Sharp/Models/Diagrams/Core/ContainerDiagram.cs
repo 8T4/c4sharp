@@ -9,6 +9,9 @@
     /// </summary>    
     public class ContainerDiagram: Diagram
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public ContainerDiagram() : base("C4_Container")
         {
         }

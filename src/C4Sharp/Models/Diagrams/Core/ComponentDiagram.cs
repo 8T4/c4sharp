@@ -7,6 +7,9 @@
     /// </summary>
     public class ComponentDiagram: Diagram
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public ComponentDiagram() : base("C4_Component")
         {
         }

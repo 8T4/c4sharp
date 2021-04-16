@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Text;
 using C4Sharp.Extensions;
 using C4Sharp.Models.Relationships;
@@ -6,10 +5,13 @@ using C4Sharp.Models.Relationships;
 namespace C4Sharp.Models.Plantuml
 {
     /// <summary>
-    /// Parser Structure to PlantUML
+    /// PlantUML Parser
     /// </summary>
     internal static class PlantumlStructure
     {
+        /// <summary>
+        /// Parser Structure to PlantUML
+        /// </summary>        
         public static string ToPumlString(this Structure structure)
         {
             return structure switch

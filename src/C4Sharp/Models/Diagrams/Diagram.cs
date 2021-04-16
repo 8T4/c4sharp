@@ -15,13 +15,21 @@ namespace C4Sharp.Models.Diagrams
         public Structure[] Structures { get; set; }
         public Relationship[] Relationships { get; set; }
 
-        public string Slug() =>
-            $"{Title}-{Name}".GenerateSlug();
-
+        /// <summary>
+        /// Constructor 
+        /// </summary>
+        /// <param name="name"></param>
         protected Diagram(string name)
         {
             LayoutWithLegend = true;
             Name = name;
         }
+        
+        /// <summary>
+        /// Slugfy "title-name"
+        /// </summary>
+        /// <returns></returns>
+        public string Slug() =>
+            $"{Title}-{Name}".GenerateSlug();        
     }
 }

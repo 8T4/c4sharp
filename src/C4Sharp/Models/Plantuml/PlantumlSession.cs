@@ -1,17 +1,21 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Security;
 using System.Text;
-using C4Sharp.Models.Diagrams;
 
 namespace C4Sharp.Models.Plantuml
 {
+    /// <summary>
+    /// Session
+    /// </summary>
     public class PlantumlSession: IDisposable
     {
         private string FilePath { get; }
         private ProcessStartInfo ProcessInfo { get; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public PlantumlSession()
         {
             FilePath = PlantumlResource.Load();
@@ -23,6 +27,11 @@ namespace C4Sharp.Models.Plantuml
             };            
         }
         
+        /// <summary>
+        /// Constructor with credentials to impersonate
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
         public PlantumlSession(string username, string password)
         {
             FilePath = PlantumlResource.Load();
@@ -36,6 +45,12 @@ namespace C4Sharp.Models.Plantuml
             };            
         }        
         
+        /// <summary>
+        /// Execute plantuml.jar
+        /// </summary>
+        /// <param name="path">puml files path</param>
+        /// <param name="processWholeDirectory">process all *.puml files</param>
+        /// <exception cref="PlantumlException"></exception>
         internal void Execute(string path, bool processWholeDirectory)
         {
             var directory = processWholeDirectory 
@@ -69,6 +84,9 @@ namespace C4Sharp.Models.Plantuml
             }
         }
 
+        /// <summary>
+        /// Clear Plantuml Resource
+        /// </summary>
         public void Dispose()
         {
             PlantumlResource.Clear(FilePath);

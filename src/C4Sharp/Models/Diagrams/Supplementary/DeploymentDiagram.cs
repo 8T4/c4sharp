@@ -11,6 +11,9 @@ namespace C4Sharp.Models.Diagrams.Supplementary
     /// </summary>
     public class DeploymentDiagram : Diagram
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public DeploymentDiagram() : base("C4_Deployment")
         {
         }

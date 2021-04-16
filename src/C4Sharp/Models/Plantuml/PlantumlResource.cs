@@ -9,6 +9,11 @@ namespace C4Sharp.Models.Plantuml
     /// </summary>    
     internal static class PlantumlResource
     {
+        /// <summary>
+        /// Load plantuml.jar as tempfile
+        /// </summary>
+        /// <returns>tempfile name</returns>
+        /// <exception cref="PlantumlException"></exception>
         public static string Load()
         {
             try
@@ -31,6 +36,10 @@ namespace C4Sharp.Models.Plantuml
             }
         }
 
+        /// <summary>
+        /// Clear
+        /// </summary>
+        /// <param name="file"></param>
         public static void Clear(string file)
         {
             try

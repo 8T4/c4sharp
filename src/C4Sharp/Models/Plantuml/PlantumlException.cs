@@ -2,6 +2,9 @@ using System;
 
 namespace C4Sharp.Models.Plantuml
 {
+    /// <summary>
+    /// PlantumlException
+    /// </summary>
     public class PlantumlException: Exception
     {
         public PlantumlException(string message):base(message)

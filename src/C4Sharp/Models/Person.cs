@@ -8,11 +8,24 @@ namespace C4Sharp.Models
     /// </summary>
     public class Person : Structure
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="alias">Should be unique</param>
+        /// <param name="label"></param>
+        /// <param name="description"></param>
         public Person(string alias, string label, string description) 
             : base(alias, label, description)
         {
         }
         
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="alias">Should be unique</param>
+        /// <param name="label"></param>
+        /// <param name="description"></param>
+        /// <param name="boundary"></param>
         public Person(string alias, string label, string description, Boundary boundary) 
             : base(alias, label, description, boundary)
         {

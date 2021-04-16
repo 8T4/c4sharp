@@ -7,6 +7,11 @@ namespace C4Sharp.Models.Plantuml
     /// </summary>
     internal static class PlantumlRelationship
     {
+        /// <summary>
+        /// Create PUML content from Relationship
+        /// </summary>
+        /// <param name="relationship"></param>
+        /// <returns></returns>        
         public static string ToPumlString(this Relationship relationship)
         {
             var direction = relationship.Direction switch

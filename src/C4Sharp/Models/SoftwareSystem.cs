@@ -14,18 +14,36 @@ namespace C4Sharp.Models
     {
         public SoftwareSystemType SoftwareSystemType { get; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="alias">Should be unique</param>
+        /// <param name="label"></param>
         public SoftwareSystem(string alias, string label) 
             : base(alias, label)
         {
             SoftwareSystemType = SoftwareSystemType.Internal;
         }             
         
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="alias">Should be unique</param>
+        /// <param name="label"></param>
+        /// <param name="description"></param>
         public SoftwareSystem(string alias, string label, string description) 
             : base(alias, label, description)
         {
             SoftwareSystemType = SoftwareSystemType.Internal;
         }        
         
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="alias">Should be unique</param>
+        /// <param name="label"></param>
+        /// <param name="description"></param>
+        /// <param name="softwareSystemType"></param>
         [Obsolete("Uses Boundary enumeration insted SoftwareSystemType")]
         public SoftwareSystem(string alias, string label, string description, SoftwareSystemType softwareSystemType) 
             : base(alias, label, description)
@@ -33,6 +51,13 @@ namespace C4Sharp.Models
             SoftwareSystemType = softwareSystemType;
         }
         
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="alias">Should be unique</param>
+        /// <param name="label"></param>
+        /// <param name="description"></param>
+        /// <param name="boundary"></param>
         public SoftwareSystem(string alias, string label, string description,  Boundary boundary) 
             : base(alias, label, description, boundary)
         {

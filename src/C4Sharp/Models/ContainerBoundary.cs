@@ -1,8 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Text;
-using C4Sharp.Extensions;
 using C4Sharp.Models.Relationships;
-using static C4Sharp.Extensions.StringMethods;
 
 namespace C4Sharp.Models
 {
@@ -11,9 +8,14 @@ namespace C4Sharp.Models
     /// </summary>
     public class ContainerBoundary: Structure
     {
-        public ICollection<Component> Components { get; set; }
-        public ICollection<Relationship> Relationships { get; set; }
+        public IEnumerable<Component> Components { get; set; }
+        public IEnumerable<Relationship> Relationships { get; set; }
         
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="alias">Should  be unique</param>
+        /// <param name="label"></param>
         public ContainerBoundary(string alias, string label) : base(alias, label)
         {
         }

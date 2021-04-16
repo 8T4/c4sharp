@@ -4,12 +4,27 @@ using C4Sharp.Extensions;
 
 namespace C4Sharp.FileSystem
 {
+    /// <summary>
+    /// Manipulate the C4 folder and their resoucers
+    /// </summary>
     internal static class C4Directory
     {
+        /// <summary>
+        /// Default Directory Name
+        /// </summary>
         public static string DirectoryName => "c4";
+        /// <summary>
+        /// Default Resource Folder Name
+        /// </summary>
         public static string ResourcesFolderName => "resources";
+        /// <summary>
+        /// Default Resource path
+        /// </summary>
         private static string ResourcesPath => Path.Join(DirectoryName, ResourcesFolderName);      
 
+        /// <summary>
+        /// Load all C4_Plantuml files
+        /// </summary>
         public static void LoadResources()
         {
             LoadResource("C4");
@@ -19,7 +34,12 @@ namespace C4Sharp.FileSystem
             LoadResource("C4_Deployment");
         }
         
-        public static void LoadResource(string resourceName)
+        /// <summary>
+        /// Load C4_Plantuml file
+        /// </summary>
+        /// <param name="resourceName"></param>
+        /// <exception cref="C4FileException"></exception>
+        private static void LoadResource(string resourceName)
         {
             try
             {

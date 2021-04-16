@@ -3,8 +3,16 @@ using System.Linq;
 
 namespace C4Sharp.Extensions
 {
+    /// <summary>
+    /// Enum extension methods
+    /// </summary>
     internal static class EnumMethods
     {
+        /// <summary>
+        /// Get Description from Enum item
+        /// </summary>
+        /// <param name="genericEnum">Enum</param>
+        /// <returns>Description of enum</returns>
         public static string GetDescription(this Enum genericEnum)
         {
             var genericEnumType = genericEnum.GetType();
@@ -21,6 +29,5 @@ namespace C4Sharp.Extensions
                 ? ((System.ComponentModel.DescriptionAttribute)attribs.ElementAt(0)).Description 
                 : genericEnum.ToString();
         }
-
     }
 }

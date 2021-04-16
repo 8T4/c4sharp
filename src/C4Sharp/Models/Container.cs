@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using C4Sharp.Extensions;
 using C4Sharp.Models.Relationships;
 
@@ -20,12 +19,18 @@ namespace C4Sharp.Models
     {
         private readonly Dictionary<int, Container> _instances = 
             new Dictionary<int, Container>();
-        
+
         public string Technology { get; }
         public ContainerType ContainerType { get; }
-        
         public Container this[int index] => this.NewInstance(index);
         
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="alias">Should  be unique</param>
+        /// <param name="type"></param>
+        /// <param name="description"></param>
+        /// <param name="technology"></param>
         public Container(string alias, ContainerType type, string description, string technology) 
             : base(alias, type.GetDescription(), description)
         {
@@ -33,6 +38,14 @@ namespace C4Sharp.Models
             ContainerType = type;
         }    
         
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="alias">Should  be unique</param>
+        /// <param name="type"></param>
+        /// <param name="description"></param>
+        /// <param name="technology"></param>
+        /// <param name="boundary"></param>
         public Container(string alias, ContainerType type, string description, string technology, Boundary boundary) 
             : base(alias, type.GetDescription(), description, boundary)
         {
@@ -40,6 +53,13 @@ namespace C4Sharp.Models
             ContainerType = type;
         }          
         
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="alias">Should  be unique</param>
+        /// <param name="label"></param>
+        /// <param name="description"></param>
+        /// <param name="technology"></param>
         public Container(string alias, string label, string description, string technology) 
             : base(alias, label, description)
         {
@@ -47,6 +67,14 @@ namespace C4Sharp.Models
             ContainerType = ContainerType.None;
         }
         
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="alias">Should  be unique</param>
+        /// <param name="label"></param>
+        /// <param name="description"></param>
+        /// <param name="technology"></param>
+        /// <param name="boundary"></param>
         public Container(string alias, string label, string description, string technology, Boundary boundary) 
             : base(alias, label, description, boundary)
         {
@@ -54,7 +82,12 @@ namespace C4Sharp.Models
             ContainerType = ContainerType.None;
         }
 
-        public Container NewInstance(int code)
+        /// <summary>
+        /// Create a new instance of current container
+        /// </summary>
+        /// <param name="code">instance code</param>
+        /// <returns>New Container</returns>
+        private Container NewInstance(int code)
         {
             if (_instances.ContainsKey(code))
             {

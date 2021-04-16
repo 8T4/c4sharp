@@ -10,6 +10,11 @@ namespace C4Sharp.Models.Plantuml
     /// </summary>
     internal static class PlantumlDiagram
     {
+        /// <summary>
+        /// Create PUML content from Diagram
+        /// </summary>
+        /// <param name="diagram"></param>
+        /// <returns></returns>
         public static string ToPumlString(this Diagram diagram)
         {
             var path = Path.Join(C4Directory.ResourcesFolderName, $"{diagram.Name}.puml");
