@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C4Sharp", "src\C4Sharp\C4Sh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C4Sharp.Tests", "tests\C4Sharp.Tests\C4Sharp.Tests.csproj", "{814FD1C8-313F-4BDF-90D0-C3E664FBF117}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C4Sharp.Sample", "samples\C4Sharp.Sample\C4Sharp.Sample.csproj", "{28CB0FEC-B072-454B-A51B-6004477F07FB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C4Sharp.Sample", "src\C4Sharp.Sample\C4Sharp.Sample.csproj", "{D3786945-183A-40D4-8B53-FE185C65D0CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,9 +20,9 @@ Global
 		{814FD1C8-313F-4BDF-90D0-C3E664FBF117}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{814FD1C8-313F-4BDF-90D0-C3E664FBF117}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{814FD1C8-313F-4BDF-90D0-C3E664FBF117}.Release|Any CPU.Build.0 = Release|Any CPU
-		{28CB0FEC-B072-454B-A51B-6004477F07FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{28CB0FEC-B072-454B-A51B-6004477F07FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{28CB0FEC-B072-454B-A51B-6004477F07FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{28CB0FEC-B072-454B-A51B-6004477F07FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3786945-183A-40D4-8B53-FE185C65D0CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3786945-183A-40D4-8B53-FE185C65D0CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3786945-183A-40D4-8B53-FE185C65D0CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3786945-183A-40D4-8B53-FE185C65D0CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
