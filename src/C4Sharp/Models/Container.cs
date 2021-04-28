@@ -32,7 +32,7 @@ namespace C4Sharp.Models
         /// <param name="description"></param>
         /// <param name="technology"></param>
         public Container(string alias, ContainerType type, string description, string technology) 
-            : base(alias, type.GetDescription(), description)
+            : base(alias, type.GetDescription(), description, Boundary.Internal)
         {
             Technology = technology;
             ContainerType = type;
@@ -51,6 +51,23 @@ namespace C4Sharp.Models
         {
             Technology = technology;
             ContainerType = type;
+        }
+
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="alias">Should  be unique</param>
+        /// <param name="type"></param>
+        /// <param name="label"></param>
+        /// <param name="description"></param>
+        /// <param name="technology"></param>
+        /// <param name="boundary"></param>
+        public Container(string alias, ContainerType type, string label, string description, string technology, Boundary boundary) 
+            : base(alias, label, description, boundary)
+        {
+            Technology = technology;
+            ContainerType = type;
         }          
         
         /// <summary>
@@ -61,7 +78,7 @@ namespace C4Sharp.Models
         /// <param name="description"></param>
         /// <param name="technology"></param>
         public Container(string alias, string label, string description, string technology) 
-            : base(alias, label, description)
+            : base(alias, label, description, Boundary.Internal)
         {
             Technology = technology;
             ContainerType = ContainerType.None;
@@ -94,7 +111,7 @@ namespace C4Sharp.Models
                 return _instances[code];
             }
 
-            var container = new Container($"{Alias}{code}", ContainerType, Description, Technology, Boundary);
+            var container = new Container($"{Alias}{code}", ContainerType, Label, Description, Technology, Boundary);
             _instances[code] = container;
             return container;
         }
