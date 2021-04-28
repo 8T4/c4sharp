@@ -12,6 +12,7 @@ namespace C4Sharp.Models
     /// </summary>
     public class SoftwareSystem : Structure
     {
+        [Obsolete("Uses Boundary enumeration instead")]
         public SoftwareSystemType SoftwareSystemType { get; }
 
         /// <summary>
@@ -44,7 +45,7 @@ namespace C4Sharp.Models
         /// <param name="label"></param>
         /// <param name="description"></param>
         /// <param name="softwareSystemType"></param>
-        [Obsolete("Uses Boundary enumeration insted SoftwareSystemType")]
+        [Obsolete("Uses Boundary enumeration instead")]
         public SoftwareSystem(string alias, string label, string description, SoftwareSystemType softwareSystemType) 
             : base(alias, label, description)
         {
