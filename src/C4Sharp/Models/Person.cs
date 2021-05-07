@@ -6,7 +6,7 @@ namespace C4Sharp.Models
     /// A person represents one of the human users of your software system (e.g. actors, roles, personas, etc)
     /// <see href="https://c4model.com/"/>
     /// </summary>
-    public class Person : Structure
+    public sealed class Person : Structure
     {
         /// <summary>
         /// Constructor

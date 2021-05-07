@@ -36,8 +36,7 @@ namespace C4Sharp.Models.Plantuml
         
         private static string ToPumlString(this SoftwareSystem system)
         {
-            var isExternal = system.SoftwareSystemType == SoftwareSystemType.External ||
-                             system.Boundary == Boundary.External;
+            var isExternal = system.Boundary == Boundary.External;
             
             return isExternal
                 ? $"System_Ext({system.Alias}, \"{system.Label}\", \"{system.Description}\")"

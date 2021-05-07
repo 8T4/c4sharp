@@ -10,22 +10,18 @@ namespace C4Sharp.Models
     /// a single software development team.
     /// <see href="https://c4model.com/"/>
     /// </summary>
-    public class SoftwareSystem : Structure
+    public sealed class SoftwareSystem : Structure
     {
-        [Obsolete("Uses Boundary enumeration instead")]
-        public SoftwareSystemType SoftwareSystemType { get; }
-
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="alias">Should be unique</param>
         /// <param name="label"></param>
-        public SoftwareSystem(string alias, string label) 
-            : base(alias, label)
+        public SoftwareSystem(string alias, string label)
+            : base(alias, label, string.Empty, Boundary.Internal)
         {
-            SoftwareSystemType = SoftwareSystemType.Internal;
-        }             
-        
+        }
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -33,24 +29,9 @@ namespace C4Sharp.Models
         /// <param name="label"></param>
         /// <param name="description"></param>
         public SoftwareSystem(string alias, string label, string description) 
-            : base(alias, label, description)
+            : base(alias, label, description, Boundary.Internal)
         {
-            SoftwareSystemType = SoftwareSystemType.Internal;
         }        
-        
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="alias">Should be unique</param>
-        /// <param name="label"></param>
-        /// <param name="description"></param>
-        /// <param name="softwareSystemType"></param>
-        [Obsolete("Uses Boundary enumeration instead")]
-        public SoftwareSystem(string alias, string label, string description, SoftwareSystemType softwareSystemType) 
-            : base(alias, label, description)
-        {
-            SoftwareSystemType = softwareSystemType;
-        }
         
         /// <summary>
         /// Constructor

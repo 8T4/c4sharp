@@ -9,7 +9,7 @@ namespace C4Sharp.Models
     /// server, Microsoft IIS), etc. Deployment nodes can be nested.
     /// <see href="https://c4model.com/#DeploymentDiagram"/>
     /// </summary>
-    public class DeploymentNode : Structure
+    public sealed class DeploymentNode : Structure
     {
         public IEnumerable<DeploymentNode> Nodes { get; set; }
         public Dictionary<string, string> Properties { get; set; }

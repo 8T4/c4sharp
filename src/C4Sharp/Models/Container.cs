@@ -15,7 +15,7 @@ namespace C4Sharp.Models
     ///
     /// <see href="https://c4model.com/#ContainerDiagram"/>
     /// </summary>
-    public class Container : Structure
+    public sealed class Container : Structure
     {
         private readonly Dictionary<int, Container> _instances = 
             new Dictionary<int, Container>();

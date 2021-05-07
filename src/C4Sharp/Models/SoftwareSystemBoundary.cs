@@ -5,7 +5,7 @@ namespace C4Sharp.Models
     /// <summary>
     /// Software System Boundary
     /// </summary>
-    public class SoftwareSystemBoundary: Structure
+    public sealed class SoftwareSystemBoundary: Structure
     {
         public IEnumerable<Container> Containers { get; set; }
         

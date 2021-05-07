@@ -23,7 +23,18 @@ namespace C4Sharp.Models.Plantuml
             stream.AppendLine($"@startuml {diagram.Slug()}");
             stream.AppendLine($"!include {path}");
             stream.AppendLine();
-            stream.AppendLine($"{(diagram.LayoutWithLegend ? "LAYOUT_WITH_LEGEND()" : "")}");
+            
+            if (diagram.LayoutWithLegend && !diagram.ShowLegend)
+            {
+                stream.AppendLine("LAYOUT_WITH_LEGEND()");
+            }
+
+            if (diagram.LayoutAsSketch)
+            {
+                stream.AppendLine("LAYOUT_AS_SKETCH()");
+            }
+            
+            stream.AppendLine($"{(diagram.FlowVisualization == DiagramLayout.TopDown ? "LAYOUT_TOP_DOWN()" : "LAYOUT_LEFT_RIGHT()")}");
             stream.AppendLine();
      
             foreach (var structure in diagram.Structures)
@@ -38,7 +49,13 @@ namespace C4Sharp.Models.Plantuml
                 stream.AppendLine(relationship.ToPumlString());
             }
 
-            stream.AppendLine($"@enduml");
+            if (diagram.ShowLegend)
+            {
+                stream.AppendLine();
+                stream.AppendLine("SHOW_LEGEND()");
+            }
+
+            stream.AppendLine("@enduml");
             return stream.ToString();
         }        
     }

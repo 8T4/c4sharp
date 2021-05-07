@@ -12,7 +12,7 @@ namespace C4Sharp.Models
     /// space. In the C4 model, components are not separately deployable units.
     /// <see href="https://c4model.com/"/>
     /// </summary>
-    public class Component : Structure
+    public sealed class Component : Structure
     {
         public string Technology { get; }
 

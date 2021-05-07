@@ -13,6 +13,7 @@ namespace C4Sharp.Sample.Diagrams
         {
             return new()
             {
+                ShowLegend = true,
                 Title = "Container diagram for Internet Banking System",
                 Structures = new Structure[]
                 {

@@ -11,7 +11,10 @@ namespace C4Sharp.Models.Diagrams
     {
         internal string Name { get; }
         public bool LayoutWithLegend { get; set; }
+        public bool ShowLegend { get; set; }
+        public bool LayoutAsSketch { get; set; }
         public string Title { get; set; }
+        public DiagramLayout FlowVisualization { get; set; }
         public Structure[] Structures { get; set; }
         public Relationship[] Relationships { get; set; }
 
@@ -22,6 +25,9 @@ namespace C4Sharp.Models.Diagrams
         protected Diagram(string name)
         {
             LayoutWithLegend = true;
+            LayoutAsSketch = false;
+            ShowLegend = false;
+            FlowVisualization = DiagramLayout.TopDown;
             Name = name;
         }
         

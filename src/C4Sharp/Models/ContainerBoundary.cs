@@ -6,7 +6,7 @@ namespace C4Sharp.Models
     /// <summary>
     /// Container Boundary
     /// </summary>
-    public class ContainerBoundary: Structure
+    public sealed class ContainerBoundary: Structure
     {
         public IEnumerable<Component> Components { get; set; }
         public IEnumerable<Relationship> Relationships { get; set; }
