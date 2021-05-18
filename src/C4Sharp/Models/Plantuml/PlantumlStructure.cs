@@ -29,18 +29,20 @@ namespace C4Sharp.Models.Plantuml
         
         private static string ToPumlString(this Person person)
         {
-            return person.Boundary == Boundary.External
-                ? $"Person_Ext({person.Alias}, \"{person.Label}\", \"{person.Description}\" )"
-                : $"Person({person.Alias}, \"{person.Label}\", \"{person.Description}\" )";
+            var external = person.Boundary == Boundary.External
+                ? "_Ext"
+                : string.Empty;
+
+            return $"Person{external}({person.Alias}, \"{person.Label}\", \"{person.Description}\", $link=\"{person.Link}\")";
         }        
         
         private static string ToPumlString(this SoftwareSystem system)
         {
-            var isExternal = system.Boundary == Boundary.External;
-            
-            return isExternal
-                ? $"System_Ext({system.Alias}, \"{system.Label}\", \"{system.Description}\")"
-                : $"System({system.Alias}, \"{system.Label}\", \"{system.Description}\")";
+            var external = system.Boundary == Boundary.External
+                ? "_Ext"
+                : string.Empty;
+
+            return $"System{external}({system.Alias}, \"{system.Label}\", \"{system.Description}\", $link=\"{system.Link}\")";
         }        
         
         private static string ToPumlString(this SoftwareSystemBoundary boundary)
@@ -61,9 +63,11 @@ namespace C4Sharp.Models.Plantuml
         
         private static string ToPumlString(this Component component)
         {
-            return component.Boundary == Boundary.External
-                ? $"Component_Ext({component.Alias}, \"{component.Label}\", \"{component.Technology}\", \"{component.Description}\" )"
-                : $"Component({component.Alias}, \"{component.Label}\", \"{component.Technology}\", \"{component.Description}\" )";
+            var external = component.Boundary == Boundary.External
+                ? "_Ext"
+                : string.Empty;
+
+            return $"Component{external}({component.Alias}, \"{component.Label}\", \"{component.Technology}\", \"{component.Description}\", $link=\"{component.Link}\")";
         }     
         
         private static string ToPumlString(this Container container)
@@ -79,7 +83,7 @@ namespace C4Sharp.Models.Plantuml
                 _ => $"Container{external}"
             };
 
-            return  $"{value}({container.Alias}, \"{container.Label}\", \"{container.Technology}\", \"{container.Description}\" )";
+            return  $"{value}({container.Alias}, \"{container.Label}\", \"{container.Technology}\", \"{container.Description}\", $link=\"{container.Link}\")";
         }
 
         private static string ToPumlString(this ContainerBoundary boundary)
