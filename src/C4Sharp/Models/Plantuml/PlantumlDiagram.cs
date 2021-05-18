@@ -8,7 +8,7 @@ namespace C4Sharp.Models.Plantuml
     /// <summary>
     /// Parser Diagram to PlantUML
     /// </summary>
-    internal static class PlantumlDiagram
+    public static class PlantumlDiagram
     {
         /// <summary>
         /// Create PUML content from Diagram
