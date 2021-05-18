@@ -18,7 +18,19 @@ namespace C4Sharp.Models
             : base(alias, label, description)
         {
         }
-        
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="alias">Should be unique</param>
+        /// <param name="label"></param>
+        /// <param name="description"></param>
+        /// <param name="link"></param>
+        public Person(string alias, string label, string description, string link)
+            : base(alias, label, description, link)
+        {
+        }
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -29,6 +41,19 @@ namespace C4Sharp.Models
         public Person(string alias, string label, string description, Boundary boundary) 
             : base(alias, label, description, boundary)
         {
-        }        
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="alias">Should be unique</param>
+        /// <param name="label"></param>
+        /// <param name="description"></param>
+        /// <param name="link"></param>
+        /// <param name="boundary"></param>
+        public Person(string alias, string label, string description, string link, Boundary boundary)
+            : base(alias, label, description, link, boundary)
+        {
+        }
     }
 }

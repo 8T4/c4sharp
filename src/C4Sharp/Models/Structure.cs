@@ -15,6 +15,7 @@ namespace C4Sharp.Models
         public string Label { get; }
         public string Description { get; }
         public string[] Tags { get; private set; }
+        public string Link { get; }
         public Boundary Boundary { get; }
 
         /// <summary>
@@ -40,9 +41,30 @@ namespace C4Sharp.Models
         /// <param name="alias">Should be unique</param>
         /// <param name="label"></param>
         /// <param name="description"></param>
+        /// <param name="link"></param>
+        protected Structure(string alias, string label, string description, string link) =>
+            (Alias, Label, Description, Link, Boundary) = (alias, label, description, link, Boundary.Internal);
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="alias">Should be unique</param>
+        /// <param name="label"></param>
+        /// <param name="description"></param>
         /// <param name="boundary"></param>
         protected Structure(string alias, string label, string description, Boundary boundary) =>
             (Alias, Label, Description, Boundary) = (alias, label, description, boundary);
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="alias">Should be unique</param>
+        /// <param name="label"></param>
+        /// <param name="description"></param>
+        /// <param name="link"></param>
+        /// <param name="boundary"></param>
+        protected Structure(string alias, string label, string description, string link, Boundary boundary) =>
+            (Alias, Label, Description, Link, Boundary) = (alias, label, description, link, boundary);
 
         /// <summary>
         /// Add Tags

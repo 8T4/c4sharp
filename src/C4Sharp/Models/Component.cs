@@ -28,7 +28,21 @@ namespace C4Sharp.Models
         {
             Technology = technology;
         }
-        
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="alias">Unique identification</param>
+        /// <param name="label"></param>
+        /// <param name="description"></param>
+        /// <param name="technology"></param>
+        /// <param name="link"></param>
+        public Component(string alias, string label, string description, string technology, string link)
+            : base(alias, label, description, link, Boundary.Internal)
+        {
+            Technology = technology;
+        }
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -41,6 +55,21 @@ namespace C4Sharp.Models
             : base(alias, label, description, boundary)
         {
             Technology = technology;
-        }        
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="alias">Unique identification</param>
+        /// <param name="label"></param>
+        /// <param name="description"></param>
+        /// <param name="technology"></param>
+        /// <param name="link"></param>
+        /// <param name="boundary"></param>
+        public Component(string alias, string label, string description, string technology, string link, Boundary boundary)
+            : base(alias, label, description, link, boundary)
+        {
+            Technology = technology;
+        }
     }
 }
