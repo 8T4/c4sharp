@@ -10,7 +10,7 @@ namespace C4Sharp.Models.Plantuml
     /// </summary>
     internal static class PlantumlDiagram
     {
-        const string stdlibBaseUrl = "https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master";
+        const string standardLibraryBaseUrl = "https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master";
 
         /// <summary>
         /// Create PUML content from Diagram
@@ -20,7 +20,7 @@ namespace C4Sharp.Models.Plantuml
         public static string ToPumlString(this Diagram diagram, bool useUrlInclude = false)
         {
             var pumlFileName = $"{diagram.Name}.puml";
-            var path = useUrlInclude ? $"{stdlibBaseUrl}/{pumlFileName}"
+            var path = useUrlInclude ? $"{standardLibraryBaseUrl}/{pumlFileName}"
                 : Path.Join(C4Directory.ResourcesFolderName, pumlFileName);
                  
             var stream = new StringBuilder();
