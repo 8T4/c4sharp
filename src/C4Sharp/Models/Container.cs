@@ -47,7 +47,7 @@ namespace C4Sharp.Models
         /// <param name="technology"></param>
         /// <param name="link"></param>
         public Container(string alias, ContainerType type, string description, string technology, string link)
-            : base(alias, type.GetDescription(), description, link, Boundary.Internal)
+            : base(alias, type.GetDescription(), description, link)
         {
             Technology = technology;
             ContainerType = type;
@@ -107,7 +107,7 @@ namespace C4Sharp.Models
         /// <param name="technology"></param>
         /// <param name="link"></param>
         public Container(string alias, string label, string description, string technology, string link)
-            : base(alias, label, description, link, Boundary.Internal)
+            : base(alias, label, description, link)
         {
             Technology = technology;
             ContainerType = ContainerType.None;

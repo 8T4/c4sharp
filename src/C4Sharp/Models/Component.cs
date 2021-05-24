@@ -38,7 +38,7 @@ namespace C4Sharp.Models
         /// <param name="technology"></param>
         /// <param name="link"></param>
         public Component(string alias, string label, string description, string technology, string link)
-            : base(alias, label, description, link, Boundary.Internal)
+            : base(alias, label, description, link)
         {
             Technology = technology;
         }

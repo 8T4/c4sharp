@@ -41,7 +41,7 @@ namespace C4Sharp.Models
         /// <param name="description"></param>
         /// <param name="link"></param>
         public SoftwareSystem(string alias, string label, string description, string link)
-            : base(alias, label, description, link, Boundary.Internal)
+            : base(alias, label, description, link)
         {
         }
 
