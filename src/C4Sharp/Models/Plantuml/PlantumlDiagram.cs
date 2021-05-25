@@ -26,7 +26,12 @@ namespace C4Sharp.Models.Plantuml
             stream.AppendLine($"@startuml {diagram.Slug()}");
             stream.AppendLine($"!include {path}");
             stream.AppendLine();
-            
+
+            if (!string.IsNullOrWhiteSpace(diagram.Title))
+            {
+                stream.AppendLine($"title {diagram.Title}");
+            }
+
             if (diagram.LayoutWithLegend && !diagram.ShowLegend)
             {
                 stream.AppendLine("LAYOUT_WITH_LEGEND()");
