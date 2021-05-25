@@ -29,18 +29,16 @@ namespace C4Sharp.Models.Plantuml
         
         private static string ToPumlString(this Person person)
         {
-            return person.Boundary == Boundary.External
-                ? $"Person_Ext({person.Alias}, \"{person.Label}\", \"{person.Description}\" )"
-                : $"Person({person.Alias}, \"{person.Label}\", \"{person.Description}\" )";
+            var procedureName = $"Person{GetExternalSuffix(person)}";
+
+            return $"{procedureName}({person.Alias}, \"{person.Label}\", \"{person.Description}\", $link=\"{person.Link}\")";
         }        
         
         private static string ToPumlString(this SoftwareSystem system)
         {
-            var isExternal = system.Boundary == Boundary.External;
-            
-            return isExternal
-                ? $"System_Ext({system.Alias}, \"{system.Label}\", \"{system.Description}\")"
-                : $"System({system.Alias}, \"{system.Label}\", \"{system.Description}\")";
+            var procedureName = $"System{GetExternalSuffix(system)}";
+
+            return $"{procedureName}({system.Alias}, \"{system.Label}\", \"{system.Description}\", $link=\"{system.Link}\")";
         }        
         
         private static string ToPumlString(this SoftwareSystemBoundary boundary)
@@ -61,25 +59,23 @@ namespace C4Sharp.Models.Plantuml
         
         private static string ToPumlString(this Component component)
         {
-            return component.Boundary == Boundary.External
-                ? $"Component_Ext({component.Alias}, \"{component.Label}\", \"{component.Technology}\", \"{component.Description}\" )"
-                : $"Component({component.Alias}, \"{component.Label}\", \"{component.Technology}\", \"{component.Description}\" )";
+            var procedureName = $"Component{GetExternalSuffix(component)}";
+
+            return $"{procedureName}({component.Alias}, \"{component.Label}\", \"{component.Technology}\", \"{component.Description}\", $link=\"{component.Link}\")";
         }     
         
         private static string ToPumlString(this Container container)
         {
-            var external = container.Boundary == Boundary.External
-                ? "_Ext"
-                : string.Empty;
+            var externalSuffix = GetExternalSuffix(container);
 
-            var value = container.ContainerType switch
+            var procedureName = container.ContainerType switch
             {
-                ContainerType.Database => $"ContainerDb{external}",
-                ContainerType.Queue => $"ContainerQueue{external}",
-                _ => $"Container{external}"
+                ContainerType.Database => $"ContainerDb{externalSuffix}",
+                ContainerType.Queue => $"ContainerQueue{externalSuffix}",
+                _ => $"Container{externalSuffix}"
             };
 
-            return  $"{value}({container.Alias}, \"{container.Label}\", \"{container.Technology}\", \"{container.Description}\" )";
+            return  $"{procedureName}({container.Alias}, \"{container.Label}\", \"{container.Technology}\", \"{container.Description}\", $link=\"{container.Link}\")";
         }
 
         private static string ToPumlString(this ContainerBoundary boundary)
@@ -144,5 +140,7 @@ namespace C4Sharp.Models.Plantuml
 
             return stream.ToString();
         }
+
+        private static string GetExternalSuffix(Structure structure) => structure.Boundary == Boundary.External ? "_Ext" : string.Empty;
     }
 }

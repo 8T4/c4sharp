@@ -36,8 +36,23 @@ namespace C4Sharp.Models
         {
             Technology = technology;
             ContainerType = type;
-        }    
-        
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="alias">Should  be unique</param>
+        /// <param name="type"></param>
+        /// <param name="description"></param>
+        /// <param name="technology"></param>
+        /// <param name="link"></param>
+        public Container(string alias, ContainerType type, string description, string technology, string link)
+            : base(alias, type.GetDescription(), description, link)
+        {
+            Technology = technology;
+            ContainerType = type;
+        }
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -52,7 +67,6 @@ namespace C4Sharp.Models
             Technology = technology;
             ContainerType = type;
         }
-
 
         /// <summary>
         /// Constructor
@@ -83,7 +97,22 @@ namespace C4Sharp.Models
             Technology = technology;
             ContainerType = ContainerType.None;
         }
-        
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="alias">Should  be unique</param>
+        /// <param name="label"></param>
+        /// <param name="description"></param>
+        /// <param name="technology"></param>
+        /// <param name="link"></param>
+        public Container(string alias, string label, string description, string technology, string link)
+            : base(alias, label, description, link)
+        {
+            Technology = technology;
+            ContainerType = ContainerType.None;
+        }
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -94,6 +123,22 @@ namespace C4Sharp.Models
         /// <param name="boundary"></param>
         public Container(string alias, string label, string description, string technology, Boundary boundary) 
             : base(alias, label, description, boundary)
+        {
+            Technology = technology;
+            ContainerType = ContainerType.None;
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="alias">Should  be unique</param>
+        /// <param name="label"></param>
+        /// <param name="description"></param>
+        /// <param name="technology"></param>
+        /// <param name="link"></param>
+        /// <param name="boundary"></param>
+        public Container(string alias, string label, string description, string technology, string link, Boundary boundary)
+            : base(alias, label, description, link, boundary)
         {
             Technology = technology;
             ContainerType = ContainerType.None;
