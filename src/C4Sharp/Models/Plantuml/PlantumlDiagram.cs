@@ -26,7 +26,6 @@ namespace C4Sharp.Models.Plantuml
             stream.AppendLine($"@startuml {diagram.Slug()}");
             stream.AppendLine($"!include {path}");
             stream.AppendLine();
-
             if (diagram.LayoutWithLegend && !diagram.ShowLegend)
             {
                 stream.AppendLine("LAYOUT_WITH_LEGEND()");
