@@ -26,7 +26,7 @@ namespace C4Sharp.Models.Plantuml
             stream.AppendLine($"@startuml {diagram.Slug()}");
             stream.AppendLine($"!include {path}");
             stream.AppendLine();
-            
+
             if (diagram.LayoutWithLegend && !diagram.ShowLegend)
             {
                 stream.AppendLine("LAYOUT_WITH_LEGEND()");
@@ -39,7 +39,13 @@ namespace C4Sharp.Models.Plantuml
             
             stream.AppendLine($"{(diagram.FlowVisualization == DiagramLayout.TopDown ? "LAYOUT_TOP_DOWN()" : "LAYOUT_LEFT_RIGHT()")}");
             stream.AppendLine();
-     
+            
+            if (!string.IsNullOrWhiteSpace(diagram.Title))
+            {
+                stream.AppendLine($"title {diagram.Title}");
+                stream.AppendLine();
+            }
+
             foreach (var structure in diagram.Structures)
             {
                 stream.AppendLine(structure.ToPumlString());
