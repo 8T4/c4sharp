@@ -47,7 +47,7 @@ var diagram = new <Diagram Type>
 };
 ```
 
-For example, with C4S you can create a _C4 Context Diagram_ using this code:
+With C4S you can create a _C4 Context Diagram_, as shown in following [code](https://github.com/8T4/c4sharp/tree/main/src/C4Sharp.Sample):
 
 ```c#
 
@@ -72,6 +72,8 @@ var diagram = new ContextDiagram
 
 PlantumlFile.Export(diagram);
 ```
+
+
 The result will be:
 
 <p align="center">
