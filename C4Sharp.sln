@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C4Sharp", "src\C4Sharp\C4Sh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C4Sharp.Sample", "src\C4Sharp.Sample\C4Sharp.Sample.csproj", "{D3786945-183A-40D4-8B53-FE185C65D0CF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C4Sharp.Sample.Orders", "src\C4Sharp.Sample.Orders\C4Sharp.Sample.Orders.csproj", "{A5D21411-5D15-44D1-A800-C296B1AA2CC4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{D3786945-183A-40D4-8B53-FE185C65D0CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3786945-183A-40D4-8B53-FE185C65D0CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3786945-183A-40D4-8B53-FE185C65D0CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5D21411-5D15-44D1-A800-C296B1AA2CC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5D21411-5D15-44D1-A800-C296B1AA2CC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5D21411-5D15-44D1-A800-C296B1AA2CC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5D21411-5D15-44D1-A800-C296B1AA2CC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

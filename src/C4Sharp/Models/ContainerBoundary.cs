@@ -6,11 +6,11 @@ namespace C4Sharp.Models
     /// <summary>
     /// Container Boundary
     /// </summary>
-    public sealed class ContainerBoundary: Structure
+    public sealed class ContainerBoundary : Structure
     {
         public IEnumerable<Component> Components { get; set; }
         public IEnumerable<Relationship> Relationships { get; set; }
-        
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -18,6 +18,7 @@ namespace C4Sharp.Models
         /// <param name="label"></param>
         public ContainerBoundary(string alias, string label) : base(alias, label)
         {
+            Relationships = new Relationship[] { };
         }
     }
 }

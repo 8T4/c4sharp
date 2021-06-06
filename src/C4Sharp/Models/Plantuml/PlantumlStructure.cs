@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Text;
 using C4Sharp.Extensions;
 using C4Sharp.Models.Relationships;
@@ -89,11 +90,13 @@ namespace C4Sharp.Models.Plantuml
                 stream.AppendLine($"{SpaceMethods.Indent()}{component.ToPumlString()}");
             }
 
-            stream.AppendLine();
-            
-            foreach (var relationship in boundary.Relationships)
+            if (boundary.Relationships.Any())
             {
-                stream.AppendLine($"{SpaceMethods.Indent()}{relationship.ToPumlString()}");
+                stream.AppendLine();
+                foreach (var relationship in boundary.Relationships)
+                {
+                    stream.AppendLine($"{SpaceMethods.Indent()}{relationship.ToPumlString()}");
+                }
             }
 
             stream.AppendLine("}");
