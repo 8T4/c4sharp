@@ -145,6 +145,23 @@ namespace C4Sharp.Models
         }
 
         /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="alias">Should  be unique</param>
+        /// <param name="type"></param>
+        /// <param name="label"></param>
+        /// <param name="description"></param>
+        /// <param name="technology"></param>
+        /// <param name="link"></param>
+        /// <param name="boundary"></param>
+        public Container(string alias, ContainerType type, string label, string description, string technology, string link, Boundary boundary)
+            : base(alias, label, description, link, boundary)
+        {
+            Technology = technology;
+            ContainerType = type;
+        }
+
+        /// <summary>
         /// Create a new instance of current container
         /// </summary>
         /// <param name="code">instance code</param>
