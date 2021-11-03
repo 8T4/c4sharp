@@ -1,17 +1,18 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.Versioning;
 using System.Text;
-using C4Sharp.FileSystem;
 
 namespace C4Sharp.Models.Plantuml
 {
     /// <summary>
     /// Session
     /// </summary>
-    public class PlantumlSession: IDisposable
+    public class PlantumlSession : IDisposable
     {
         public bool StandardLibraryBaseUrl { get; private set; } = false;
+        public bool GenerateDiagramImages { get; private set; } = false;
         private string FilePath { get; }
         private ProcessStartInfo ProcessInfo { get; }
 
@@ -25,26 +26,22 @@ namespace C4Sharp.Models.Plantuml
             {
                 FileName = "java",
                 UseShellExecute = false,
+                CreateNoWindow = true,
                 WindowStyle = ProcessWindowStyle.Hidden,
-            };            
+            };
         }
-        
+
         /// <summary>
         /// Constructor with credentials to impersonate
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
-        public PlantumlSession(string username, string password)
+        [SupportedOSPlatform("windows")]
+        public PlantumlSession(string username, string password) : this()
         {
-            FilePath = PlantumlResource.Load();
-            ProcessInfo = new ProcessStartInfo
-            {
-                FileName = "java",
-                UserName = username,
-                UseShellExecute = false,
-                PasswordInClearText = password,
-                WindowStyle = ProcessWindowStyle.Hidden,
-            };            
+            if (!OperatingSystem.IsWindows()) return;
+            ProcessInfo.UserName = username;
+            ProcessInfo.PasswordInClearText = password;
         }
 
         public PlantumlSession UseStandardLibraryBaseUrl()
@@ -52,7 +49,13 @@ namespace C4Sharp.Models.Plantuml
             StandardLibraryBaseUrl = true;
             return this;
         }
-        
+
+        public PlantumlSession UseDiagramImageBuilder()
+        {
+            GenerateDiagramImages = true;
+            return this;
+        }
+
         /// <summary>
         /// Execute plantuml.jar
         /// </summary>
@@ -61,7 +64,7 @@ namespace C4Sharp.Models.Plantuml
         /// <exception cref="PlantumlException"></exception>
         internal void Execute(string path, bool processWholeDirectory)
         {
-            var directory = processWholeDirectory 
+            var directory = processWholeDirectory
                 ? path
                 : new FileInfo(path)?.Directory?.FullName;
 
@@ -74,15 +77,15 @@ namespace C4Sharp.Models.Plantuml
 
                 var results = new StringBuilder();
 
-                var jar = StandardLibraryBaseUrl 
+                var jar = StandardLibraryBaseUrl
                     ? $"-jar {FilePath} -verbose -o \"{directory}\" -charset UTF-8"
                     : $"-jar {FilePath} -DRELATIVE_INCLUDE=\".\" -verbose -o \"{directory}\" -charset UTF-8";
-                
+
                 ProcessInfo.Arguments = $"{jar} {path}";
                 ProcessInfo.RedirectStandardOutput = true;
                 ProcessInfo.StandardOutputEncoding = Encoding.UTF8;
 
-                var process = new Process {StartInfo = ProcessInfo};
+                var process = new Process { StartInfo = ProcessInfo };
 
                 process.OutputDataReceived += (sender, args) => { results.AppendLine(args.Data); };
 

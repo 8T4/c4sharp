@@ -17,10 +17,6 @@ namespace C4Sharp.FileSystem
         /// Default Resource Folder Name
         /// </summary>
         public static string ResourcesFolderName => "resources";
-        /// <summary>
-        /// Default Resource path
-        /// </summary>
-        private static string ResourcesPath => Path.Join(DirectoryName, ResourcesFolderName);      
 
         /// <summary>
         /// Load all C4_Plantuml files
@@ -28,7 +24,7 @@ namespace C4Sharp.FileSystem
         public static void LoadResources(string path = null)
         {
             var local = path is null
-                ? ResourcesPath
+                ? Path.Join(DirectoryName, ResourcesFolderName)
                 : Path.Join(path, ResourcesFolderName);
             
             LoadResource(local, "C4");

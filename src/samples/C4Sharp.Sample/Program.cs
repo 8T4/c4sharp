@@ -17,12 +17,13 @@ namespace C4Sharp.Sample
                 DeploymentDiagramBuilder.Build()
             };
 
-            using var session = new PlantumlSession()
-                .UseStandardLibraryBaseUrl();
+            new PlantumlSession()
+                .UseDiagramImageBuilder()
+                .UseStandardLibraryBaseUrl()
+                .Export(diagrams);
+            
             // var path = "/Users/yanjustino/Projects/org.8t4/c4sharp/docs";
             // PlantumlFile.Export(diagrams, path, session);
-            
-            PlantumlFile.Export(diagrams, session);            
         }
     }
 }

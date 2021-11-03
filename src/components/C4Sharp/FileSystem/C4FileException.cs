@@ -1,10 +1,12 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace C4Sharp.FileSystem
 {
     /// <summary>
     /// C4File Exception
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class C4FileException: Exception
     {
         /// <summary>

@@ -1,12 +1,11 @@
-﻿using System;
-using C4Sharp.Diagrams;
+﻿using C4Sharp.Diagrams;
 using C4Sharp.Models.Plantuml;
 
 namespace C4Sharp.Sample.Orders
 {
-    class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             var diagrams = new Diagram[]
             {
@@ -14,7 +13,7 @@ namespace C4Sharp.Sample.Orders
             };
 
             using var session = new PlantumlSession();
-            PlantumlFile.Export(diagrams, session);
+            session.Export(diagrams);
         }
     }
 }
