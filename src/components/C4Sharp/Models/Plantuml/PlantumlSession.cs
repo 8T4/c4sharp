@@ -11,8 +11,8 @@ namespace C4Sharp.Models.Plantuml
     /// </summary>
     public class PlantumlSession : IDisposable
     {
-        public bool StandardLibraryBaseUrl { get; private set; } = false;
-        public bool GenerateDiagramImages { get; private set; } = false;
+        public bool StandardLibraryBaseUrl { get; private set; }
+        public bool GenerateDiagramImages { get; private set; }
         private string FilePath { get; }
         private ProcessStartInfo ProcessInfo { get; }
 
@@ -39,7 +39,11 @@ namespace C4Sharp.Models.Plantuml
         [SupportedOSPlatform("windows")]
         public PlantumlSession(string username, string password) : this()
         {
-            if (!OperatingSystem.IsWindows()) return;
+            if (!OperatingSystem.IsWindows())
+            {
+                return;
+            }
+
             ProcessInfo.UserName = username;
             ProcessInfo.PasswordInClearText = password;
         }
@@ -87,7 +91,7 @@ namespace C4Sharp.Models.Plantuml
 
                 var process = new Process { StartInfo = ProcessInfo };
 
-                process.OutputDataReceived += (sender, args) => { results.AppendLine(args.Data); };
+                process.OutputDataReceived += (_, args) => { results.AppendLine(args.Data); };
 
                 process.Start();
                 process.WaitForExit();
