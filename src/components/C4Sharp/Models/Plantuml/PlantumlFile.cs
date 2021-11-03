@@ -11,7 +11,7 @@ namespace C4Sharp.Models.Plantuml
     /// <summary>
     /// PUML File Utils
     /// </summary>
-    public static partial class PlantumlFile
+    public static class PlantumlFile
     {
         /// <summary>
         /// It creates a Puml file into the default directory "./c4"

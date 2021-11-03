@@ -14,9 +14,17 @@ namespace C4Sharp.Models.Plantuml
         /// Create PUML content from Diagram
         /// </summary>
         /// <param name="diagram"></param>
+        /// <returns></returns>
+        public static string ToPumlString(this Diagram diagram) =>
+            ToPumlString(diagram, false);
+        
+        /// <summary>
+        /// Create PUML content from Diagram
+        /// </summary>
+        /// <param name="diagram"></param>
         /// <param name="useStandardLibrary"></param>
         /// <returns></returns>
-        public static string ToPumlString(this Diagram diagram, bool useStandardLibrary = false)
+        public static string ToPumlString(this Diagram diagram, bool useStandardLibrary)
         {
             var path = GetPumlFilePath(diagram, useStandardLibrary);
                  
