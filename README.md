@@ -47,7 +47,7 @@ var diagram = new <Diagram Type>
 };
 ```
 
-With C4S you can create a _C4 Context Diagram_, as shown in following [code](https://github.com/8T4/c4sharp/tree/main/src/C4Sharp.Sample):
+With C4S you can create a _C4 Context Diagram_, as shown in following [code](https://github.com/8T4/c4sharp/tree/main/src/samples/C4Sharp.Sample):
 
 ```c#
 
