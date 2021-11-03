@@ -18,16 +18,24 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    
+    - name: Print version
+      run: echo ${{env.VERSION}}
+    
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
+        
     - name: Restore dependencies
       run: dotnet restore
+      
     - name: Build
       run: dotnet build --no-restore --configuration Release -p:PackageVersion=${{env.VERSION}}
+      
     - name: Test
       run: dotnet test --no-build --verbosity normal
+      
     - name: Publish Artifact
       run: |
         dotnet pack --no-restore --configuration ${{ env.BUILD_TYPE }} -p:PackageVersion=${{ env.VERSION }}
