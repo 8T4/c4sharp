@@ -5,6 +5,11 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+    
+env:
+  VERSION: 3.${{ github.run_number }}.${{ github.run_id }}
+  NUGET_INDEX: https://api.nuget.org/v3/index.json
+  BUILD_TYPE: Release 
 
 jobs:
   build:
@@ -20,6 +25,10 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore --configuration Release -p:PackageVersion=${{env.VERSION}}
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: Publish Artifact
+      run: |
+        dotnet pack --no-restore --configuration ${{ env.BUILD_TYPE }} -p:PackageVersion=${{ env.VERSION }}
+        dotnet nuget push ./<project>/out/*.nupkg --api-key ${{ secrets.NUGET_KEY }} --source ${{ env.NUGET_INDEX }}
