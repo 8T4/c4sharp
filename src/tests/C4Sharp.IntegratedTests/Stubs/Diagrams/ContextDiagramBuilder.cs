@@ -1,9 +1,9 @@
 using C4Sharp.Diagrams.Core;
+using C4Sharp.IntegratedTests.Stubs.Models;
 using C4Sharp.Models;
 using C4Sharp.Models.Relationships;
-using C4Sharp.Tests.Stubs.Models;
 
-namespace C4Sharp.Tests.Stubs.Diagrams
+namespace C4Sharp.IntegratedTests.Stubs.Diagrams
 {
     using static Position;
     using static People;

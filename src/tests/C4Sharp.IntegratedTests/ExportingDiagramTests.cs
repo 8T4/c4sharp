@@ -1,11 +1,10 @@
 using System.IO;
 using C4Sharp.Diagrams;
+using C4Sharp.IntegratedTests.Stubs.Diagrams;
 using C4Sharp.Models.Plantuml;
-using C4Sharp.Tests.Stubs.Diagrams;
-using FluentAssertions;
 using Xunit;
 
-namespace C4Sharp.Tests.IntegratedTests
+namespace C4Sharp.IntegratedTests
 {
     
     public class ExportingDiagramTests: ExportingDiagramFixture

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using C4Sharp.Models;
 
-namespace C4Sharp.Tests.Stubs.Models
+namespace C4Sharp.IntegratedTests.Stubs.Models
 {
     public static class Nodes
     {

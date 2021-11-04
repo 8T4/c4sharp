@@ -48,12 +48,23 @@ namespace C4Sharp.Models.Plantuml
             ProcessInfo.PasswordInClearText = password;
         }
 
+        /// <summary>
+        /// The C4Sharp has embedded the current version of C4-PluntUML.
+        /// But, if you want to use the C4-PlantUML up-to-date version from their repo,
+        /// use this method
+        /// </summary>
+        /// <returns>PlantumlSession instance</returns>
         public PlantumlSession UseStandardLibraryBaseUrl()
         {
             StandardLibraryBaseUrl = true;
             return this;
         }
 
+        /// <summary>
+        /// The C4Sharp will generate *.puml files of your diagram.
+        /// Also, you could save the *.png files using this method
+        /// </summary>
+        /// <returns></returns>
         public PlantumlSession UseDiagramImageBuilder()
         {
             GenerateDiagramImages = true;

@@ -1,7 +1,7 @@
 using System.IO;
 using FluentAssertions;
 
-namespace C4Sharp.Tests.IntegratedTests
+namespace C4Sharp.IntegratedTests
 {
     public class ExportingDiagramFixture
     {

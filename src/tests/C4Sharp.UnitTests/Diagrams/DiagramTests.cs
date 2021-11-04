@@ -1,9 +1,10 @@
 using C4Sharp.Diagrams;
 using C4Sharp.Diagrams.Core;
+using C4Sharp.Diagrams.Supplementary;
 using FluentAssertions;
 using Xunit;
 
-namespace C4Sharp.Tests.Diagrams
+namespace C4Sharp.UnitTests.Diagrams
 {
     public class DiagramTests
     {
@@ -13,7 +14,7 @@ namespace C4Sharp.Tests.Diagrams
         [InlineData("TEST A")]
         public void TestWhenSlugComponentDiagram(string title)
         {
-            var diagram = Stubs.Diagrams.ComponentDiagramBuilder.Build() with { Title = title};
+            var diagram = new ComponentDiagram { Title = title };
             diagram.Slug().Should().Be("test-a-c4component");
         }
         
@@ -23,7 +24,7 @@ namespace C4Sharp.Tests.Diagrams
         [InlineData("TEST A")]
         public void TestWhenSlugContextDiagram(string title)
         {
-            var diagram = Stubs.Diagrams.ContextDiagramBuilder.Build() with { Title = title};
+            var diagram = new ContextDiagram { Title = title};
             diagram.Slug().Should().Be("test-a-c4context");
         }   
         
@@ -33,7 +34,7 @@ namespace C4Sharp.Tests.Diagrams
         [InlineData("TEST A")]
         public void TestWhenSlugContainerDiagram(string title)
         {
-            var diagram = Stubs.Diagrams.ContainerDiagramBuilder.Build() with { Title = title};
+            var diagram = new ContainerDiagram { Title = title};
             diagram.Slug().Should().Be("test-a-c4container");
         }  
         
@@ -43,7 +44,7 @@ namespace C4Sharp.Tests.Diagrams
         [InlineData("TEST A")]
         public void TestWhenSlugDeploymentDiagram(string title)
         {
-            var diagram = Stubs.Diagrams.DeploymentDiagramBuilder.Build() with { Title = title};
+            var diagram = new DeploymentDiagram { Title = title};
             diagram.Slug().Should().Be("test-a-c4deployment");
         }         
 
