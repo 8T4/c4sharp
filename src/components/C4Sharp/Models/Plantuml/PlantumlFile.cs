@@ -19,6 +19,20 @@ namespace C4Sharp.Models.Plantuml
         /// It generates png files of the diagram
         /// </summary>
         /// <param name="diagrams">C4 Diagrams</param>
+        /// <param name="session">Plantuml Session</param>
+        public static void Export(this PlantumlSession session, IEnumerable<Diagram> diagrams)
+        {
+            var dirPath = Directory.GetCurrentDirectory();
+            var path = Path.Join(dirPath, C4Directory.DirectoryName);
+            Export(session, path, diagrams);
+        }        
+        
+        /// <summary>
+        /// It creates a Puml file into the default directory "./c4"
+        /// If the attribute of Session GenerateDiagramImages is true
+        /// It generates png files of the diagram
+        /// </summary>
+        /// <param name="diagrams">C4 Diagrams</param>
         /// <param name="path">
         /// Full path of the directory
         /// <example>For windows.: C:\users\user\projects\</example>
@@ -31,48 +45,11 @@ namespace C4Sharp.Models.Plantuml
             {
                 Save(diagram, path, session);
             }
-
-            session ??= new PlantumlSession();
             
             if (session.GenerateDiagramImages)
             {
                 session.Execute(path, true);
             }
-        }
-
-        /// <summary>
-        /// It creates a Puml file into the default directory "./c4"
-        /// If the attribute of Session GenerateDiagramImages is true
-        /// It generates png files of the diagram
-        /// </summary>
-        /// <param name="diagrams">C4 Diagrams</param>
-        /// <param name="session">Plantuml Session</param>
-        public static void Export(this PlantumlSession session, IEnumerable<Diagram> diagrams)
-        {
-            foreach (var diagram in diagrams)
-            {
-                Save(diagram, session);
-            }
-
-            var dirPath = Directory.GetCurrentDirectory();
-            var path = Path.Join(dirPath, C4Directory.DirectoryName);
-
-            session ??= new PlantumlSession();
-            
-            if (session.GenerateDiagramImages)
-            {
-                session.Execute(path, true);
-            }
-        }
-
-        /// <summary>
-        /// Save puml file on c4/[file name].puml
-        /// </summary>
-        /// <param name="diagram">C4 Diagram</param>
-        /// <param name="session"></param>
-        private static void Save(Diagram diagram, PlantumlSession session)
-        {
-            Save(diagram, C4Directory.DirectoryName, session);
         }
 
         /// <summary>

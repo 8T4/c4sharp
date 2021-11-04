@@ -21,9 +21,6 @@ namespace C4Sharp.Sample
                 .UseDiagramImageBuilder()
                 .UseStandardLibraryBaseUrl()
                 .Export(diagrams);
-            
-            // var path = "/Users/yanjustino/Projects/org.8t4/c4sharp/docs";
-            // PlantumlFile.Export(diagrams, path, session);
         }
     }
 }

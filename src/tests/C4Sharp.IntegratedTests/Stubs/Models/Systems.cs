@@ -1,7 +1,7 @@
 using C4Sharp.Models;
 using C4Sharp.Models.Relationships;
 
-namespace C4Sharp.Tests.Stubs.Models
+namespace C4Sharp.IntegratedTests.Stubs.Models
 {
     public static class Systems
     {

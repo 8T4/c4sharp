@@ -24,8 +24,4 @@
       <ProjectReference Include="..\..\components\C4Sharp\C4Sharp.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="UnitTests" />
-    </ItemGroup>
-
 </Project>
