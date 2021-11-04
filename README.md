@@ -111,14 +111,14 @@ To learn more about `C4S` access our [wiki](https://github.com/8T4/c4sharp/wiki)
 ## Thanks
 
 ### C4 community
-- [Simon Brown](https://twitter.com/simonbrown)
-- [PlantUML Team](https://plantuml.com/)
-- [C4-PlantUML Team](https://github.com/plantuml-stdlib/C4-PlantUML)
+- 🌟 [Simon Brown](https://twitter.com/simonbrown)
+- 🌟 [PlantUML Team](https://plantuml.com/)
+- 🌟 [C4-PlantUML Team](https://github.com/plantuml-stdlib/C4-PlantUML)
 
 ### Colleagues 
-- [Abraão Honório](https://www.linkedin.com/in/abraaohonorio)
-- [Daniel Martins](https://www.linkedin.com/in/daniel-de-souza-martins)
-- [Rafael Santos](https://www.linkedin.com/in/rafael-santos-0b51465)
+- 🤝 [Abraão Honório](https://www.linkedin.com/in/abraaohonorio)
+- 🤝 [Daniel Martins](https://www.linkedin.com/in/daniel-de-souza-martins)
+- 🤝 [Rafael Santos](https://www.linkedin.com/in/rafael-santos-0b51465)
 
 ## Guide to contributing to a GitHub project
 This is a guide to contributing to this open source project that uses GitHub. It’s mostly based on how many open sorce projects operate. That’s all there is to it. The fundamentals are:
