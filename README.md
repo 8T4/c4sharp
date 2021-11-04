@@ -35,19 +35,40 @@ You need these things to run C4Sharp:
 
 ### Coding
 
-C4S diagrams have a basic structure containing a Title, a set of C4 structures and their Relationships.
-As shown in following code:
+To create C4S diagrams, we need a set of C4 structures and inform their Relationships, as shown in the following example:
+
+##### structures
+
+To start using C4S, you should create the basic structures of your architecture design, like this:
 
 ```c#
-var diagram = new <Diagram Type>
+
+//Person
+public static Person Customer => new Person("customer", "Personal Banking Customer")
 {
-    Title = "...",
-    Structures = new Structure[] { },
-    Relationships = new Relationship[]{ }
+    Description = "A customer of the bank, with personal bank accounts."
+};
+
+// Systems
+public static SoftwareSystem BankingSystem => new SoftwareSystem("BankingSystem", "Internet Banking System")
+{
+    Description = "Allows customers to view information about their bank accounts, and make payments."
+};
+
+public static SoftwareSystem Mainframe => new SoftwareSystem("Mainframe", "Mainframe Banking System")
+{
+    Description = "Stores all of the core banking information about customers, accounts, transactions, etc.",
+    Boundary = Boundary.External
+};
+
+public static SoftwareSystem MailSystem => new SoftwareSystem("MailSystem", "E-mail system")
+{
+    Description = "The internal Microsoft Exchange e-mail system.",
+    Boundary = Boundary.External
 };
 ```
 
-With C4S you can create a _C4 Context Diagram_, as shown in following [code](https://github.com/8T4/c4sharp/tree/main/src/samples/C4Sharp.Sample):
+Then, you'll be able to create a _C4 Context Diagram_:
 
 ```c#
 
@@ -70,9 +91,12 @@ var diagram = new ContextDiagram
     }
 };
 
-PlantumlFile.Export(diagram);
+new PlantumlSession()
+    .UseDiagramImageBuilder()
+    .UseStandardLibraryBaseUrl()
+    .Export(diagrams);
 ```
-
+See more in our [sample code](https://github.com/8T4/c4sharp/tree/main/src/samples/C4Sharp.Sample): 
 
 The result will be:
 
@@ -85,6 +109,7 @@ The result will be:
 To learn more about `C4S` access our [wiki](https://github.com/8T4/c4sharp/wiki).
 
 ## Thanks
+
 ### C4 community
 - [Simon Brown](https://twitter.com/simonbrown)
 - [PlantUML Team](https://plantuml.com/)
