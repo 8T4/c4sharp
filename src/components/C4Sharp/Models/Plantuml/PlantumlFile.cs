@@ -13,6 +13,8 @@ namespace C4Sharp.Models.Plantuml
     /// </summary>
     public static class PlantumlFile
     {
+        private static readonly object Lock = new object();        
+        
         /// <summary>
         /// It creates a Puml file into the default directory "./c4"
         /// If the attribute of Session GenerateDiagramImages is true
@@ -62,9 +64,13 @@ namespace C4Sharp.Models.Plantuml
         {
             try
             {
-                C4Directory.LoadResources(path);
-                var filePath = Path.Combine(path, $"{diagram.Slug()}.puml");
-                File.WriteAllText(filePath, diagram.ToPumlString(session.StandardLibraryBaseUrl));
+                lock (Lock)
+                {
+                    C4Directory.LoadResources(path);
+                    var filePath = Path.Combine(path, $"{diagram.Slug()}.puml");
+                    Directory.CreateDirectory(path);
+                    File.WriteAllText(filePath, diagram.ToPumlString(session.StandardLibraryBaseUrl));
+                }
             }
             catch (Exception e)
             {

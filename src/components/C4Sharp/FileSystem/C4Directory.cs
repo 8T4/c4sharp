@@ -16,7 +16,7 @@ namespace C4Sharp.FileSystem
         /// <summary>
         /// Default Resource Folder Name
         /// </summary>
-        public static string ResourcesFolderName => "resources";
+        public static string ResourcesFolderName => Path.Join("..", ".c4s");
 
         /// <summary>
         /// Load all C4_Plantuml files

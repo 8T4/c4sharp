@@ -1,7 +1,9 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Runtime.Versioning;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace C4Sharp.Models.Plantuml
@@ -79,12 +81,12 @@ namespace C4Sharp.Models.Plantuml
         /// <exception cref="PlantumlException"></exception>
         internal void Execute(string path, bool processWholeDirectory)
         {
-            var directory = processWholeDirectory
-                ? path
-                : new FileInfo(path)?.Directory?.FullName;
-
             try
             {
+                var directory = processWholeDirectory
+                    ? path
+                    : new FileInfo(path)?.Directory?.FullName;                
+                
                 if (string.IsNullOrEmpty(directory))
                 {
                     throw new PlantumlException($"{nameof(PlantumlException)}: puml file not found.");
@@ -106,6 +108,53 @@ namespace C4Sharp.Models.Plantuml
 
                 process.Start();
                 process.WaitForExit();
+            }
+            catch (Exception e)
+            {
+                throw new PlantumlException($"{nameof(PlantumlException)}: puml file not found.", e);
+            }
+        }
+
+        /// <summary>
+        /// Using the -pipe option, you can easily use PlantUML in your scripts.
+        /// With this option, a diagram description is received through standard input and the PNG file is generated to standard output.
+        /// No file is written on the local file system.
+        /// </summary>
+        /// <param name="input">puml content</param>
+        /// <exception cref="PlantumlException"></exception>
+        internal (string, Stream) GetStream(string input)
+        {
+            try
+            {
+                var results = new StringBuilder();
+
+                var jar = StandardLibraryBaseUrl
+                    ? $"-jar {FilePath} -verbose -charset UTF-8"
+                    : $"-jar {FilePath} -DRELATIVE_INCLUDE=\".\" -verbose -charset UTF-8";
+
+                var fileName = Guid.NewGuid().ToString("N");
+                
+                ProcessInfo.Arguments = $"{jar} -pipe > {fileName}.png";
+                ProcessInfo.RedirectStandardOutput = true;
+                ProcessInfo.RedirectStandardInput = true;
+                ProcessInfo.StandardOutputEncoding = Encoding.UTF8;
+
+                var process = new Process { StartInfo = ProcessInfo };
+                
+                process.OutputDataReceived += (p, args) =>
+                {
+                    results.AppendLine(args.Data);
+                };
+
+                process.Start();
+                process.StandardInput.Write(input);
+                process.StandardInput.Flush();
+                process.StandardInput.Close();
+                process.BeginOutputReadLine();
+                process.WaitForExit();
+
+                var buffer = Encoding.UTF8.GetBytes(results.ToString());
+                return (fileName, new MemoryStream(buffer));
             }
             catch (Exception e)
             {
