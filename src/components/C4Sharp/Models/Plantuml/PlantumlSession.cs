@@ -1,9 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.IO.Compression;
 using System.Runtime.Versioning;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace C4Sharp.Models.Plantuml

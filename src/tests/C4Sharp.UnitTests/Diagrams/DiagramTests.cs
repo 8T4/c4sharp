@@ -1,6 +1,10 @@
+using System;
 using C4Sharp.Diagrams;
 using C4Sharp.Diagrams.Core;
 using C4Sharp.Diagrams.Supplementary;
+using C4Sharp.Models.Plantuml;
+using C4Sharp.Models.Relationships;
+using C4Sharp.Sample.Diagrams;
 using FluentAssertions;
 using Xunit;
 
@@ -44,7 +48,7 @@ namespace C4Sharp.UnitTests.Diagrams
         [InlineData("TEST A")]
         public void TestWhenSlugDeploymentDiagram(string title)
         {
-            var diagram = new DeploymentDiagram { Title = title};
+            var diagram = new DeploymentDiagram { Title = title };
             diagram.Slug().Should().Be("test-a-c4deployment");
         }         
 
@@ -59,6 +63,17 @@ namespace C4Sharp.UnitTests.Diagrams
             diagram.FlowVisualization.Should().Be(DiagramLayout.TopDown);
             diagram.Structures.Should().BeNullOrEmpty();
             diagram.Relationships.Should().BeNullOrEmpty();
+        }
+        
+        [Fact]
+        public void TesteWithoutRelationships()
+        {
+            var diagram = ComponentDiagramBuilder.Build() with
+            {
+                Relationships = Array.Empty<Relationship>()
+            };
+
+            Assert.Throws<PlantumlException>(() => diagram.ToPumlString()).Should().BeNull();
         }
     }
 }

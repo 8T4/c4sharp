@@ -1,4 +1,5 @@
-﻿using C4Sharp.Extensions;
+﻿using System;
+using C4Sharp.Extensions;
 using C4Sharp.Models;
 using C4Sharp.Models.Relationships;
 
@@ -30,8 +31,8 @@ namespace C4Sharp.Diagrams
             ShowLegend = false;
             FlowVisualization = DiagramLayout.TopDown;
             Name = name;
-            Structures = default;
-            Relationships = default;
+            Structures = Array.Empty<Structure>();
+            Relationships = Array.Empty<Relationship>();
         }
         
         /// <summary>
