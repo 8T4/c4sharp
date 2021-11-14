@@ -25,7 +25,7 @@ namespace C4Sharp.Models.Plantuml
         public static void Export(this PlantumlSession session, IEnumerable<Diagram> diagrams)
         {
             var dirPath = Directory.GetCurrentDirectory();
-            var path = Path.Join(dirPath, C4Directory.DirectoryName);
+            var path = Path.Join(dirPath, C4SharpDirectory.DirectoryName);
             Export(session, path, diagrams);
         }        
         
@@ -66,7 +66,7 @@ namespace C4Sharp.Models.Plantuml
             {
                 lock (Lock)
                 {
-                    C4Directory.LoadResources(path);
+                    C4SharpDirectory.LoadResources(path);
                     var filePath = Path.Combine(path, $"{diagram.Slug()}.puml");
                     Directory.CreateDirectory(path);
                     File.WriteAllText(filePath, diagram.ToPumlString(session.StandardLibraryBaseUrl));

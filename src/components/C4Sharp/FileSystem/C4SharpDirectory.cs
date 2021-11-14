@@ -7,7 +7,7 @@ namespace C4Sharp.FileSystem
     /// <summary>
     /// Manipulate the C4 folder and their resoucers
     /// </summary>
-    internal static class C4Directory
+    internal static class C4SharpDirectory
     {
         /// <summary>
         /// Default Directory Name
