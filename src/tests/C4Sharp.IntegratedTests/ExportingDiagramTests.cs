@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using C4Sharp.Diagrams;
 using C4Sharp.IntegratedTests.Stubs.Diagrams;
@@ -7,13 +8,16 @@ using Xunit;
 namespace C4Sharp.IntegratedTests
 {
     
-    public class ExportingDiagramTests: ExportingDiagramFixture
+    public class ExportingDiagramTests: ExportingDiagramFixture, IDisposable
     {
+        public ExportingDiagramTests()
+        {
+            Setup();
+        }
+
         [Fact]
         public void TestExportWithoutImages()
         {
-            Setup();
-            
             var diagrams = new Diagram[]
             {
                 ContextDiagramBuilder.Build() with { Title = "Diagram" },
@@ -28,8 +32,6 @@ namespace C4Sharp.IntegratedTests
             VerifyIfResourceFilesExists();
             VerifyIfPumlFilesExists("diagram");
             VerifyIfPngFilesNonExists("diagram");
-            
-            CleanUp();
         }         
         
         [Fact]
@@ -62,8 +64,6 @@ namespace C4Sharp.IntegratedTests
         [Fact]
         public void TestExportOnlyPngToDefaultPath()
         {
-            Setup();
-            
             var diagrams = new Diagram[]
             {
                 ContextDiagramBuilder.Build() with { Title = "Diagram" },
@@ -72,7 +72,6 @@ namespace C4Sharp.IntegratedTests
                 DeploymentDiagramBuilder.Build() with { Title = "Diagram" }
             };
 
-            
             new PlantumlSession()
                 .UseDiagramImageBuilder()
                 .Export(diagrams);
@@ -81,15 +80,11 @@ namespace C4Sharp.IntegratedTests
             VerifyIfPumlFilesExists("diagram");
             VerifyIfPngFilesExists("diagram");
             VerifyIfSvgFilesNonExists("diagram");
-
-            CleanUp();
         }
 
         [Fact]
         public void TestExportOnlySvgToDefaultPath()
         {
-            Setup();
-
             var diagrams = new Diagram[]
             {
                 ContextDiagramBuilder.Build() with { Title = "Diagram" },
@@ -97,7 +92,6 @@ namespace C4Sharp.IntegratedTests
                 ComponentDiagramBuilder.Build() with { Title = "Diagram" },
                 DeploymentDiagramBuilder.Build() with { Title = "Diagram" }
             };
-
 
             new PlantumlSession()
                 .UseDiagramSvgImageBuilder()
@@ -107,15 +101,11 @@ namespace C4Sharp.IntegratedTests
             VerifyIfPumlFilesExists("diagram");
             VerifyIfPngFilesNonExists("diagram");
             VerifyIfSvgFilesExists("diagram");
-
-            CleanUp();
         }
 
         [Fact]
         public void TestExportPngAndSvgToDefaultPath()
         {
-            Setup();
-
             var diagrams = new Diagram[]
             {
                 ContextDiagramBuilder.Build() with { Title = "Diagram" },
@@ -123,7 +113,6 @@ namespace C4Sharp.IntegratedTests
                 ComponentDiagramBuilder.Build() with { Title = "Diagram" },
                 DeploymentDiagramBuilder.Build() with { Title = "Diagram" }
             };
-
 
             new PlantumlSession()
                 .UseDiagramImageBuilder()
@@ -134,7 +123,10 @@ namespace C4Sharp.IntegratedTests
             VerifyIfPumlFilesExists("diagram");
             VerifyIfPngFilesExists("diagram");
             VerifyIfSvgFilesExists("diagram");
+        }
 
+        public void Dispose()
+        {
             CleanUp();
         }
     }
