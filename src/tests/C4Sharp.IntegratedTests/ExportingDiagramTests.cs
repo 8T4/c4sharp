@@ -10,7 +10,7 @@ namespace C4Sharp.IntegratedTests
     public class ExportingDiagramTests: ExportingDiagramFixture
     {
         [Fact]
-        public void TestExporteWithoutImages()
+        public void TestExportWithoutImages()
         {
             Setup();
             
@@ -33,7 +33,7 @@ namespace C4Sharp.IntegratedTests
         }         
         
         [Fact]
-        public void TestExportToEspecifiedPath()
+        public void TestExportToSpecifiedPath()
         {
             const string path = "c4temp";
             Setup(path);
@@ -60,7 +60,7 @@ namespace C4Sharp.IntegratedTests
         }        
         
         [Fact]
-        public void TestExportToDefaultPath()
+        public void TestExportOnlyPngToDefaultPath()
         {
             Setup();
             
@@ -80,12 +80,39 @@ namespace C4Sharp.IntegratedTests
             VerifyIfResourceFilesExists();
             VerifyIfPumlFilesExists("diagram");
             VerifyIfPngFilesExists("diagram");
-            
+            VerifyIfSvgFilesNonExists("diagram");
+
             CleanUp();
         }
 
         [Fact]
-        public void TestExportSvgToDefaultPath()
+        public void TestExportOnlySvgToDefaultPath()
+        {
+            Setup();
+
+            var diagrams = new Diagram[]
+            {
+                ContextDiagramBuilder.Build() with { Title = "Diagram" },
+                ContainerDiagramBuilder.Build() with { Title = "Diagram" },
+                ComponentDiagramBuilder.Build() with { Title = "Diagram" },
+                DeploymentDiagramBuilder.Build() with { Title = "Diagram" }
+            };
+
+
+            new PlantumlSession()
+                .UseDiagramSvgImageBuilder()
+                .Export(diagrams);
+
+            VerifyIfResourceFilesExists();
+            VerifyIfPumlFilesExists("diagram");
+            VerifyIfPngFilesNonExists("diagram");
+            VerifyIfSvgFilesExists("diagram");
+
+            CleanUp();
+        }
+
+        [Fact]
+        public void TestExportPngAndSvgToDefaultPath()
         {
             Setup();
 
