@@ -1,10 +1,8 @@
-﻿using System;
+﻿using C4Sharp.Diagrams;
+using C4Sharp.FileSystem;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
-using C4Sharp.Diagrams;
-using C4Sharp.FileSystem;
 
 namespace C4Sharp.Models.Plantuml
 {
@@ -48,8 +46,14 @@ namespace C4Sharp.Models.Plantuml
             
             if (session.GenerateDiagramImages)
             {
-                session.Execute(path, true);
+                session.Execute(path, true, "png");
             }
+
+            if (session.GenerateDiagramSvgImages)
+            {
+                session.Execute(path, true, "svg");
+            }
+
         }
 
         /// <summary>

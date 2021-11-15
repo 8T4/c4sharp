@@ -83,5 +83,32 @@ namespace C4Sharp.IntegratedTests
             
             CleanUp();
         }
+
+        [Fact]
+        public void TestExportSvgToDefaultPath()
+        {
+            Setup();
+
+            var diagrams = new Diagram[]
+            {
+                ContextDiagramBuilder.Build() with { Title = "Diagram" },
+                ContainerDiagramBuilder.Build() with { Title = "Diagram" },
+                ComponentDiagramBuilder.Build() with { Title = "Diagram" },
+                DeploymentDiagramBuilder.Build() with { Title = "Diagram" }
+            };
+
+
+            new PlantumlSession()
+                .UseDiagramImageBuilder()
+                .UseDiagramSvgImageBuilder()
+                .Export(diagrams);
+
+            VerifyIfResourceFilesExists();
+            VerifyIfPumlFilesExists("diagram");
+            VerifyIfPngFilesExists("diagram");
+            VerifyIfSvgFilesExists("diagram");
+
+            CleanUp();
+        }
     }
 }

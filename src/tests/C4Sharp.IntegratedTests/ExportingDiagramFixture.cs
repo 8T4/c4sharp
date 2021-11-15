@@ -56,7 +56,19 @@ namespace C4Sharp.IntegratedTests
 
             VerifyIfFilesExists(files);
         }
-        
+
+        protected static void VerifyIfSvgFilesExists(string diagramName, string path = "c4")
+        {
+            var files = new[]
+            {
+                Path.Join(path, $"{diagramName}-c4component.svg"),
+                Path.Join(path, $"{diagramName}-c4context.svg"),
+                Path.Join(path, $"{diagramName}-c4container.svg"),
+                Path.Join(path, $"{diagramName}-c4deployment.svg")
+            };
+
+            VerifyIfFilesExists(files);
+        }
         protected static void VerifyIfPngFilesNonExists(string diagramName, string path = "c4")
         {
             var files = new[]
