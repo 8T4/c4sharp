@@ -124,14 +124,14 @@ namespace C4Sharp.Models.Plantuml
             }
         }
 
-        private string CalculateJarCommand(bool includeLocalFiles, string generatedImageFormat, string directory)
+        private string CalculateJarCommand(bool useStandardLibrary, string generatedImageFormat, string directory)
         {
             const string includeLocalFilesArg = "-DRELATIVE_INCLUDE=\".\"";
 
-            var localFilesArg = includeLocalFiles ? includeLocalFilesArg: string.Empty;
+            var resourcesOriginArg = useStandardLibrary ? string.Empty : includeLocalFilesArg;
             var imageFormatOutputArg = string.IsNullOrWhiteSpace(generatedImageFormat) ? string.Empty: $"-t{generatedImageFormat}";
 
-            return $"-jar {FilePath} {localFilesArg} {imageFormatOutputArg} -verbose -o \"{directory}\" -charset UTF-8";
+            return $"-jar {FilePath} {resourcesOriginArg} {imageFormatOutputArg} -verbose -o \"{directory}\" -charset UTF-8";
         }
       
         /// <summary>
