@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using C4Sharp.Diagrams;
 using C4Sharp.IntegratedTests.Stubs.Diagrams;
@@ -7,13 +8,16 @@ using Xunit;
 namespace C4Sharp.IntegratedTests
 {
     
-    public class ExportingDiagramTests: ExportingDiagramFixture
+    public class ExportingDiagramTests: ExportingDiagramFixture, IDisposable
     {
-        [Fact]
-        public void TestExporteWithoutImages()
+        public ExportingDiagramTests()
         {
             Setup();
-            
+        }
+
+        [Fact]
+        public void TestExportWithoutImages()
+        {
             var diagrams = new Diagram[]
             {
                 ContextDiagramBuilder.Build() with { Title = "Diagram" },
@@ -28,12 +32,10 @@ namespace C4Sharp.IntegratedTests
             VerifyIfResourceFilesExists();
             VerifyIfPumlFilesExists("diagram");
             VerifyIfPngFilesNonExists("diagram");
-            
-            CleanUp();
         }         
         
         [Fact]
-        public void TestExportToEspecifiedPath()
+        public void TestExportToSpecifiedPath()
         {
             const string path = "c4temp";
             Setup(path);
@@ -60,10 +62,8 @@ namespace C4Sharp.IntegratedTests
         }        
         
         [Fact]
-        public void TestExportToDefaultPath()
+        public void TestExportOnlyPngToDefaultPath()
         {
-            Setup();
-            
             var diagrams = new Diagram[]
             {
                 ContextDiagramBuilder.Build() with { Title = "Diagram" },
@@ -72,7 +72,6 @@ namespace C4Sharp.IntegratedTests
                 DeploymentDiagramBuilder.Build() with { Title = "Diagram" }
             };
 
-            
             new PlantumlSession()
                 .UseDiagramImageBuilder()
                 .Export(diagrams);
@@ -80,7 +79,54 @@ namespace C4Sharp.IntegratedTests
             VerifyIfResourceFilesExists();
             VerifyIfPumlFilesExists("diagram");
             VerifyIfPngFilesExists("diagram");
-            
+            VerifyIfSvgFilesNonExists("diagram");
+        }
+
+        [Fact]
+        public void TestExportOnlySvgToDefaultPath()
+        {
+            var diagrams = new Diagram[]
+            {
+                ContextDiagramBuilder.Build() with { Title = "Diagram" },
+                ContainerDiagramBuilder.Build() with { Title = "Diagram" },
+                ComponentDiagramBuilder.Build() with { Title = "Diagram" },
+                DeploymentDiagramBuilder.Build() with { Title = "Diagram" }
+            };
+
+            new PlantumlSession()
+                .UseDiagramSvgImageBuilder()
+                .Export(diagrams);
+
+            VerifyIfResourceFilesExists();
+            VerifyIfPumlFilesExists("diagram");
+            VerifyIfPngFilesNonExists("diagram");
+            VerifyIfSvgFilesExists("diagram");
+        }
+
+        [Fact]
+        public void TestExportPngAndSvgToDefaultPath()
+        {
+            var diagrams = new Diagram[]
+            {
+                ContextDiagramBuilder.Build() with { Title = "Diagram" },
+                ContainerDiagramBuilder.Build() with { Title = "Diagram" },
+                ComponentDiagramBuilder.Build() with { Title = "Diagram" },
+                DeploymentDiagramBuilder.Build() with { Title = "Diagram" }
+            };
+
+            new PlantumlSession()
+                .UseDiagramImageBuilder()
+                .UseDiagramSvgImageBuilder()
+                .Export(diagrams);
+
+            VerifyIfResourceFilesExists();
+            VerifyIfPumlFilesExists("diagram");
+            VerifyIfPngFilesExists("diagram");
+            VerifyIfSvgFilesExists("diagram");
+        }
+
+        public void Dispose()
+        {
             CleanUp();
         }
     }

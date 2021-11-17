@@ -13,6 +13,7 @@ namespace C4Sharp.Models.Plantuml
     {
         public bool StandardLibraryBaseUrl { get; private set; }
         public bool GenerateDiagramImages { get; private set; }
+        public bool GenerateDiagramSvgImages { get; private set; }
         private string FilePath { get; }
         private ProcessStartInfo ProcessInfo { get; }
 
@@ -72,12 +73,24 @@ namespace C4Sharp.Models.Plantuml
         }
 
         /// <summary>
+        /// The C4Sharp will generate *.puml files of your diagram.
+        /// Also, you could save the *.svg files using this method
+        /// </summary>
+        /// <returns></returns>
+        public PlantumlSession UseDiagramSvgImageBuilder()
+        {
+            GenerateDiagramSvgImages = true;
+            return this;
+        }
+
+        /// <summary>
         /// Execute plantuml.jar
         /// </summary>
         /// <param name="path">puml files path</param>
         /// <param name="processWholeDirectory">process all *.puml files</param>
+        /// <param name="generatedImageFormat">specifies the format of the generated images</param>
         /// <exception cref="PlantumlException"></exception>
-        internal void Execute(string path, bool processWholeDirectory)
+        internal void Execute(string path, bool processWholeDirectory, string generatedImageFormat)
         {
             var directory = processWholeDirectory
                 ? path
@@ -91,10 +104,8 @@ namespace C4Sharp.Models.Plantuml
                 }
 
                 var results = new StringBuilder();
-
-                var jar = StandardLibraryBaseUrl
-                    ? $"-jar {FilePath} -verbose -o \"{directory}\" -charset UTF-8"
-                    : $"-jar {FilePath} -DRELATIVE_INCLUDE=\".\" -verbose -o \"{directory}\" -charset UTF-8";
+                
+                var jar = CalculateJarCommand(StandardLibraryBaseUrl, generatedImageFormat, directory);
 
                 ProcessInfo.Arguments = $"{jar} {path}";
                 ProcessInfo.RedirectStandardOutput = true;
@@ -113,6 +124,16 @@ namespace C4Sharp.Models.Plantuml
             }
         }
 
+        private string CalculateJarCommand(bool useStandardLibrary, string generatedImageFormat, string directory)
+        {
+            const string includeLocalFilesArg = "-DRELATIVE_INCLUDE=\".\"";
+
+            var resourcesOriginArg = useStandardLibrary ? string.Empty : includeLocalFilesArg;
+            var imageFormatOutputArg = string.IsNullOrWhiteSpace(generatedImageFormat) ? string.Empty: $"-t{generatedImageFormat}";
+
+            return $"-jar {FilePath} {resourcesOriginArg} {imageFormatOutputArg} -verbose -o \"{directory}\" -charset UTF-8";
+        }
+      
         /// <summary>
         /// Clear Plantuml Resource
         /// </summary>
