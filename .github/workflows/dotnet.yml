@@ -7,7 +7,7 @@ on:
     branches: [ main ]
     
 env:
-  VERSION: 3.1.${{ github.run_number }}
+  VERSION: 3.2.${{ github.run_number }}
   NUGET_INDEX: https://api.nuget.org/v3/index.json
   BUILD_TYPE: Release 
 
