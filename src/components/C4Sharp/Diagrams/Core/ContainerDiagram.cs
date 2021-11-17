@@ -7,13 +7,5 @@
     /// support/operations staff alike.
     /// <see href="https://c4model.com/#ContainerDiagram"/>
     /// </summary>    
-    public record ContainerDiagram: Diagram
-    {
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public ContainerDiagram() : base("C4_Container")
-        {
-        }
-    }
+    public record ContainerDiagram() : Diagram("C4_Container");
 }

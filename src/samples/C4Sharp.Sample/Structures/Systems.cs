@@ -11,7 +11,8 @@ namespace C4Sharp.Sample.Structures
             "BankingSystem",
             "Internet Banking System")
         {
-            Description = "Allows customers to view information about their bank accounts, and make payments."
+            Description = "Allows customers to view information about their " +
+                          "bank accounts, and make payments."
         };
 
         private static SoftwareSystem _mainframe;
@@ -20,7 +21,8 @@ namespace C4Sharp.Sample.Structures
             "Mainframe",
             "Mainframe Banking System")
         {
-            Description = "Stores all of the core banking information about customers, accounts, transactions, etc.",
+            Description = "Stores all of the core banking information about customers, " +
+                          "accounts, transactions, etc.",
             Boundary = Boundary.External
         };
 

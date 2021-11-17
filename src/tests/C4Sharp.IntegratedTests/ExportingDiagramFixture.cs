@@ -21,11 +21,11 @@ namespace C4Sharp.IntegratedTests
         {
             var files = new[]
             {
-                Path.Join(path, "resources", "C4.puml"),
-                Path.Join(path, "resources", "C4_Component.puml"),
-                Path.Join(path, "resources", "C4_Context.puml"),
-                Path.Join(path, "resources", "C4_Container.puml"),
-                Path.Join(path, "resources", "C4_Deployment.puml"),
+                Path.Join(path, "..", ".c4s", "C4.puml"),
+                Path.Join(path, "..", ".c4s", "C4_Component.puml"),
+                Path.Join(path, "..", ".c4s", "C4_Context.puml"),
+                Path.Join(path, "..", ".c4s", "C4_Container.puml"),
+                Path.Join(path, "..", ".c4s", "C4_Deployment.puml"),
             };
 
             VerifyIfFilesExists(files);

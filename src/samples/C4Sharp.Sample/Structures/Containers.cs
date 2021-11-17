@@ -7,7 +7,7 @@ namespace C4Sharp.Sample.Structures
         private static Container _webApp;
 
         public static Container WebApp => _webApp ??= new Container(
-            "WebApp", "WebApp")
+            "Corporate.Finance.Limits.Service.ServiceBus", "WebApp")
         {
             ContainerType = ContainerType.WebApplication,
             Description = "Delivers the static content and the Internet banking SPA",

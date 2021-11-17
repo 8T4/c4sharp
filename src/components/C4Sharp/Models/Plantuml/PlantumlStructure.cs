@@ -24,6 +24,7 @@ namespace C4Sharp.Models.Plantuml
                 Component component => component.ToPumlString(),
                 Container container => container.ToPumlString(),
                 ContainerBoundary containerBoundary => containerBoundary.ToPumlString(),
+                EnterpriseBoundary enterpriseBoundary => enterpriseBoundary.ToPumlString(),
                 _ => string.Empty
             };
         }
@@ -56,7 +57,26 @@ namespace C4Sharp.Models.Plantuml
             stream.AppendLine("}");
 
             return stream.ToString();
-        }           
+        } 
+        
+        private static string ToPumlString(this EnterpriseBoundary boundary)
+        {
+            var stream = new StringBuilder();
+            stream.AppendLine();
+            stream.AppendLine($"Enterprise_Boundary({boundary.Alias}, \"{boundary.Label}\") {{");
+
+            foreach (var structure in boundary.Structures)
+            {
+                if (structure is (Person or SoftwareSystem or EnterpriseBoundary))
+                {
+                    stream.AppendLine($"{SpaceMethods.Indent()}{structure.ToPumlString()}");
+                }
+            }
+
+            stream.AppendLine("}");
+
+            return stream.ToString();
+        }         
         
         private static string ToPumlString(this Component component)
         {

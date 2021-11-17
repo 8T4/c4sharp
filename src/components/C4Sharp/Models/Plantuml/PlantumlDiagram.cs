@@ -81,7 +81,7 @@ namespace C4Sharp.Models.Plantuml
             
             return useUrlInclude 
                 ? $"{standardLibraryBaseUrl}/{pumlFileName}"
-                : Path.Join(C4Directory.ResourcesFolderName, pumlFileName);            
+                : Path.Join(C4SharpDirectory.ResourcesFolderName, pumlFileName);            
         }        
     }
 }
