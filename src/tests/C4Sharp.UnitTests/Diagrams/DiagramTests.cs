@@ -64,16 +64,5 @@ namespace C4Sharp.UnitTests.Diagrams
             diagram.Structures.Should().BeNullOrEmpty();
             diagram.Relationships.Should().BeNullOrEmpty();
         }
-        
-        [Fact]
-        public void TesteWithoutRelationships()
-        {
-            var diagram = ComponentDiagramBuilder.Build() with
-            {
-                Relationships = Array.Empty<Relationship>()
-            };
-
-            Assert.Throws<PlantumlException>(() => diagram.ToPumlString()).Should().BeNull();
-        }
     }
 }
