@@ -67,7 +67,7 @@ namespace C4Sharp.Models.Plantuml
 
             foreach (var structure in boundary.Structures)
             {
-                if (structure is (Person or SoftwareSystem))
+                if (structure is (Person or SoftwareSystem or EnterpriseBoundary))
                 {
                     stream.AppendLine($"{SpaceMethods.Indent()}{structure.ToPumlString()}");
                 }
