@@ -33,8 +33,11 @@ jobs:
     - name: Build
       run: dotnet build --no-restore --configuration Release -p:PackageVersion=${{env.VERSION}}
       
-    - name: Test
-      run: dotnet test ./tests/**/*.*Tests.csproj --no-restore
+    - name: Unit Tests
+      run: dotnet test ./tests/**/*.UnitTests.csproj --no-restore
+      
+    - name: Integrated Tests
+      run: dotnet test ./tests/**/*.IntegratedTests.csproj --no-restore      
 
     - name: Publish Artifact
       if: github.ref == 'refs/heads/main'
