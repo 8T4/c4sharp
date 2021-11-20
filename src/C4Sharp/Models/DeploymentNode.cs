@@ -13,7 +13,7 @@ namespace C4Sharp.Models
     public sealed record DeploymentNode(string Alias, string Label) : Structure(Alias, Label)
     {
         public IEnumerable<DeploymentNode> Nodes { get; init; } = Array.Empty<DeploymentNode>();
-        public Dictionary<string, string> Properties { get; init; }
-        public Container Container { get; init; }
+        public Dictionary<string, string> Properties { get; init; } = new();
+        public Container? Container { get; init; }
     }
 }

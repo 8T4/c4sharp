@@ -1,13 +1,12 @@
 ﻿using C4Sharp.Diagrams;
-using C4Sharp.Models;
-using C4Sharp.Models.Plantuml;
+using C4Sharp.Models.Plantuml.IO;
 using C4Sharp.Sample.Diagrams;
 
 namespace C4Sharp.Sample
 {
     internal static class Program
     {
-        private static void Main(string[] args)
+        private static void Main()
         {
             var diagrams = new Diagram[]
             {

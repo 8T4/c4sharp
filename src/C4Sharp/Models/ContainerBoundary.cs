@@ -9,7 +9,7 @@ namespace C4Sharp.Models
     /// </summary>
     public sealed record ContainerBoundary(string Alias, string Label) : Structure(Alias, Label)
     {
-        public IEnumerable<Component> Components { get; init; }
+        public IEnumerable<Component> Components { get; init; } = Array.Empty<Component>();
         public IEnumerable<Relationship> Relationships { get; init; } = Array.Empty<Relationship>();
     }
 }

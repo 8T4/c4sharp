@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using C4Sharp.Diagrams;
 using C4Sharp.IntegratedTests.Stubs.Diagrams;
-using C4Sharp.Models.Plantuml;
+using C4Sharp.Models.Plantuml.IO;
 using Xunit;
 
 namespace C4Sharp.IntegratedTests

@@ -19,7 +19,7 @@ namespace C4Sharp.Models
     {
         private readonly Dictionary<int, Container> _instances = new();
         public ContainerType ContainerType{ get; init; }
-        public string Technology { get; init; }
+        public string? Technology { get; init; }
         public Container this[int index] => this.GetInstance(index);
 
         /// <summary>
