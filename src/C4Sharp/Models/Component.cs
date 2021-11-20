@@ -15,6 +15,6 @@ namespace C4Sharp.Models
     /// </summary>
     public sealed record Component(string Alias, string Label) : Structure(Alias, Label)
     {
-        public string Technology { get; init; }
+        public string? Technology { get; init; }
     }
 }

@@ -21,7 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\samples\C4Sharp.Sample\C4Sharp.Sample.csproj" />
+      <ProjectReference Include="..\..\src\C4Sharp\C4Sharp.csproj" />
     </ItemGroup>
 
 </Project>

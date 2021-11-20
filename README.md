@@ -29,9 +29,8 @@ dotnet add package C4Sharp
 ### Dependencies
 
 You need these things to run C4Sharp:
- - [.NET Standard 2.1](https://docs.microsoft.com/pt-br/dotnet/standard/net-standard)
+ - [.NET 5.0+](https://docs.microsoft.com/pt-br/dotnet/standard/net-standard)
  - [Java](https://www.java.com/en/download/)
- - [Graphviz](https://plantuml.com/graphviz-dot) 
 
 ### Coding
 

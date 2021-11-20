@@ -7,7 +7,7 @@ on:
     branches: [ main ]
     
 env:
-  VERSION: 3.2.${{ github.run_number }}
+  VERSION: 4.0.${{ github.run_number }}
   NUGET_INDEX: https://api.nuget.org/v3/index.json
   BUILD_TYPE: Release 
 
@@ -33,10 +33,14 @@ jobs:
     - name: Build
       run: dotnet build --no-restore --configuration Release -p:PackageVersion=${{env.VERSION}}
       
-    - name: Test
+    - name: Unit Tests
       run: dotnet test ./tests/**/*.UnitTests.csproj --no-restore
+      
+    - name: Integrated Tests
+      run: dotnet test ./tests/**/*.IntegratedTests.csproj --no-restore      
 
     - name: Publish Artifact
+      if: github.ref == 'refs/heads/main'
       run: |
         dotnet pack --no-restore --configuration ${{ env.BUILD_TYPE }} -p:PackageVersion=${{ env.VERSION }}
         dotnet nuget push ./src/**/*.${{ env.VERSION }}.nupkg --api-key ${{ secrets.NUGET_KEY }} --source ${{ env.NUGET_INDEX }}

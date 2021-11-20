@@ -11,12 +11,13 @@
         <RepositoryUrl>https://github.com/8T4/c4sharp</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>c4, diagrams</PackageTags>
-        <PackageVersion>3.2.0</PackageVersion>
+        <PackageVersion>4.0.0</PackageVersion>
         <PackageIconUrl>https://github.com/8T4/c4sharp/blob/main/LICENSE</PackageIconUrl>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <LangVersion>9</LangVersion>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
@@ -34,8 +35,8 @@
     <ItemGroup>
         <None Remove="Resources\*.puml" />
         <None Remove="Resources\plantuml.jar" />
-        
+
         <EmbeddedResource Include="Resources\*.puml" />
-        <EmbeddedResource Include="Resources\plantuml.jar" />        
+        <EmbeddedResource Include="Resources\plantuml.jar" />
     </ItemGroup>
 </Project>

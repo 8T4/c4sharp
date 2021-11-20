@@ -1,10 +1,6 @@
-using System;
 using C4Sharp.Diagrams;
 using C4Sharp.Diagrams.Core;
 using C4Sharp.Diagrams.Supplementary;
-using C4Sharp.Models.Plantuml;
-using C4Sharp.Models.Relationships;
-using C4Sharp.Sample.Diagrams;
 using FluentAssertions;
 using Xunit;
 
