@@ -1,4 +1,4 @@
-namespace C4Sharp.Diagrams
+namespace C4Sharp.Models.Plantuml.Constants
 {
     public record ElementName
     {

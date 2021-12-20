@@ -19,7 +19,7 @@ namespace C4Sharp.Sample.Diagrams
                 {
                     People.Customer,
                     Boundary(),
-                    Systems.BankingSystem,
+                    Systems.BankingSystem.AddTags("services"),
                     Systems.MailSystem,
                 },
                 Relationships = new[]

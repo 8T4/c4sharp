@@ -17,13 +17,14 @@ namespace C4Sharp.Extensions
         /// </summary>
         /// <see href="https://stackoverflow.com/questions/19335215/what-is-a-slug"/>
         /// <param name="phrase">text to slugfy</param>
+        /// <param name="separator">default separator is hyphens('-')</param>
         /// <returns>text with slug style</returns>
-        internal static string GenerateSlug(this string phrase) 
+        internal static string GenerateSlug(this string phrase, string separator = "-") 
         { 
             var str = phrase.RemoveAccent().ToLower(CultureInfo.InvariantCulture); 
             str = Regex.Replace(str, @"[^a-z0-9\s-]", ""); 
             str = Regex.Replace(str, @"\s+", " ").Trim(); 
-            str = Regex.Replace(str, @"\s", "-"); // hyphens   
+            str = Regex.Replace(str, @"\s", separator);   
             return str; 
         }
         

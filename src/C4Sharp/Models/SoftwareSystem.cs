@@ -1,7 +1,4 @@
-﻿using System;
-using C4Sharp.Models.Relationships;
-
-namespace C4Sharp.Models
+﻿namespace C4Sharp.Models
 {
     /// <summary>
     /// A software system is the highest level of abstraction and describes something that delivers value to its users,

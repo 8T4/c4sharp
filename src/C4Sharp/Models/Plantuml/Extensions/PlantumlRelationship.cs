@@ -1,3 +1,4 @@
+using System.Linq;
 using C4Sharp.Models.Relationships;
 
 namespace C4Sharp.Models.Plantuml.Extensions
@@ -32,10 +33,14 @@ namespace C4Sharp.Models.Plantuml.Extensions
                 Position.None => "",
                 _ => ""
             };
+            
+            var tags = relationship.Tags.Any() 
+                ? $", $tags={string.Join("+", relationship.Tags)}" 
+                : string.Empty;
 
             return string.IsNullOrEmpty(relationship.Protocol)
-                ? $"{direction}({relationship.From}, {relationship.To}, \"{relationship.Label}\")"
-                : $"{direction}({relationship.From}, {relationship.To}, \"{relationship.Label}\", \"{relationship.Protocol}\" )";
+                ? $"{direction}({relationship.From}, {relationship.To}, \"{relationship.Label}\"{tags})"
+                : $"{direction}({relationship.From}, {relationship.To}, \"{relationship.Label}\", \"{relationship.Protocol}\"{tags})";
         }        
     }
 }

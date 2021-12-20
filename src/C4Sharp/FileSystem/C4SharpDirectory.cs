@@ -1,6 +1,4 @@
-using System;
 using System.IO;
-using C4Sharp.Extensions;
 
 namespace C4Sharp.FileSystem
 {

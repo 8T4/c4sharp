@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using C4Sharp.Diagrams;
+using C4Sharp.Models.Plantuml.Constants;
 
-namespace C4Sharp.Diagrams
+namespace C4Sharp.Models.Plantuml
 {
-    public class ElementStyle
+    public class ElementStyle: IElementStyle
     {
         public IDictionary<string, string> Items { get; }
 

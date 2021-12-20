@@ -1,4 +1,4 @@
-namespace C4Sharp.Diagrams
+namespace C4Sharp.Models.Plantuml.Constants
 {
     public record Shape
     {
@@ -11,6 +11,6 @@ namespace C4Sharp.Diagrams
         /// </summary>
         public static Shape EightSidedShape => new() { Value = "EightSidedShape()"};
 
-        public string Value { get; init; } = string.Empty;        
+        public string Value { get; private init; } = string.Empty;        
     }
 }

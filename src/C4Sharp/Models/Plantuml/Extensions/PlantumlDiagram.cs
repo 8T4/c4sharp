@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using C4Sharp.Diagrams;
 using C4Sharp.FileSystem;
+using C4Sharp.Models.Plantuml.Constants;
 
 namespace C4Sharp.Models.Plantuml.Extensions
 {
@@ -55,29 +56,7 @@ namespace C4Sharp.Models.Plantuml.Extensions
             //diagram.UpdateElementStyle(elementName.Name, item);
             return diagram;
         }
-
-        /// <summary>
-        /// Introduces a new relation tag. The styles of the tagged relations are updated and the tag is displayed
-        /// in the calculated legend.
-        /// Perform this PUML ddRelTag(tagStereo, ?textColor, ?lineColor, ?lineStyle)
-        /// </summary>
-        /// <param name="diagram"></param>
-        /// <param name="tagStereo"></param>
-        /// <param name="textColor"></param>
-        /// <param name="lineColor"></param>
-        /// <param name="lineStyle"></param>
-        /// <returns></returns>
-        public static Diagram AddRelTag(this Diagram diagram, string tagStereo, string textColor, string lineColor="#000000", LineStyle? lineStyle = null)
-        {
-            if (string.IsNullOrEmpty(tagStereo))
-                throw new ArgumentNullException(nameof(tagStereo), $"{nameof(tagStereo)} is required");
-
-            var lineStyleValue = lineStyle is null ? string.Empty : $", ?lineStyle={lineStyle.Value}";
-            var item = $"AddRelTag(\"{tagStereo}\", $textColor={textColor}, $lineColor={lineColor}{lineStyleValue})";
-            diagram.AddRelTag(tagStereo, item);
-            return diagram;
-        }        
-
+        
         private static StringBuilder BuildHeader(this StringBuilder stream, Diagram diagram, bool useStandardLibrary)
         {
             var path = GetPumlFilePath(diagram, useStandardLibrary);
@@ -92,7 +71,8 @@ namespace C4Sharp.Models.Plantuml.Extensions
                     stream.AppendLine(value);
                 }
             }
-
+            stream.AppendLine();
+            
             if (diagram.Style is not null)
             {
                 foreach (var (_, value) in diagram.Style.Items)
@@ -100,6 +80,15 @@ namespace C4Sharp.Models.Plantuml.Extensions
                     stream.AppendLine(value);
                 }
             }
+            stream.AppendLine();
+            
+            if (diagram.RelTags is not null)
+            {
+                foreach (var (_, value) in diagram.RelTags.Items)
+                {
+                    stream.AppendLine(value);
+                }
+            }            
 
             stream.AppendLine();
             
