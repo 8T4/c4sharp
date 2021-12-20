@@ -64,33 +64,7 @@ namespace C4Sharp.Models.Plantuml.Extensions
             stream.AppendLine($"!include {path}");
             stream.AppendLine();
 
-            if (diagram.Tags is not null)
-            {
-                foreach (var (_, value) in diagram.Tags.Items)
-                {
-                    stream.AppendLine(value);
-                }
-            }
-            stream.AppendLine();
-            
-            if (diagram.Style is not null)
-            {
-                foreach (var (_, value) in diagram.Style.Items)
-                {
-                    stream.AppendLine(value);
-                }
-            }
-            stream.AppendLine();
-            
-            if (diagram.RelTags is not null)
-            {
-                foreach (var (_, value) in diagram.RelTags.Items)
-                {
-                    stream.AppendLine(value);
-                }
-            }            
-
-            stream.AppendLine();
+            BuildStyleSession(stream, diagram);
             
             if (diagram.LayoutWithLegend && !diagram.ShowLegend)
             {
@@ -113,6 +87,39 @@ namespace C4Sharp.Models.Plantuml.Extensions
             }
 
             return stream;
+        }
+
+        private static void BuildStyleSession(StringBuilder stream, Diagram diagram)
+        {
+            if (diagram.Tags is not null)
+            {
+                foreach (var (_, value) in diagram.Tags.Items)
+                {
+                    stream.AppendLine(value);
+                }
+                
+                stream.AppendLine();
+            }
+            
+            if (diagram.Style is not null)
+            {
+                foreach (var (_, value) in diagram.Style.Items)
+                {
+                    stream.AppendLine(value);
+                }
+                
+                stream.AppendLine();
+            }
+            
+            if (diagram.RelTags is not null)
+            {
+                foreach (var (_, value) in diagram.RelTags.Items)
+                {
+                    stream.AppendLine(value);
+                }
+                
+                stream.AppendLine();
+            }                 
         }
 
         private static StringBuilder BuildBody(this StringBuilder stream, Diagram diagram)

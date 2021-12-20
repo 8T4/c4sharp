@@ -14,6 +14,17 @@ namespace C4Sharp.Models.Plantuml
             Items = new Dictionary<string, string>();
         }
         
+        /// <summary>
+        /// This call updates the default style of the elements (component, ...) and creates no additional legend entry.
+        /// </summary>
+        /// <param name="elementName"></param>
+        /// <param name="bgColor"></param>
+        /// <param name="fontColor"></param>
+        /// <param name="borderColor"></param>
+        /// <param name="shadowing"></param>
+        /// <param name="shape"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public ElementStyle UpdateElementStyle(ElementName elementName, string bgColor, string fontColor="#ffffff", string borderColor="#00000000", bool shadowing = false, Shape? shape = null)
         {
             if (elementName is null)
