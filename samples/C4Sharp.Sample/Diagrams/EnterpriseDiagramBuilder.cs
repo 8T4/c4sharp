@@ -1,3 +1,4 @@
+using C4Sharp.Diagrams;
 using C4Sharp.Diagrams.Core;
 using C4Sharp.Models;
 using C4Sharp.Models.Relationships;
@@ -16,6 +17,10 @@ namespace C4Sharp.Sample.Diagrams
             return new ()
             {
                 Title = "System Enterprise diagram for Internet Banking System",
+                Style = new ElementStyle()
+                    .UpdateElementStyle(ElementName.ExternalPerson, "#7f3b08", "#7f3b08")
+                    .UpdateElementStyle(ElementName.Person, "#55ACEE", "#55ACEE")
+                    .UpdateElementStyle(ElementName.ExternalSystem, bgColor: "#3F6684", shape: Shape.RoundedBoxShape ),
                 Structures = new Structure[]
                 {
                     Customer,

@@ -20,7 +20,7 @@ namespace C4Sharp.Sample
             new PlantumlSession()
                 .UseDiagramImageBuilder()
                 .UseDiagramSvgImageBuilder()
-                .UseStandardLibraryBaseUrl()
+                //.UseStandardLibraryBaseUrl()
                 .Export(diagrams);
         }
     }
