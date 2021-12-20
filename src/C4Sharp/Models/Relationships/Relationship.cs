@@ -1,4 +1,6 @@
-﻿namespace C4Sharp.Models.Relationships
+﻿using System;
+
+namespace C4Sharp.Models.Relationships
 {
     /// <summary>
     /// Relationship
@@ -9,6 +11,7 @@
         public string To { get; }
         public string Label { get; private set; }
         public string Protocol { get; private set; }
+        public string[] Tags { get; private init; }
         public Position Position { get; private set; }
         public Direction Direction { get; }
         
@@ -58,7 +61,7 @@
             Direction = direction;
             Protocol = protocol;
             Position = position;
-            
+            Tags = Array.Empty<string>();
         }
 
         /// <summary>
@@ -83,5 +86,7 @@
             : this(from, direction, to, label, string.Empty, Position.None)
         {
         }
+
+        public Relationship AddTags(params string[] values) => this with{ Tags = values };
     }
 }

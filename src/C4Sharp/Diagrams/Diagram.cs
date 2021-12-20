@@ -12,13 +12,16 @@ namespace C4Sharp.Diagrams
     public abstract record Diagram
     {
         internal string Name { get; }
-        public bool LayoutWithLegend { get; set; }
-        public bool ShowLegend { get; set; }
-        public bool LayoutAsSketch { get; set; }
-        public string? Title { get; set; }
-        public DiagramLayout FlowVisualization { get; set; }
-        public Structure[] Structures { get; set; }
-        public Relationship[] Relationships { get; set; }
+        public bool LayoutWithLegend { get; init; }
+        public bool ShowLegend { get; init; }
+        public bool LayoutAsSketch { get; init; }
+        public string? Title { get; init; }
+        public DiagramLayout FlowVisualization { get; init; }
+        public Structure[] Structures { get; init; }
+        public Relationship[] Relationships { get; init; }
+        public IElementStyle? Style { get; private init; } = default;
+        public IElementTag? Tags { get; private init; } = default;
+        public IRelationshipTag? RelTags { get; private init; } = default;
 
         /// <summary>
         /// Constructor 
@@ -34,12 +37,15 @@ namespace C4Sharp.Diagrams
             Structures = Array.Empty<Structure>();
             Relationships = Array.Empty<Relationship>();
         }
-        
+
+        public Diagram SetStyle(IElementStyle style) => this with { Style = style };
+        public Diagram SetTags(IElementTag tag) => this with { Tags = tag };
+        public Diagram SetRelTags(IRelationshipTag tag) => this with { RelTags = tag };
+
         /// <summary>
         /// Slugfy "title-name"
         /// </summary>
         /// <returns></returns>
-        public string Slug() =>
-            $"{Title}-{Name}".GenerateSlug();        
+        public string Slug() => $"{Title}-{Name}".GenerateSlug();
     }
 }

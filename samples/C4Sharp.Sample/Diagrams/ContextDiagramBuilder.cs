@@ -13,7 +13,7 @@ namespace C4Sharp.Sample.Diagrams
     {
         public static ContextDiagram Build()
         {
-            return new ()
+            return new ContextDiagram()
             {
                 Title = "System Context diagram for Internet Banking System",
                 Structures = new Structure[]
@@ -25,7 +25,7 @@ namespace C4Sharp.Sample.Diagrams
                 },
                 Relationships = new[]
                 {
-                    Customer > BankingSystem,
+                    (Customer > BankingSystem).AddTags("error"),
                     (Customer < MailSystem)["Sends e-mails to"],
                     (BankingSystem > MailSystem)["Sends e-mails", "SMTP"][Neighbor],
                     BankingSystem > Mainframe,

@@ -1,7 +1,9 @@
+using System;
 using System.IO;
 using System.Text;
 using C4Sharp.Diagrams;
 using C4Sharp.FileSystem;
+using C4Sharp.Models.Plantuml.Constants;
 
 namespace C4Sharp.Models.Plantuml.Extensions
 {
@@ -26,13 +28,70 @@ namespace C4Sharp.Models.Plantuml.Extensions
         /// <returns></returns>
         public static string ToPumlString(this Diagram diagram, bool useStandardLibrary)
         {
+            return new StringBuilder()
+                .BuildHeader(diagram, useStandardLibrary)
+                .BuildBody(diagram)
+                .BuildFooter(diagram)
+                .ToString();
+        }
+
+        /// <summary>
+        /// This call updates the default style of the elements (component, ...) and creates no additional legend entry.
+        /// perform this PUML comandUpdate ElementStyle(elementName, ?bgColor, ?fontColor, ?borderColor, ?shadowing)
+        /// </summary>
+        /// <param name="diagram"></param>
+        /// <param name="elementName">(component, person, container,...)</param>
+        /// <param name="bgColor">background color</param>
+        /// <param name="fontColor">font color</param>
+        /// <param name="borderColor">border color</param>
+        /// <param name="shadowing">shadowing</param>
+        /// <param name="shape"></param>              
+        public static Diagram UpdateElementStyle(this Diagram diagram, ElementName elementName, string bgColor, string fontColor, string borderColor, bool shadowing, Shape? shape = null)
+        {
+            if (elementName is null)
+                throw new ArgumentNullException(nameof(elementName), $"{nameof(elementName)} is required");
+            
+            var shapeValue = shape is null ? string.Empty : $", ?shape={shape.Value}";
+            var item = $"UpdateElementStyle(\"{elementName}\", $bgColor={bgColor}, $fontColor={fontColor}, $borderColor={borderColor}, $shadowing=\"{shadowing}\"{shapeValue} )";
+            //diagram.UpdateElementStyle(elementName.Name, item);
+            return diagram;
+        }
+        
+        private static StringBuilder BuildHeader(this StringBuilder stream, Diagram diagram, bool useStandardLibrary)
+        {
             var path = GetPumlFilePath(diagram, useStandardLibrary);
-                 
-            var stream = new StringBuilder();
             stream.AppendLine($"@startuml {diagram.Slug()}");
             stream.AppendLine($"!include {path}");
             stream.AppendLine();
 
+            if (diagram.Tags is not null)
+            {
+                foreach (var (_, value) in diagram.Tags.Items)
+                {
+                    stream.AppendLine(value);
+                }
+            }
+            stream.AppendLine();
+            
+            if (diagram.Style is not null)
+            {
+                foreach (var (_, value) in diagram.Style.Items)
+                {
+                    stream.AppendLine(value);
+                }
+            }
+            stream.AppendLine();
+            
+            if (diagram.RelTags is not null)
+            {
+                foreach (var (_, value) in diagram.RelTags.Items)
+                {
+                    stream.AppendLine(value);
+                }
+            }            
+
+            stream.AppendLine();
+            
             if (diagram.LayoutWithLegend && !diagram.ShowLegend)
             {
                 stream.AppendLine("LAYOUT_WITH_LEGEND()");
@@ -42,16 +101,22 @@ namespace C4Sharp.Models.Plantuml.Extensions
             {
                 stream.AppendLine("LAYOUT_AS_SKETCH()");
             }
-            
+
+            stream.AppendLine("SHOW_PERSON_PORTRAIT()");
             stream.AppendLine($"{(diagram.FlowVisualization == DiagramLayout.TopDown ? "LAYOUT_TOP_DOWN()" : "LAYOUT_LEFT_RIGHT()")}");
-            stream.AppendLine();
-            
+            stream.AppendLine(); 
+                        
             if (!string.IsNullOrWhiteSpace(diagram.Title))
             {
                 stream.AppendLine($"title {diagram.Title}");
                 stream.AppendLine();
             }
 
+            return stream;
+        }
+
+        private static StringBuilder BuildBody(this StringBuilder stream, Diagram diagram)
+        {
             foreach (var structure in diagram.Structures)
             {
                 stream.AppendLine(structure.ToPumlString());
@@ -64,6 +129,11 @@ namespace C4Sharp.Models.Plantuml.Extensions
                 stream.AppendLine(relationship.ToPumlString());
             }
 
+            return stream;
+        }
+
+        private static StringBuilder BuildFooter(this StringBuilder stream, Diagram diagram)
+        {
             if (diagram.ShowLegend)
             {
                 stream.AppendLine();
@@ -71,7 +141,8 @@ namespace C4Sharp.Models.Plantuml.Extensions
             }
 
             stream.AppendLine("@enduml");
-            return stream.ToString();
+
+            return stream;
         }
 
         private static string GetPumlFilePath(this Diagram diagram, bool useUrlInclude)

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using C4Sharp.Extensions;
-using C4Sharp.Models.Relationships;
 
 namespace C4Sharp.Models
 {
@@ -17,32 +16,36 @@ namespace C4Sharp.Models
     /// </summary>
     public sealed record Container(string Alias, string Label) : Structure(Alias, Label)
     {
-        private readonly Dictionary<int, Container> _instances = new();
+        private readonly Dictionary<string, Container> _instances = new();
+        
         public ContainerType ContainerType{ get; init; }
         public string? Technology { get; init; }
-        public Container this[int index] => this.GetInstance(index);
+        public Container this[int index] => GetInstance($"instance {index}");
+        public Container this[string instanceName] => GetInstance(instanceName);
 
         /// <summary>
         /// Get or Create a instance of current container
         /// </summary>
-        /// <param name="code">instance code</param>
+        /// <param name="name">instance name</param>
         /// <returns>New Container</returns>
-        private Container GetInstance(int code)
+        private Container GetInstance(string name)
         {
-            if (_instances.ContainsKey(code))
+            var key = name.GenerateSlug(".");
+            
+            if (_instances.ContainsKey(key))
             {
-                return _instances[code];
+                return _instances[key];
             }
-
-            var container = new Container($"{Alias}{code}", Label) with
+            
+            var container = new Container($"{Alias}.{key}", Label)
             {
-                ContainerType = this.ContainerType, 
-                Description = this.Description, 
-                Technology = this.Technology,
-                Boundary = this.Boundary
+                ContainerType = ContainerType, 
+                Description = Description, 
+                Technology = Technology,
+                Boundary = Boundary
             };
 
-            _instances[code] = container;
+            _instances[key] = container;
             return container;
         }
     }

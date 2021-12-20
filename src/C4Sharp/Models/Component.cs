@@ -1,7 +1,4 @@
-﻿using System;
-using C4Sharp.Models.Relationships;
-
-namespace C4Sharp.Models
+﻿namespace C4Sharp.Models
 {
     /// <summary>
     /// The word "component" is a hugely overloaded term in the software development industry, but in this context a
