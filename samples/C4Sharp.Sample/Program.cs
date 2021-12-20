@@ -1,5 +1,4 @@
-﻿using C4Sharp.Diagrams;
-using C4Sharp.Models.Plantuml;
+﻿using C4Sharp.Models.Plantuml;
 using C4Sharp.Models.Plantuml.Constants;
 using C4Sharp.Models.Plantuml.IO;
 using C4Sharp.Sample.Diagrams;
@@ -18,25 +17,17 @@ namespace C4Sharp.Sample
 
         private static readonly ElementTag Tags = new ElementTag()
             .AddElementTag("services", "#3F6684", shape: Shape.EightSidedShape);
-        
+
         private static void Main()
         {
-            
-            var diagrams = new Diagram[]
+            var diagrams = new[]
             {
-                ContextDiagramBuilder.Build()
-                    .SetStyle(Style)
-                    .SetRelTags(Reltags),
-                
-                ContainerDiagramBuilder.Build()
-                    .SetTags(Tags),
-                
+                ContextDiagramBuilder.Build().SetStyle(Style).SetRelTags(Reltags),
+                ContainerDiagramBuilder.Build().SetTags(Tags),
                 ComponentDiagramBuilder.Build(),
                 DeploymentDiagramBuilder.Build(),
-                EnterpriseDiagramBuilder.Build()
-                    .SetStyle(Style),
+                EnterpriseDiagramBuilder.Build().SetStyle(Style),
             };
-
             new PlantumlSession()
                 .UseDiagramImageBuilder()
                 .UseDiagramSvgImageBuilder()

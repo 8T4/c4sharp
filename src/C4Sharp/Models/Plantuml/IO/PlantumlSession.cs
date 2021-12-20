@@ -92,7 +92,7 @@ namespace C4Sharp.Models.Plantuml.IO
 
                 var jar = CalculateJarCommand(StandardLibraryBaseUrl, generatedImageFormat, directory);
 
-                ProcessInfo.Arguments = $"{jar} {path}";
+                ProcessInfo.Arguments = $"{jar} \"{path}\"";
                 ProcessInfo.RedirectStandardOutput = true;
                 ProcessInfo.StandardOutputEncoding = Encoding.UTF8;
 
