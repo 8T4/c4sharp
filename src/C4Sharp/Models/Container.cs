@@ -42,7 +42,8 @@ namespace C4Sharp.Models
                 ContainerType = ContainerType, 
                 Description = Description, 
                 Technology = Technology,
-                Boundary = Boundary
+                Boundary = Boundary,
+                Tags = Tags
             };
 
             _instances[key] = container;
