@@ -15,7 +15,7 @@ namespace C4Sharp.Models
         public string Alias { get; }
         public string Label { get; }
         public string Description { get; init; } = string.Empty;
-        public string[] Tags { get; private init; } = Array.Empty<string>();
+        public string[] Tags { get; init; } = Array.Empty<string>();
         public string Link { get; init; } = string.Empty;
         public Boundary Boundary { get; init; } = Boundary.Internal;
         
@@ -62,7 +62,5 @@ namespace C4Sharp.Models
         /// <returns></returns>
         public static Relationship operator <(Structure a, Structure b) =>
             new (a, Direction.Back, b, "uses");
-        
-        public Structure AddTags(params string[] values) => this with{ Tags = values };        
     }
 }

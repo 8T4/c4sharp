@@ -12,7 +12,8 @@ namespace C4Sharp.Sample.Structures
             "Internet Banking System")
         {
             Description = "Allows customers to view information about their " +
-                          "bank accounts, and make payments."
+                          "bank accounts, and make payments.",
+            Tags = new []{"services"}
         };
 
         private static SoftwareSystem _mainframe;
