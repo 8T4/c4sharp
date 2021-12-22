@@ -180,6 +180,6 @@ namespace C4Sharp.Models.Plantuml.Extensions
              value + (structure.Tags.Any() ? $", $tags=\"{string.Join("+", structure.Tags)}\"" : string.Empty);
         
         private static string TryConcatLink(this string value, Structure structure) =>
-            value + (string.IsNullOrEmpty(structure.Link) ? string.Empty : $", $link=\"{structure.Link}");
+            value + (string.IsNullOrEmpty(structure.Link) ? string.Empty : $", $link=\"{structure.Link}\"");
     }
 }
