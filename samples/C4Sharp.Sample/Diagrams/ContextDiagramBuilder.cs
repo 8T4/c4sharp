@@ -1,36 +1,28 @@
 using C4Sharp.Diagrams.Core;
 using C4Sharp.Models;
-using C4Sharp.Models.Relationships;
-using C4Sharp.Sample.Structures;
+using static C4Sharp.Models.Relationships.Position;
+using static C4Sharp.Sample.Structures.People;
+using static C4Sharp.Sample.Structures.Systems;
 
-namespace C4Sharp.Sample.Diagrams
+namespace C4Sharp.Sample.Diagrams;
+public static class ContextDiagramBuilder
 {
-    using static Position;
-    using static People;
-    using static Systems;
-
-    public static class ContextDiagramBuilder
+    public static ContextDiagram Build() => new()
     {
-        public static ContextDiagram Build()
+        Title = "System Context diagram for Internet Banking System",
+        Structures = new Structure[]
         {
-            return new ContextDiagram()
-            {
-                Title = "System Context diagram for Internet Banking System",
-                Structures = new Structure[]
-                {
-                    Customer,
-                    BankingSystem,
-                    Mainframe,
-                    MailSystem
-                },
-                Relationships = new[]
-                {
-                    (Customer > BankingSystem).AddTags("error"),
-                    (Customer < MailSystem)["Sends e-mails to"],
-                    (BankingSystem > MailSystem)["Sends e-mails", "SMTP"][Neighbor],
-                    BankingSystem > Mainframe,
-                }
-            };
+            Customer,
+            BankingSystem,
+            Mainframe,
+            MailSystem
+        },
+        Relationships = new[]
+        {
+            (Customer > BankingSystem).AddTags("error"),
+            (Customer < MailSystem)["Sends e-mails to"],
+            (BankingSystem > MailSystem)["Sends e-mails", "SMTP"][Neighbor],
+            BankingSystem > Mainframe,
         }
-    }
+    };
 }

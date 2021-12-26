@@ -1,60 +1,51 @@
 using C4Sharp.Diagrams;
 using C4Sharp.Diagrams.Core;
 using C4Sharp.Models;
-using C4Sharp.Sample.Structures;
+using static C4Sharp.Sample.Structures.Components;
+using static C4Sharp.Sample.Structures.Containers;
+using static C4Sharp.Sample.Structures.Systems;
 
-namespace C4Sharp.Sample.Diagrams
+namespace C4Sharp.Sample.Diagrams;
+
+public static class ComponentDiagramBuilder
 {
-    using static Systems;    
-    using static Components;    
-    using static Containers;    
-    
-    public static class ComponentDiagramBuilder
+    public static ComponentDiagram Build() => new()
     {
-        public static ComponentDiagram Build()
+        Title = "Internet Banking System API Application",
+        FlowVisualization = DiagramLayout.LeftRight,
+        LayoutAsSketch = true,
+        Structures = new Structure[]
         {
-            return new()
-            {
-                Title = "Internet Banking System API Application",
-                FlowVisualization = DiagramLayout.LeftRight,
-                LayoutAsSketch = true,
-                Structures = new Structure[]
-                {
-                    Spa,
-                    MobileApp,
-                    SqlDatabase,
-                    Mainframe,
-                    Boundary(),
-                },
-                Relationships = new[]
-                {
-                    (Spa > Sign)["Uses", "JSON/HTTPS"],
-                    (Spa > Accounts)["Uses", "JSON/HTTPS"],
-                    (MobileApp > Sign)["Uses", "JSON/HTTPS"],
-                    (MobileApp > Accounts)["Uses", "JSON/HTTPS"],
-                }
-            };
+            Spa,
+            MobileApp,
+            SqlDatabase,
+            Mainframe,
+            Boundary(),
+        },
+        Relationships = new[]
+        {
+            (Spa > Sign)["Uses", "JSON/HTTPS"],
+            (Spa > Accounts)["Uses", "JSON/HTTPS"],
+            (MobileApp > Sign)["Uses", "JSON/HTTPS"],
+            (MobileApp > Accounts)["Uses", "JSON/HTTPS"],
         }
+    };
 
-        private static ContainerBoundary Boundary()
+    private static ContainerBoundary Boundary() => new("c1", "API Application")
+    {
+        Components = new[]
         {
-            return new ("c1", "API Application")
-            {
-                Components = new[]
-                {
-                    Sign,
-                    Accounts,
-                    Security,
-                    MainframeFacade
-                },
-                Relationships = new[]
-                {
-                    Sign > Security,
-                    Accounts > MainframeFacade,
-                    (Security > SqlDatabase)["Read & write to", "JDBC"],
-                    (MainframeFacade > Mainframe)["Uses", "XML/HTTPS"]
-                }
-            };
+            Sign,
+            Accounts,
+            Security,
+            MainframeFacade
+        },
+        Relationships = new[]
+        {
+            Sign > Security,
+            Accounts > MainframeFacade,
+            (Security > SqlDatabase)["Read & write to", "JDBC"],
+            (MainframeFacade > Mainframe)["Uses", "XML/HTTPS"]
         }
-    }
+    };
 }

@@ -1,18 +1,15 @@
-using System;
+namespace C4Sharp.Models.Plantuml.IO;
 
-namespace C4Sharp.Models.Plantuml.IO
+/// <summary>
+/// PlantumlException
+/// </summary>
+public class PlantumlException : Exception
 {
-    /// <summary>
-    /// PlantumlException
-    /// </summary>
-    public class PlantumlException: Exception
+    public PlantumlException(string message) : base(message)
     {
-        public PlantumlException(string message):base(message)
-        {
-        }
-        
-        public PlantumlException(string message, Exception innerException):base(message, innerException)
-        {
-        }
+    }
+
+    public PlantumlException(string message, Exception innerException) : base(message, innerException)
+    {
     }
 }

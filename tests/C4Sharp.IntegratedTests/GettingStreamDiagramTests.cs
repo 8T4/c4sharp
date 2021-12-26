@@ -3,19 +3,18 @@ using C4Sharp.Models.Plantuml.IO;
 using FluentAssertions;
 using Xunit;
 
-namespace C4Sharp.IntegratedTests
+namespace C4Sharp.IntegratedTests;
+
+public class GettingStreamDiagramTests
 {
-    public class GettingStreamDiagramTests
+    [Fact]
+    public void TestGetStream()
     {
-        [Fact]
-        public void TestGetStream()
-        {
-            var diagram = ContextDiagramBuilder.Build() with { Title = "Diagram" };
+        var diagram = ContextDiagramBuilder.Build() with { Title = "Diagram" };
 
-            var session = new PlantumlSession();
-            var (_, results) = session.GetStream(diagram);
+        var session = new PlantumlSession();
+        var (_, results) = session.GetStream(diagram);
 
-            results.Should().NotBeNull();
-        }        
+        results.Should().NotBeNull();
     }
 }
