@@ -22,11 +22,11 @@ namespace C4Sharp.Sample
         {
             var diagrams = new[]
             {
-                ContextDiagramBuilder.Build().SetStyle(Style).SetRelTags(Reltags),
-                ContainerDiagramBuilder.Build().SetTags(Tags),
-                ComponentDiagramBuilder.Build(),
-                DeploymentDiagramBuilder.Build(),
-                EnterpriseDiagramBuilder.Build().SetStyle(Style),
+                new ContextDiagramBuildRunner().Build().SetStyle(Style).SetRelTags(Reltags),
+                new ContainerDiagramBuildRunner().Build().SetTags(Tags),
+                new ComponentDiagramBuildRunner().Build(),
+                new DeploymentDiagramBuildRunner().Build(),
+                new EnterpriseDiagramBuildRunner().Build().SetStyle(Style),
             };
             new PlantumlSession()
                 .UseDiagramImageBuilder()

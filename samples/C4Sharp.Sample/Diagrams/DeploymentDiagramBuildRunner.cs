@@ -1,3 +1,4 @@
+using C4Sharp.Diagrams;
 using C4Sharp.Diagrams.Supplementary;
 using C4Sharp.Models;
 using C4Sharp.Models.Relationships;
@@ -5,11 +6,11 @@ using C4Sharp.Sample.Structures;
 
 namespace C4Sharp.Sample.Diagrams
 {
-    public static class DeploymentDiagramBuilder
+    public class DeploymentDiagramBuildRunner: IDiagramBuildRunner
     {
-        public static DeploymentDiagram Build()
+        public Diagram Build()
         {
-            return new()
+            return new DeploymentDiagram()
             {
                 Title = "System Context diagram for Internet Banking System",
                 Structures = new Structure[]

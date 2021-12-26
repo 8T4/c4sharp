@@ -1,3 +1,9 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using C4Sharp.Tools;
+using C4Sharp.Tools.Root;
 
-Console.WriteLine("Hello, World!");
+await RootCommandBuilder
+    .CreateDefaultBuilder(args)
+    .Configure<Startup>()
+    .Run();
+    
+

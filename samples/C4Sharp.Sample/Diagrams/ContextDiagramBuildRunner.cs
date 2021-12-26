@@ -1,3 +1,4 @@
+using C4Sharp.Diagrams;
 using C4Sharp.Diagrams.Core;
 using C4Sharp.Models;
 using C4Sharp.Models.Relationships;
@@ -9,9 +10,9 @@ namespace C4Sharp.Sample.Diagrams
     using static People;
     using static Systems;
 
-    public static class ContextDiagramBuilder
+    public class ContextDiagramBuildRunner: IDiagramBuildRunner
     {
-        public static ContextDiagram Build()
+        public Diagram Build()
         {
             return new ContextDiagram()
             {

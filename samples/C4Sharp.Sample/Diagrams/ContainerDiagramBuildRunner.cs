@@ -1,3 +1,4 @@
+using C4Sharp.Diagrams;
 using C4Sharp.Diagrams.Core;
 using C4Sharp.Models;
 using C4Sharp.Models.Relationships;
@@ -7,11 +8,11 @@ namespace C4Sharp.Sample.Diagrams
 {
     using static Containers;
     
-    public static class ContainerDiagramBuilder
+    public class ContainerDiagramBuildRunner: IDiagramBuildRunner
     {
-        public static ContainerDiagram Build()
+        public Diagram Build()
         {
-            return new()
+            return new ContainerDiagram()
             {
                 ShowLegend = true,
                 Title = "Container diagram for Internet Banking System",

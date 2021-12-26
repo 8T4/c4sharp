@@ -9,11 +9,11 @@ namespace C4Sharp.Sample.Diagrams
     using static Components;    
     using static Containers;    
     
-    public static class ComponentDiagramBuilder
+    public class ComponentDiagramBuildRunner: IDiagramBuildRunner
     {
-        public static ComponentDiagram Build()
+        public Diagram Build()
         {
-            return new()
+            return new ComponentDiagram()
             {
                 Title = "Internet Banking System API Application",
                 FlowVisualization = DiagramLayout.LeftRight,
