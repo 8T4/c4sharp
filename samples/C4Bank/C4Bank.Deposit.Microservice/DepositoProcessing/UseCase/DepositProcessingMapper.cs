@@ -7,6 +7,4 @@ public static class DepositProcessingMapper
         //TODO: implements mapping class
         return default!;
     }
-    
-  
 }

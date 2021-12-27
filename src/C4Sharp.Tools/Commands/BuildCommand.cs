@@ -131,11 +131,16 @@ public class BuildCommand : Command
 
             var type = typeof(IDiagramBuildRunner);
 
-            var runners = Assembly.LoadFrom(project.OutputFilePath)
-                .GetTypes()
+            var runners = Assembly.LoadFrom(project.OutputFilePath).GetTypes()
                 .Where(p => type.IsAssignableFrom(p) && p.IsClass)
-                .Select(r => (IDiagramBuildRunner)Activator.CreateInstance(r)!);
-            
+                .Select(r => (IDiagramBuildRunner)Activator.CreateInstance(r)!).ToArray();
+
+            if (!runners.Any())
+            {
+                ColorConsole.WriteLine("'IDiagramBuildRunner' implementations NOT FOUND into the project ".Yellow(), project.Name);
+                continue;
+            }
+                
             result.AddRange(runners);
         }
 

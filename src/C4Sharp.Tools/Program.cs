@@ -1,9 +1,13 @@
-﻿using C4Sharp.Tools;
+﻿using C4Sharp.Tools.Commands;
 using C4Sharp.Tools.Root;
 
-await RootCommandBuilder
+var root = RootCommandBuilder
     .CreateDefaultBuilder(args)
-    .Configure<Startup>()
-    .Run();
-    
+    .Configure(context =>
+    {
+        context
+            .Add<GreetingCommand>()
+            .Add<BuildCommand>();
+    });
 
+await root.Run();

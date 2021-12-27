@@ -22,6 +22,12 @@ public class RootCommandBuilder
         startup?.Configuration(_context);
         return this;
     }
+    
+    public RootCommandBuilder Configure(Action<IRootCommandContext> action)
+    {
+        action.Invoke(_context);
+        return this;
+    }    
 
     public async Task Run() => await _context.InvokeAsync(_args);
 
