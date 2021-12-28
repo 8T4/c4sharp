@@ -1,9 +1,6 @@
-using System.Collections.Generic;
+namespace C4Sharp.Diagrams;
 
-namespace C4Sharp.Diagrams
+public interface IDiagramStyle
 {
-    public interface IDiagramStyle
-    {
-        public IDictionary<string, string> Items { get; }
-    }
+    public IDictionary<string, string> Items { get; }
 }

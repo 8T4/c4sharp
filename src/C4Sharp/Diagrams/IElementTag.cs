@@ -1,8 +1,5 @@
-using System.Collections.Generic;
+namespace C4Sharp.Diagrams;
 
-namespace C4Sharp.Diagrams
+public interface IElementTag : IDiagramStyle
 {
-    public interface IElementTag: IDiagramStyle
-    {
-    }
 }
