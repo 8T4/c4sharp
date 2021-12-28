@@ -1,19 +1,11 @@
 ﻿using C4Sharp.Diagrams;
 using C4Sharp.Models.Plantuml.IO;
+using C4Sharp.Sample.Orders;
 
-namespace C4Sharp.Sample.Orders
+var diagrams = new Diagram[]
 {
-    internal static class Program
-    {
-        private static void Main()
-        {
-            var diagrams = new Diagram[]
-            {
-                PackageByLayerDiagram.Diagram,
-            };
+    PackageByLayerDiagram.Diagram,
+};
 
-            using var session = new PlantumlSession();
-            session.Export(diagrams);
-        }
-    }
-}
+using var session = new PlantumlSession();
+session.Export(diagrams);

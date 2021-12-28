@@ -1,20 +1,28 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{758DA496-3186-4129-B0FA-5C3205B52763}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{53454ACB-CE39-4F53-AB32-C28C15720537}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2EAFABEF-1FBB-4DEB-A620-52CBF42F1736}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C4Sharp.Sample", "samples\C4Sharp.Sample\C4Sharp.Sample.csproj", "{37975D66-915F-4388-8849-F9D6693BA9CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "C4Sharp.Sample", "samples\C4Sharp.Sample\C4Sharp.Sample.csproj", "{37975D66-915F-4388-8849-F9D6693BA9CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C4Sharp.Sample.Orders", "samples\C4Sharp.Sample.Orders\C4Sharp.Sample.Orders.csproj", "{4834C449-0A0F-40D3-9297-EFEEAF50A318}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "C4Sharp.Sample.Orders", "samples\C4Sharp.Sample.Orders\C4Sharp.Sample.Orders.csproj", "{4834C449-0A0F-40D3-9297-EFEEAF50A318}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C4Sharp", "src\C4Sharp\C4Sharp.csproj", "{B3850A7A-EBB2-4C33-827B-98B88901A638}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "C4Sharp", "src\C4Sharp\C4Sharp.csproj", "{B3850A7A-EBB2-4C33-827B-98B88901A638}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C4Sharp.IntegratedTests", "tests\C4Sharp.IntegratedTests\C4Sharp.IntegratedTests.csproj", "{652679C0-4067-4ED5-8D97-48A765E7A965}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "C4Sharp.IntegratedTests", "tests\C4Sharp.IntegratedTests\C4Sharp.IntegratedTests.csproj", "{652679C0-4067-4ED5-8D97-48A765E7A965}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C4Sharp.UnitTests", "tests\C4Sharp.UnitTests\C4Sharp.UnitTests.csproj", "{4B6E0F06-65DA-43FB-A984-A08DC6B66665}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "C4Sharp.UnitTests", "tests\C4Sharp.UnitTests\C4Sharp.UnitTests.csproj", "{4B6E0F06-65DA-43FB-A984-A08DC6B66665}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F5D8068E-A8B9-47B9-A36A-91E27FC04A1C}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,11 +51,17 @@ Global
 		{4B6E0F06-65DA-43FB-A984-A08DC6B66665}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B6E0F06-65DA-43FB-A984-A08DC6B66665}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{37975D66-915F-4388-8849-F9D6693BA9CA} = {53454ACB-CE39-4F53-AB32-C28C15720537}
 		{4834C449-0A0F-40D3-9297-EFEEAF50A318} = {53454ACB-CE39-4F53-AB32-C28C15720537}
 		{B3850A7A-EBB2-4C33-827B-98B88901A638} = {758DA496-3186-4129-B0FA-5C3205B52763}
 		{652679C0-4067-4ED5-8D97-48A765E7A965} = {2EAFABEF-1FBB-4DEB-A620-52CBF42F1736}
 		{4B6E0F06-65DA-43FB-A984-A08DC6B66665} = {2EAFABEF-1FBB-4DEB-A620-52CBF42F1736}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {500559FA-7255-43DC-9FD4-5381F61FB632}
 	EndGlobalSection
 EndGlobal
