@@ -1,4 +1,5 @@
-﻿using C4Sharp.Models.Relationships;
+﻿using C4Sharp.Extensions;
+using C4Sharp.Models.Relationships;
 
 namespace C4Sharp.Models;
 
@@ -12,7 +13,7 @@ namespace C4Sharp.Models;
 public abstract record Structure
 {
     public string Alias { get; }
-    public string Label { get; }
+    public string Label { get; } = "";
     public string Description { get; init; } = string.Empty;
     public string[] Tags { get; init; } = Array.Empty<string>();
     public string Link { get; init; } = string.Empty;
@@ -24,6 +25,10 @@ public abstract record Structure
     /// <param name="alias">Should be unique</param>
     /// <param name="label"></param>
     protected Structure(string alias, string label) => (Alias, Label) = (alias, label);
+
+    protected Structure(StructureIdentity identity, string label) : this(identity.Value, label)
+    {
+    }
 
     /// <summary>
     /// Forward relationship

@@ -1,3 +1,0 @@
-namespace C4Bank.Deposit.Microservice.DepositoProcessing.UseCase.Messages.Events;
-
-public record RegisteredDeposit();

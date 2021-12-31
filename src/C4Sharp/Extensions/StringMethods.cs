@@ -27,6 +27,20 @@ internal static class StringMethods
         str = Regex.Replace(str, @"\s", separator);
         return str;
     }
+    
+    /// <summary>
+    /// Split by capitalized words
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    internal static string SplitCapitalizedWords(this string text)
+    {
+        var regex = new Regex(@"
+                (?<=[A-Z])(?=[A-Z][a-z]) | (?<=[^A-Z])(?=[A-Z]) | (?<=[A-Za-z])(?=[^A-Za-z])", 
+            RegexOptions.IgnorePatternWhitespace);
+
+        return regex.Replace(text, " ");
+    }
 
     /// <summary>
     /// Remove Accent from text

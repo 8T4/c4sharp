@@ -5,4 +5,4 @@
 /// components are, their responsibilities and the technology/implementation details.
 /// <see href="https://c4model.com/#ComponentDiagram"/>
 /// </summary>
-public record ComponentDiagram() : Diagram("C4_Component");
+public record ComponentDiagram() : Diagram(DiagramType.Component);

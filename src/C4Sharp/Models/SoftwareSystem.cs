@@ -7,4 +7,18 @@
 /// a single software development team.
 /// <see href="https://c4model.com/"/>
 /// </summary>
-public sealed record SoftwareSystem(string Alias, string Label) : Structure(Alias, Label);
+public sealed record SoftwareSystem : Structure
+{
+    public SoftwareSystem(string alias, string label) : base(alias, label)
+    {
+    }
+    
+    public SoftwareSystem(string alias, string label, string description) : this(alias, label)
+    {
+        Description = description;
+    }    
+
+    public SoftwareSystem(StructureIdentity identity, string label) : base(identity, label)
+    {
+    }
+}

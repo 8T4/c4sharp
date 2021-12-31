@@ -132,7 +132,7 @@ public class BuildCommand : Command
             var type = typeof(IDiagramBuildRunner);
 
             var runners = Assembly.LoadFrom(project.OutputFilePath).GetTypes()
-                .Where(p => type.IsAssignableFrom(p) && p.IsClass)
+                .Where(p => type.IsAssignableFrom(p) && p.IsClass && p != typeof(DiagramBuildRunner))
                 .Select(r => (IDiagramBuildRunner)Activator.CreateInstance(r)!).ToArray();
 
             if (!runners.Any())

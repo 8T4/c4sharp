@@ -18,28 +18,28 @@ public abstract record Diagram
     public DiagramLayout FlowVisualization { get; init; }
     public Structure[] Structures { get; init; }
     public Relationship[] Relationships { get; init; }
-    public IElementStyle? Style { get; private init; } = default;
-    public IElementTag? Tags { get; private init; } = default;
-    public IRelationshipTag? RelTags { get; private init; } = default;
+    public IElementStyle? Style { get; private init; }
+    public IElementTag? Tags { get; private init; }
+    public IRelationshipTag? RelTags { get; private init; }
 
     /// <summary>
     /// Constructor 
     /// </summary>
-    /// <param name="name"></param>
-    protected Diagram(string name)
+    /// <param name="type"></param>
+    protected Diagram(DiagramType type)
     {
         LayoutWithLegend = true;
         LayoutAsSketch = false;
         ShowLegend = false;
         FlowVisualization = DiagramLayout.TopDown;
-        Name = name;
+        Name = type.Value;
         Structures = Array.Empty<Structure>();
         Relationships = Array.Empty<Relationship>();
     }
 
-    public Diagram SetStyle(IElementStyle style) => this with { Style = style };
-    public Diagram SetTags(IElementTag tag) => this with { Tags = tag };
-    public Diagram SetRelTags(IRelationshipTag tag) => this with { RelTags = tag };
+    public Diagram SetStyle(IElementStyle? style) => this with { Style = style };
+    public Diagram SetTags(IElementTag? tag) => this with { Tags = tag };
+    public Diagram SetRelTags(IRelationshipTag? tag) => this with { RelTags = tag };
 
     /// <summary>
     /// Slugfy "title-name"

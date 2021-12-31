@@ -61,6 +61,27 @@ public record Relationship
         Position = position;
         Tags = Array.Empty<string>();
     }
+    
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="from"></param>
+    /// <param name="direction"></param>
+    /// <param name="to"></param>
+    /// <param name="label"></param>
+    /// <param name="protocol"></param>
+    /// <param name="position"></param>
+    protected Relationship(string @from, Direction direction, string to, string label,
+        string protocol, Position position)
+    {
+        From = @from;
+        To = to;
+        Label = label;
+        Direction = direction;
+        Protocol = protocol;
+        Position = position;
+        Tags = Array.Empty<string>();
+    }    
 
     /// <summary>
     /// Constructor
@@ -87,3 +108,10 @@ public record Relationship
 
     public Relationship AddTags(params string[] values) => this with { Tags = values };
 }
+
+public record Relationship<TFrom>(Structure Target, string Label = "uses") 
+    : Relationship(typeof(TFrom).Name, Direction.Forward, Target.Alias, Label, "", Position.None);
+
+public record Relationship<TFrom, TTo>(string Label = "uses") 
+    : Relationship(typeof(TFrom).Name, Direction.Forward, typeof(TTo).Name, Label, "", Position.None);
+

@@ -6,4 +6,4 @@
 /// by its users and the other systems that it interacts with.
 /// <see href="https://c4model.com/#SystemContextDiagram"/>
 /// </summary>
-public record ContextDiagram() : Diagram("C4_Context");
+public record ContextDiagram() : Diagram(DiagramType.Context);

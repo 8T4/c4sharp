@@ -1,7 +1,6 @@
-namespace C4Sharp.Diagrams
+namespace C4Sharp.Diagrams;
+
+public interface IDiagramBuildRunner
 {
-    public interface IDiagramBuildRunner
-    {
-        Diagram Build();
-    }
+    Diagram Build();
 }

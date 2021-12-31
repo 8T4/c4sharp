@@ -13,30 +13,35 @@ namespace C4Sharp.Models;
 ///
 /// <see href="https://c4model.com/#ContainerDiagram"/>
 /// </summary>
-public sealed record Container(string Alias, string Label) : Structure(Alias, Label)
+public record Container : Structure
 {
     private readonly Dictionary<string, Container> _instances = new();
 
     public ContainerType ContainerType { get; init; }
     public string? Technology { get; init; }
-    public Container this[int index] => GetInstance($"instance {index}");
+    public Container this[int index] => GetInstance(index.ToString());
     public Container this[string instanceName] => GetInstance(instanceName);
+    
+    public Container(string alias, string label) : base(alias, label)
+    {
+    }
+
+    protected Container(StructureIdentity identity, string label) : base(identity, label)
+    {
+    }
 
     /// <summary>
     /// Get or Create a instance of current container
     /// </summary>
-    /// <param name="name">instance name</param>
+    /// <param name="instanceName">instance name</param>
     /// <returns>New Container</returns>
-    private Container GetInstance(string name)
+    private Container GetInstance(string instanceName)
     {
-        var key = name.GenerateSlug(".");
+        var id = new StructureIdentity(Alias, instanceName);
 
-        if (_instances.ContainsKey(key))
-        {
-            return _instances[key];
-        }
-
-        var container = new Container($"{Alias}.{key}", Label)
+        _instances.TryGetValue(id.Value, out var instance);
+        
+        var container = instance ?? new Container(id, Label)
         {
             ContainerType = ContainerType,
             Description = Description,
@@ -45,7 +50,20 @@ public sealed record Container(string Alias, string Label) : Structure(Alias, La
             Tags = Tags
         };
 
-        _instances[key] = container;
+        if (instance is null)
+            _instances[id.Value] = container;
+        
         return container;
+    }
+}
+
+public record Container<T> : Container
+{
+    private protected Container(ContainerType containerType, string technology, string description)
+        : base(StructureIdentity.New<T>(), typeof(T).ToNamingConvention())
+    {
+        ContainerType = containerType;
+        Technology = technology;
+        Description = description;
     }
 }

@@ -9,4 +9,4 @@ namespace C4Sharp.Diagrams.Supplementary;
 /// (e.g. a database server, Java EE web/application server, Microsoft IIS), etc. Deployment nodes can be nested.
 /// <see href="https://c4model.com/#DeploymentDiagram"/>
 /// </summary>
-public record DeploymentDiagram() : Diagram("C4_Deployment");
+public record DeploymentDiagram() : Diagram(DiagramType.Deployment);
