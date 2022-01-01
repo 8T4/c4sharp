@@ -1,4 +1,6 @@
-﻿namespace C4Sharp.Models;
+﻿using C4Sharp.Models.Relationships;
+
+namespace C4Sharp.Models;
 
 /// <summary>
 /// A software system is the highest level of abstraction and describes something that delivers value to its users,
@@ -16,9 +18,11 @@ public sealed record SoftwareSystem : Structure
     public SoftwareSystem(string alias, string label, string description) : this(alias, label)
     {
         Description = description;
-    }    
-
-    public SoftwareSystem(StructureIdentity identity, string label) : base(identity, label)
-    {
     }
+    
+    public SoftwareSystem(string alias, string label, string description, Boundary boundary) : this(alias, label)
+    {
+        Description = description;
+        Boundary = boundary;
+    }    
 }

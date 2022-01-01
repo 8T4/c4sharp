@@ -10,33 +10,43 @@ namespace C4Sharp.Diagrams;
 public abstract class DiagramBuildRunner: IDiagramBuildRunner
 {
     private readonly StructureCollection _structures;
-    
-    protected bool LayoutWithLegend { get; set; }
-    protected bool ShowLegend { get; set; }
-    protected bool LayoutAsSketch { get; set; }
-    protected string? Title { get; set; }
-    protected DiagramLayout FlowVisualization { get; set; }    
-    public abstract DiagramType DiagramType { get; }
 
+    protected bool LayoutWithLegend { get; set; } = false;
+    protected bool ShowLegend { get; set; } = false;
+    protected bool LayoutAsSketch { get; set; } = false;
+    protected DiagramLayout FlowVisualization { get; set; } = DiagramLayout.TopDown;
+    
+    public abstract string Title { get; }
+    public abstract DiagramType DiagramType { get; }
+    
     
     protected DiagramBuildRunner()
     {
         _structures = new StructureCollection();
     }
 
-    public Structure? It<T>() => _structures.Items[StructureIdentity.New<T>().Value];
-    public Structure? It<T>(int instance) => _structures.Items[StructureIdentity.New<T>(instance.ToString()).Value];
-    public Structure? It<T>(string instance) => _structures.Items[StructureIdentity.New<T>(instance).Value];
-    public Structure? It(string key) => _structures.Items[key];
-    public Structure? It(string key, int instance) => _structures.Items[new StructureIdentity(key, instance.ToString()).Value];
-    public Structure? It(string key, string instance) => _structures.Items[new StructureIdentity(key, instance).Value];
+    public Structure It<T>() => It(StructureIdentity.New<T>().Value);
+    public Structure It<T>(int instance) => It(StructureIdentity.New<T>(instance.ToString()).Value);
+    public Structure It<T>(string instance) => It(StructureIdentity.New<T>(instance).Value);
+    
+    public Structure It(string key) 
+        => _structures.Items[key] 
+           ?? throw new KeyNotFoundException($"Structure {key} not found");
+    
+    public Structure It(string key, int instance) 
+        => _structures.Items[new StructureIdentity(key, instance.ToString()).Value] 
+           ?? throw new KeyNotFoundException($"Structure {key} not found");
+    
+    public Structure It(string key, string instance) 
+        => _structures.Items[new StructureIdentity(key, instance).Value] 
+           ?? throw new KeyNotFoundException($"Structure {key} not found");
 
 
     protected abstract IEnumerable<Structure> Structures();
     protected abstract IEnumerable<Relationship> Relationships();
-    public virtual IElementStyle? SetStyle() => null;
-    public virtual IElementTag? SetTags() => null;
-    public virtual IRelationshipTag? SetRelTags() => null;    
+    protected virtual IElementStyle? SetStyle() => null;
+    protected virtual IElementTag? SetTags() => null;
+    protected virtual IRelationshipTag? SetRelTags() => null;    
     
     
     public Diagram Build()
@@ -62,7 +72,6 @@ public abstract class DiagramBuildRunner: IDiagramBuildRunner
             LayoutAsSketch = LayoutAsSketch,
             FlowVisualization = FlowVisualization
         };
-
 
         result.SetStyle(SetStyle());
         result.SetTags(SetTags());

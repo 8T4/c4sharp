@@ -109,9 +109,3 @@ public record Relationship
     public Relationship AddTags(params string[] values) => this with { Tags = values };
 }
 
-public record Relationship<TFrom>(Structure Target, string Label = "uses") 
-    : Relationship(typeof(TFrom).Name, Direction.Forward, Target.Alias, Label, "", Position.None);
-
-public record Relationship<TFrom, TTo>(string Label = "uses") 
-    : Relationship(typeof(TFrom).Name, Direction.Forward, typeof(TTo).Name, Label, "", Position.None);
-

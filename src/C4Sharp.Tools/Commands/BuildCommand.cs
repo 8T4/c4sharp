@@ -28,7 +28,7 @@ public class BuildCommand : Command
             if (GetSolutionPath(path, out var slnPath, out var workspace) is false) 
                 return 1;
         
-            RunDotnetBuild(slnPath);
+            //RunDotnetBuild(slnPath);
             var runners = await StartAnalysis(workspace, slnPath);
             GenerateC4Diagrams(runners);
             return 0;
