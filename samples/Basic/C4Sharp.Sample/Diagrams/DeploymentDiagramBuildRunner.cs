@@ -1,35 +1,32 @@
 using C4Sharp.Diagrams;
-using C4Sharp.Diagrams.Supplementary;
 using C4Sharp.Models;
 using C4Sharp.Models.Relationships;
 using C4Sharp.Sample.Structures;
 
 namespace C4Sharp.Sample.Diagrams
 {
-    public class DeploymentDiagramBuildRunner: IDiagramBuildRunner
+    public class DeploymentDiagramBuildRunner: DiagramBuildRunner
     {
-        public Diagram Build()
+        public override string Title => "System Context diagram for Internet Banking System";
+        public override DiagramType DiagramType => DiagramType.Deployment;
+
+        protected override IEnumerable<Structure> Structures() => new Structure[]
         {
-            return new DeploymentDiagram()
-            {
-                Title = "System Context diagram for Internet Banking System",
-                Structures = new Structure[]
-                {
-                    BigBankNode(),
-                    Nodes.Ios("ios", Containers.MobileApp),
-                    Nodes.PersonalComputer("computer", Nodes.Browser("browser", Containers.Spa))
-                },
-                Relationships = new[]
-                {
-                    (Containers.MobileApp > Containers.BackendApi)["Makes API calls to", "json/HTTPS"],
-                    (Containers.Spa > Containers.BackendApi)["Makes API calls to", "json/HTTPS"],
-                    (Containers.WebApp > Containers.Spa)["Delivers to the customer's web browser"][Position.Up],
-                    (Containers.BackendApi > Containers.OracleDatabase[1])["Writes to", "JDBC"],
-                    (Containers.BackendApi < Containers.OracleDatabase["Data Reader"])["Reads from", "JDBC"],
-                    (Containers.OracleDatabase[1] > Containers.OracleDatabase["Data Reader"])["Replicates data to", "JDBC"][Position.Right],
-                }
-            };
-        }
+            BigBankNode(),
+            Nodes.Ios("ios", Containers.MobileApp),
+            Nodes.PersonalComputer("computer", Nodes.Browser("browser", Containers.Spa))
+        };
+
+        protected override IEnumerable<Relationship> Relationships() => new[]
+        {
+            (Containers.MobileApp > Containers.BackendApi)["Makes API calls to", "json/HTTPS"],
+            (Containers.Spa > Containers.BackendApi)["Makes API calls to", "json/HTTPS"],
+            (Containers.WebApp > Containers.Spa)["Delivers to the customer's web browser"][Position.Up],
+            (Containers.BackendApi > Containers.OracleDatabase[1])["Writes to", "JDBC"],
+            (Containers.BackendApi < Containers.OracleDatabase["Data Reader"])["Reads from", "JDBC"],
+            (Containers.OracleDatabase[1] > Containers.OracleDatabase["Data Reader"])["Replicates data to", "JDBC"][
+                Position.Right],
+        };
 
         private static DeploymentNode BigBankNode()
         {

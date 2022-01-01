@@ -10,28 +10,25 @@ namespace C4Sharp.Sample.Diagrams
     using static People;
     using static Systems;
 
-    public class ContextDiagramBuildRunner: IDiagramBuildRunner
+    public class ContextDiagramBuildRunner: DiagramBuildRunner
     {
-        public Diagram Build()
+        public override string Title => "System Context diagram for Internet Banking System";
+        public override DiagramType DiagramType => DiagramType.Context;
+
+        protected override IEnumerable<Structure> Structures() => new Structure[]
         {
-            return new ContextDiagram()
-            {
-                Title = "System Context diagram for Internet Banking System",
-                Structures = new Structure[]
-                {
-                    Customer,
-                    BankingSystem,
-                    Mainframe,
-                    MailSystem
-                },
-                Relationships = new[]
-                {
-                    (Customer > BankingSystem).AddTags("error"),
-                    (Customer < MailSystem)["Sends e-mails to"],
-                    (BankingSystem > MailSystem)["Sends e-mails", "SMTP"][Neighbor],
-                    BankingSystem > Mainframe,
-                }
-            };
-        }
+            Customer,
+            BankingSystem,
+            Mainframe,
+            MailSystem
+        };
+
+        protected override IEnumerable<Relationship> Relationships() => new[]
+        {
+            (Customer > BankingSystem).AddTags("error"),
+            (Customer < MailSystem)["Sends e-mails to"],
+            (BankingSystem > MailSystem)["Sends e-mails", "SMTP"][Neighbor],
+            BankingSystem > Mainframe,
+        };
     }
 }

@@ -1,6 +1,7 @@
 using C4Sharp.Diagrams;
 using C4Sharp.Diagrams.Core;
 using C4Sharp.Models;
+using C4Sharp.Models.Relationships;
 using C4Sharp.Sample.Structures;
 
 namespace C4Sharp.Sample.Diagrams
@@ -9,32 +10,33 @@ namespace C4Sharp.Sample.Diagrams
     using static Components;    
     using static Containers;    
     
-    public class ComponentDiagramBuildRunner: IDiagramBuildRunner
+    public class ComponentDiagramBuildRunner: DiagramBuildRunner
     {
-        public Diagram Build()
+        public override string Title => "Internet Banking System API Application";
+        public override DiagramType DiagramType  => DiagramType.Component;
+
+        public ComponentDiagramBuildRunner()
         {
-            return new ComponentDiagram()
-            {
-                Title = "Internet Banking System API Application",
-                FlowVisualization = DiagramLayout.LeftRight,
-                LayoutAsSketch = true,
-                Structures = new Structure[]
-                {
-                    Spa,
-                    MobileApp,
-                    SqlDatabase,
-                    Mainframe,
-                    Boundary(),
-                },
-                Relationships = new[]
-                {
-                    (Spa > Sign)["Uses", "JSON/HTTPS"],
-                    (Spa > Accounts)["Uses", "JSON/HTTPS"],
-                    (MobileApp > Sign)["Uses", "JSON/HTTPS"],
-                    (MobileApp > Accounts)["Uses", "JSON/HTTPS"],
-                }
-            };
+            FlowVisualization = DiagramLayout.LeftRight;
+            LayoutAsSketch = true;
         }
+
+        protected override IEnumerable<Structure> Structures() => new Structure[]
+        {
+            Spa,
+            MobileApp,
+            SqlDatabase,
+            Mainframe,
+            Boundary(),
+        };
+
+        protected override IEnumerable<Relationship> Relationships() => new Relationship[]
+        {
+            (Spa > Sign)["Uses", "JSON/HTTPS"],
+            (Spa > Accounts)["Uses", "JSON/HTTPS"],
+            (MobileApp > Sign)["Uses", "JSON/HTTPS"],
+            (MobileApp > Accounts)["Uses", "JSON/HTTPS"],
+        };
 
         private static ContainerBoundary Boundary()
         {
