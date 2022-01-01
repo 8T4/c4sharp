@@ -21,13 +21,24 @@ public record Container : Structure
     public string? Technology { get; init; }
     public Container this[int index] => GetInstance(index.ToString());
     public Container this[string instanceName] => GetInstance(instanceName);
-    
+
     public Container(string alias, string label) : base(alias, label)
     {
+        ContainerType = ContainerType.None;
     }
 
-    protected Container(StructureIdentity identity, string label) : base(identity, label)
+    public Container(string alias, string label, ContainerType type, string technology) : this(alias, label)
     {
+        ContainerType = type;
+        Technology = type == ContainerType.None
+            ? technology
+            : $"{type.ToString().SplitCapitalizedWords()}:{technology}";
+    }
+
+    public Container(string alias, string label, ContainerType type, string technology, string description)
+        : this(alias, label, type, technology)
+    {
+        Description = description;
     }
 
     /// <summary>
@@ -40,8 +51,8 @@ public record Container : Structure
         var id = new StructureIdentity(Alias, instanceName);
 
         _instances.TryGetValue(id.Value, out var instance);
-        
-        var container = instance ?? new Container(id, Label)
+
+        var container = instance ?? new Container(id.Value, Label)
         {
             ContainerType = ContainerType,
             Description = Description,
@@ -52,18 +63,15 @@ public record Container : Structure
 
         if (instance is null)
             _instances[id.Value] = container;
-        
+
         return container;
     }
 }
 
 public record Container<T> : Container
 {
-    private protected Container(ContainerType containerType, string technology, string description)
-        : base(StructureIdentity.New<T>(), typeof(T).ToNamingConvention())
+    private protected Container(ContainerType type, string technology, string description)
+        : base(StructureIdentity.New<T>().Value, typeof(T).ToNamingConvention(), type, technology, description)
     {
-        ContainerType = containerType;
-        Technology = technology;
-        Description = description;
     }
 }

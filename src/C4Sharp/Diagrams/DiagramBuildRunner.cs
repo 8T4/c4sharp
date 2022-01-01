@@ -7,7 +7,7 @@ using C4Sharp.Models.Relationships;
 
 namespace C4Sharp.Diagrams;
 
-public abstract class DiagramBuildRunner: IDiagramBuildRunner
+public abstract class DiagramBuildRunner : IDiagramBuildRunner
 {
     private readonly StructureCollection _structures;
 
@@ -15,11 +15,12 @@ public abstract class DiagramBuildRunner: IDiagramBuildRunner
     protected bool ShowLegend { get; set; } = false;
     protected bool LayoutAsSketch { get; set; } = false;
     protected DiagramLayout FlowVisualization { get; set; } = DiagramLayout.TopDown;
-    
+
+
     public abstract string Title { get; }
     public abstract DiagramType DiagramType { get; }
-    
-    
+
+
     protected DiagramBuildRunner()
     {
         _structures = new StructureCollection();
@@ -28,17 +29,17 @@ public abstract class DiagramBuildRunner: IDiagramBuildRunner
     public Structure It<T>() => It(StructureIdentity.New<T>().Value);
     public Structure It<T>(int instance) => It(StructureIdentity.New<T>(instance.ToString()).Value);
     public Structure It<T>(string instance) => It(StructureIdentity.New<T>(instance).Value);
-    
-    public Structure It(string key) 
-        => _structures.Items[key] 
+
+    public Structure It(string key)
+        => _structures.Items[key]
            ?? throw new KeyNotFoundException($"Structure {key} not found");
-    
-    public Structure It(string key, int instance) 
-        => _structures.Items[new StructureIdentity(key, instance.ToString()).Value] 
+
+    public Structure It(string key, int instance)
+        => _structures.Items[new StructureIdentity(key, instance.ToString()).Value]
            ?? throw new KeyNotFoundException($"Structure {key} not found");
-    
-    public Structure It(string key, string instance) 
-        => _structures.Items[new StructureIdentity(key, instance).Value] 
+
+    public Structure It(string key, string instance)
+        => _structures.Items[new StructureIdentity(key, instance).Value]
            ?? throw new KeyNotFoundException($"Structure {key} not found");
 
 
@@ -46,9 +47,9 @@ public abstract class DiagramBuildRunner: IDiagramBuildRunner
     protected abstract IEnumerable<Relationship> Relationships();
     protected virtual IElementStyle? SetStyle() => null;
     protected virtual IElementTag? SetTags() => null;
-    protected virtual IRelationshipTag? SetRelTags() => null;    
-    
-    
+    protected virtual IRelationshipTag? SetRelTags() => null;
+
+
     public Diagram Build()
     {
         _structures.AddRange(Structures());
@@ -66,17 +67,15 @@ public abstract class DiagramBuildRunner: IDiagramBuildRunner
         {
             Structures = Structures().ToArray(),
             Relationships = Relationships().ToArray(),
-            Title = Title ?? $"{GetType().Name.SplitCapitalizedWords()}",
+            Title = Title,
             ShowLegend = ShowLegend,
             LayoutWithLegend = LayoutWithLegend,
             LayoutAsSketch = LayoutAsSketch,
             FlowVisualization = FlowVisualization
         };
 
-        result.SetStyle(SetStyle());
-        result.SetTags(SetTags());
-        result.SetRelTags(SetRelTags());
-
-        return result;
+        return result.SetStyle(SetStyle())
+            .SetTags(SetTags())
+            .SetRelTags(SetRelTags());
     }
 }

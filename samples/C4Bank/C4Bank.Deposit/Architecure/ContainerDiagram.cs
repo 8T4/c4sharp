@@ -27,7 +27,7 @@ public class ContainerDiagram : DiagramBuildRunner
         new EventStreaming<RegisteredAccount>("kafka", "Partition 01"),
         
         SoftwareSystemBoundary.New("Deposit",
-            new ServerConsole<DepositoProcessingConsumer>("C#", "Kafka Consumer"),
+            new ServerConsole<DepositoProcessingWorker>("C#", "Deposit Worker"),
             new Database<IDepositRepository>("SQL Server", "Deposit Data Base"),
             new ServerConsole<SynchronizeNewAccountConsumer>("C#", "Kafka Consumer"),
             new Database<IAccountRepository>("SQL Server", "Account Data Base")
@@ -38,13 +38,13 @@ public class ContainerDiagram : DiagramBuildRunner
     {
         (It("Customer") > It("OTBank.Finance")) ["send deposit"],
         (It("OTBank.Finance") > It<DepositReceived>()) ["POST/HTTP"],
-        (It<DepositoProcessingConsumer>() < It<DepositReceived>()) ["POST/HTTP"],
-        It<DepositoProcessingConsumer>() > It<IDepositRepository>(),
+        (It<DepositoProcessingWorker>() < It<DepositReceived>()) ["POST/HTTP"],
+        It<DepositoProcessingWorker>() > It<IDepositRepository>(),
         
         (It("Customer") > It("C4Bank.Account")) ["register"],
         (It("C4Bank.Account") > It<RegisteredAccount>()) ["produces"],
         (It<SynchronizeNewAccountConsumer>() > It<RegisteredAccount>()) ["consumes"],
         It<SynchronizeNewAccountConsumer>() > It<IAccountRepository>(),
-        It<DepositoProcessingConsumer>() > It<IAccountRepository>(),
+        It<DepositoProcessingWorker>() > It<IAccountRepository>(),
     };
 }
