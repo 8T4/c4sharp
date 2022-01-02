@@ -2,7 +2,7 @@ using System.CommandLine.Parsing;
 
 namespace C4Sharp.Tools.Commands.Arguments;
 
-internal static class SolutionPathArgument
+internal static class  SolutionPathArgument
 {
     public static Argument Get(string argumentName)
     {

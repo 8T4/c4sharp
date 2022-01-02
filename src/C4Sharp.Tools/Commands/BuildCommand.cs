@@ -4,6 +4,7 @@ using System.Reflection;
 using C4Sharp.Diagrams;
 using C4Sharp.Models.Plantuml.IO;
 using C4Sharp.Tools.Commands.Arguments;
+using C4Sharp.Tools.Commands.Options;
 
 namespace C4Sharp.Tools.Commands;
 
@@ -13,24 +14,25 @@ public class BuildCommand : Command
         "Execute runners into solution that implements 'IDiagramBuildRunner' Interface")
     {
         RegisterArguments();
-        Handler = CommandHandler.Create<string>(Execute);
+        Handler = CommandHandler.Create<string, string?>(Execute);
     }
 
     private void RegisterArguments()
     {
         AddArgument(SolutionPathArgument.Get("path"));
+        AddOption(OutputPathOption.Get());
     }
 
-    private async Task<int> Execute(string path)
+    private async Task<int> Execute(string path, string? output)
     {
         try
         {
-            if (GetSolutionPath(path, out var slnPath, out var workspace) is false) 
+            if (GetSolutionPath(path, out var slnPath, out var workspace) is false)
                 return 1;
-        
+
             //RunDotnetBuild(slnPath);
             var runners = await StartAnalysis(workspace, slnPath);
-            GenerateC4Diagrams(runners);
+            GenerateC4Diagrams(runners, output);
             return 0;
         }
         catch (Exception e)
@@ -40,7 +42,7 @@ public class BuildCommand : Command
             ColorConsole.WriteLine($"C4SCLI - ERROR - OPTIONS: ".Red(), "NULL");
             ColorConsole.WriteLine($"C4SCLI - ERROR - MESSAGE: ".Red(), e.Message);
             ColorConsole.WriteLine(e.Message.White());
-            
+
             return 1;
         }
     }
@@ -56,7 +58,7 @@ public class BuildCommand : Command
     {
         slnPath = path;
         workspace = CreateWorkspace();
-        
+
         if (slnPath != ".") return true;
         var slnFound = Directory.EnumerateFiles(Environment.CurrentDirectory, "*.sln").FirstOrDefault();
 
@@ -102,7 +104,7 @@ public class BuildCommand : Command
             RedirectStandardError = true,
             RedirectStandardInput = true,
             RedirectStandardOutput = true
-        }); 
+        });
         dotnetProcess!.WaitForExitAsync();
         ColorConsole.WriteLine("dotnet build complete".White());
     }
@@ -112,7 +114,8 @@ public class BuildCommand : Command
     /// </summary>
     /// <param name="workspace"></param>
     /// <param name="slnPath"></param>
-    private static async Task<IEnumerable<IDiagramBuildRunner>> StartAnalysis(MSBuildWorkspace workspace, string slnPath)
+    private static async Task<IEnumerable<IDiagramBuildRunner>> StartAnalysis(MSBuildWorkspace workspace,
+        string slnPath)
     {
         ColorConsole.WriteLine("Starting analysis".White());
 
@@ -122,7 +125,7 @@ public class BuildCommand : Command
         foreach (var project in solution.Projects)
         {
             ColorConsole.WriteLine("Analyzing project: ".White(), project.Name.Green());
-            
+
             if (project.OutputFilePath is null)
             {
                 ColorConsole.WriteLine("Output file path of project: ".Red(), project.Name.White(), " not found".Red());
@@ -137,52 +140,47 @@ public class BuildCommand : Command
 
             if (!runners.Any())
             {
-                ColorConsole.WriteLine("'IDiagramBuildRunner' implementations NOT FOUND into the project ".Yellow(), project.Name);
+                ColorConsole.WriteLine("'IDiagramBuildRunner' implementations NOT FOUND into the project ".Yellow(),
+                    project.Name);
                 continue;
             }
-                
+
             result.AddRange(runners);
         }
 
         ColorConsole.WriteLine("Solution analysis is completed".White());
         return result;
     }
-    
+
     /// <summary>
     /// Generate Diagrams
     /// </summary>
     /// <param name="runners"></param>
-    private static void GenerateC4Diagrams(IEnumerable<IDiagramBuildRunner> runners)
+    /// <param name="ouput"></param>
+    private static void GenerateC4Diagrams(IEnumerable<IDiagramBuildRunner> runners, string? ouput)
     {
         ColorConsole.WriteLine("Generating C4 diagram".White());
+        var path = Path.Combine(string.IsNullOrEmpty(ouput) ? Environment.CurrentDirectory : ouput, "c4");
 
         new PlantumlSession()
             .UseDiagramImageBuilder()
             .UseDiagramSvgImageBuilder()
-            .Export(Path.Combine(Environment.CurrentDirectory, "c4"), runners.Select(r => r.Build()));
+            .Export(path, runners.Select(r => r.Build()));
 
+        PrintFileList(path, "png");
+        PrintFileList(path, "svg");
+        PrintFileList(path, "puml");
+    }
+
+    private static void PrintFileList(string path, string extension)
+    {
         ColorConsole.WriteLine();
-        ColorConsole.WriteLine("C4 diagram PNG files".Green());
-        var pngs = Directory.EnumerateFiles(Path.Combine(Environment.CurrentDirectory, "c4"), "*.png");
-        foreach (var png in pngs)
+        ColorConsole.WriteLine($"C4 diagram {extension.ToUpper()} files".Green());
+        var files = Directory.EnumerateFiles(path, $"*.{extension}");
+
+        foreach (var file in files)
         {
-            ColorConsole.WriteLine("C4 diagram generated: ".White(), $"file:///{png.Replace('\\', '/')}".Green());
-        }
-        
-        ColorConsole.WriteLine();
-        ColorConsole.WriteLine("C4 diagram SVG files".Green());
-        var svgs = Directory.EnumerateFiles(Path.Combine(Environment.CurrentDirectory, "c4"), "*.svg");
-        foreach (var svg in svgs)
-        {
-            ColorConsole.WriteLine("C4 diagram generated: ".White(), $"file:///{svg.Replace('\\', '/')}".Green());
-        }        
-        
-        ColorConsole.WriteLine();
-        ColorConsole.WriteLine("C4 diagram PUML files".Green());
-        var pumls = Directory.EnumerateFiles(Path.Combine(Environment.CurrentDirectory, "c4"), "*.puml");
-        foreach (var puml in pumls)
-        {
-            ColorConsole.WriteLine("C4 diagram generated: ".White(), $"file:///{puml.Replace('\\', '/')}".Green());
+            ColorConsole.WriteLine("C4 diagram generated: ".White(), $"file:///{file.Replace('\\', '/')}".Green());
         }
     }
 }
