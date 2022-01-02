@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace C4Sharp.Extensions;
 
 public static class TypeNameMethods
@@ -8,4 +10,15 @@ public static class TypeNameMethods
             ? type.Name.SplitCapitalizedWords().Remove(0, 1)
             : type.Name.SplitCapitalizedWords();
     }
+    
+    public static string? GetValueFromDescription(this Type type)
+    {
+        var description = type.GetCustomAttributes(typeof(DescriptionAttribute), false)
+            .FirstOrDefault(x => x is DescriptionAttribute);
+
+        if (description is DescriptionAttribute attribute)
+            return attribute.Description;
+        
+        return null;
+    }    
 }

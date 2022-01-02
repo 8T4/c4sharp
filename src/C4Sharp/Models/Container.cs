@@ -1,4 +1,5 @@
-﻿using C4Sharp.Extensions;
+﻿using System.ComponentModel;
+using C4Sharp.Extensions;
 
 namespace C4Sharp.Models;
 
@@ -35,10 +36,10 @@ public record Container : Structure
             : $"{type.ToString().SplitCapitalizedWords()}:{technology}";
     }
 
-    public Container(string alias, string label, ContainerType type, string technology, string description)
+    public Container(string alias, string label, ContainerType type, string technology, string? description)
         : this(alias, label, type, technology)
     {
-        Description = description;
+        Description = description ?? string.Empty;
     }
 
     /// <summary>
@@ -70,8 +71,18 @@ public record Container : Structure
 
 public record Container<T> : Container
 {
-    private protected Container(ContainerType type, string technology, string description)
+    private protected Container(ContainerType type, string technology)
+        : base(StructureIdentity.New<T>().Value, typeof(T).ToNamingConvention(), type, technology)
+    {
+        Description = typeof(T).GetValueFromDescription() ?? typeof(T).ToNamingConvention();
+    }    
+    
+    private protected Container(ContainerType type, string technology, string? description = null)
         : base(StructureIdentity.New<T>().Value, typeof(T).ToNamingConvention(), type, technology, description)
     {
+        if (description is null)
+        {
+            Description = typeof(T).GetValueFromDescription() ?? typeof(T).ToNamingConvention();
+        }
     }
 }

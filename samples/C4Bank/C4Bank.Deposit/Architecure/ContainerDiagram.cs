@@ -29,7 +29,7 @@ public class ContainerDiagram : DiagramBuildRunner
         new EventStreaming<RegisteredAccount>("kafka", "Partition 01"),
         
         SoftwareSystemBoundary.New("Deposit",
-            new ServerConsole<DepositoProcessingWorker>("C#", "Deposit Worker"),
+            new Api<DepositoProcessingWorker>("C#"),
             new Database<IDepositRepository>("SQL Server", "Deposit Data Base"),
             new ServerConsole<SynchronizeNewAccountConsumer>("C#", "Kafka Consumer"),
             new Database<IAccountRepository>("SQL Server", "Account Data Base")
