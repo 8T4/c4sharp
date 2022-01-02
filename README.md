@@ -39,8 +39,8 @@ public class ContainerDiagram : DiagramBuildRunner
     protected override IEnumerable<Structure> Structures() => new Structure[]
     {
         new Person("Customer", "Customer", "Bank Customer"),
-        new SoftwareSystem("OTBank.Finance", "Finance", "OTBank Finance System", Boundary.External),
-        new SoftwareSystem("C4Bank.Account", "Account", "C4Bank Account System"),
+        new SoftwareSystem("OTBank.Finance", "Finance", "OTBank Finance", Boundary.External),
+        new SoftwareSystem("C4Bank.Account", "Account", "C4Bank Account"),
         new Api<DepositReceived>("Aspnet/C#", "ACL"),
         new EventStreaming<RegisteredAccount>("kafka", "Partition 01"),
         
