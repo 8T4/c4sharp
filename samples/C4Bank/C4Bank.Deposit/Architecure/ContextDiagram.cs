@@ -1,5 +1,7 @@
 using C4Sharp.Diagrams;
 using C4Sharp.Models;
+using C4Sharp.Models.Plantuml;
+using C4Sharp.Models.Plantuml.Constants;
 using C4Sharp.Models.Relationships;
 using static C4Sharp.Models.Relationships.Position;
 
@@ -7,7 +9,7 @@ namespace C4Bank.Deposit.Architecure;
 
 public class ContextDiagram : DiagramBuildRunner
 {
-    public override string Title => "Contexts of C4Bank Deposit System";
+    public override string Title => "C4Bank Contexts of Deposit Area";
     public override DiagramType DiagramType => DiagramType.Context;
     
 
@@ -25,13 +27,21 @@ public class ContextDiagram : DiagramBuildRunner
 
     protected override IEnumerable<Relationship> Relationships() => new[]
     {
-        (It("Customer") > It("OTBank.Finance")) ["Request deposit"],
-        (It("OTBank.Finance") > It("C4Bank.Deposit")) ["Send deposit"],
+        It("Customer") > It("OTBank.Finance") | "Request deposit",
+        It("OTBank.Finance") > It("C4Bank.Deposit") | "Send deposit",
         
-        (It("Customer") > It("C4Bank.Account")) ["Request registration"],
-        (It("C4Bank.Account") > It("C4Bank.Deposit")) ["Send registration"],
+        It("Customer") > It("C4Bank.Account") | "Request registration" ,
+        It("C4Bank.Account") > It("C4Bank.Deposit") | "Send registration",
         
-        (It("C4Bank.Deposit") > It("eMailer.System")) ["Notify"][Neighbor],
-        (It("eMailer.System") > It("Customer")) ["Notify customer"]
+        It("C4Bank.Deposit") > It("eMailer.System") | "Notify" | Neighbor,
+        It("eMailer.System") > It("Customer") |"Notify customer"
     };
+    
+    protected override IElementStyle? SetStyle()
+    {
+        return new ElementStyle()
+            .UpdateElementStyle(ElementName.Person, "#000000", "#000000")
+            .UpdateElementStyle(ElementName.System, "#f4f4f4", "#000000", "#000000", false, Shape.RoundedBoxShape)
+            .UpdateElementStyle(ElementName.ExternalSystem, "#ABB2B9", "#000000", "#000000", false, Shape.RoundedBoxShape);
+    }     
 }

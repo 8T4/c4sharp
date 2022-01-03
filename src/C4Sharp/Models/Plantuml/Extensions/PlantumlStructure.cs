@@ -99,6 +99,7 @@ internal static class PlantumlStructure
         {
             ContainerType.Database => $"ContainerDb{externalSuffix}",
             ContainerType.Queue => $"ContainerQueue{externalSuffix}",
+            ContainerType.Topic => $"ContainerQueue{externalSuffix}",
             _ => $"Container{externalSuffix}"
         };
 

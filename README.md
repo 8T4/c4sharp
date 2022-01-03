@@ -54,16 +54,16 @@ public class ContainerDiagram : DiagramBuildRunner
 
     protected override IEnumerable<Relationship> Relationships() => new[]
     {
-        (It("Customer") > It("OTBank.Finance")) ["send deposit"],
-        (It("OTBank.Finance") > It<DepositReceived>()) ["POST/HTTP"],
-        (It<DepositoProcessingWorker>() < It<DepositReceived>()) ["POST/HTTP"],
-        (It<DepositoProcessingWorker>() > It<IDepositRepository>()),
+        It("Customer") > It("OTBank.Finance") | "send deposit",
+        It("OTBank.Finance") > It<DepositReceived>() | ("POST", "HTTP"),
+        It<DepositoProcessingWorker>() < It<DepositReceived>() | ("POST", "HTTP"),
+        It<DepositoProcessingWorker>() > It<IDepositRepository>(),
         
-        (It("Customer") > It("C4Bank.Account")) ["register"],
-        (It("C4Bank.Account") > It<RegisteredAccount>()) ["produces"],
-        (It<SynchronizeNewAccountConsumer>() > It<RegisteredAccount>()) ["consumes"],
-        (It<SynchronizeNewAccountConsumer>() > It<IAccountRepository>()),
-        (It<DepositoProcessingWorker>() > It<IAccountRepository>()),
+        It("Customer") > It("C4Bank.Account") | "register",
+        It("C4Bank.Account") > It<RegisteredAccount>() | "produces",
+        It<SynchronizeNewAccountConsumer>() > It<RegisteredAccount>() | "consumes",
+        It<SynchronizeNewAccountConsumer>() > It<IAccountRepository>(),
+        It<DepositoProcessingWorker>() > It<IAccountRepository>(),
     };
 }
 ```

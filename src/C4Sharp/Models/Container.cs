@@ -26,17 +26,18 @@ public record Container : Structure
     public Container(string alias, string label) : base(alias, label)
     {
         ContainerType = ContainerType.None;
+        Technology = $"{ContainerType.ToString().SplitCapitalizedWords()}";
     }
 
-    public Container(string alias, string label, ContainerType type, string technology) : this(alias, label)
+    public Container(string alias, string label, ContainerType type, string? technology) : this(alias, label)
     {
         ContainerType = type;
-        Technology = type == ContainerType.None
-            ? technology
+        Technology = technology is null
+            ? $"{type.ToString().SplitCapitalizedWords()}"
             : $"{type.ToString().SplitCapitalizedWords()}:{technology}";
     }
 
-    public Container(string alias, string label, ContainerType type, string technology, string? description)
+    public Container(string alias, string label, ContainerType type, string? technology, string? description)
         : this(alias, label, type, technology)
     {
         Description = description ?? string.Empty;
@@ -71,18 +72,12 @@ public record Container : Structure
 
 public record Container<T> : Container
 {
-    private protected Container(ContainerType type, string technology)
-        : base(StructureIdentity.New<T>().Value, typeof(T).ToNamingConvention(), type, technology)
-    {
-        Description = typeof(T).GetValueFromDescription() ?? typeof(T).ToNamingConvention();
-    }    
-    
-    private protected Container(ContainerType type, string technology, string? description = null)
-        : base(StructureIdentity.New<T>().Value, typeof(T).ToNamingConvention(), type, technology, description)
-    {
-        if (description is null)
-        {
-            Description = typeof(T).GetValueFromDescription() ?? typeof(T).ToNamingConvention();
-        }
-    }
+    private protected Container(ContainerType type, string? technology = null, string? description = null)
+        : base(
+            StructureIdentity.New<T>().Value,
+            typeof(T).ToNamingConvention(),
+            type,
+            technology,
+            description ?? typeof(T).ToNamingConvention()
+        ) { }
 }

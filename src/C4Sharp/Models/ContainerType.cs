@@ -39,6 +39,9 @@ public enum ContainerType
 
     [Description("Queue")]
     Queue,
+    
+    [Description("Topic")]
+    Topic,    
 
     [Description("Database")]
     Database,

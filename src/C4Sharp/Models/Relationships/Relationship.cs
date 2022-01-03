@@ -107,5 +107,21 @@ public record Relationship
     }
 
     public Relationship AddTags(params string[] values) => this with { Tags = values };
+
+    public static Relationship operator |(Relationship a, string value)
+    {
+        return new Relationship(a.From, a.Direction, a.To, value, a.Protocol, a.Position);
+    }
+    
+    public static Relationship operator |(Relationship a, (string label, string protocolo) b)
+    {
+        var (label, protocolo) = b;
+        return new Relationship(a.From, a.Direction, a.To, label, protocolo, a.Position);
+    }    
+    
+    public static Relationship operator |(Relationship a, Position position)
+    {
+        return new Relationship(a.From, a.Direction, a.To, a.Label, a.Protocol, position);
+    }    
 }
 

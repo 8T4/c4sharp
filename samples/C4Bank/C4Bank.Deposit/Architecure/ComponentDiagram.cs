@@ -12,9 +12,8 @@ namespace C4Bank.Deposit.Architecure;
 
 public class ComponentDiagram : DiagramBuildRunner
 {
-    public override string Title => "Componetns of C4Bank Deposit Area";
+    public override string Title => "C4Bank Componetns of Deposit Area";
     public override DiagramType DiagramType => DiagramType.Component;
-
 
     protected override IEnumerable<Structure> Structures() => new Structure[]
     {
@@ -40,27 +39,27 @@ public class ComponentDiagram : DiagramBuildRunner
 
     protected override IEnumerable<Relationship> Relationships() => new[]
     {
-        (It("Customer") > It<IController>())["request"],
-        (It<IController>() > It<IEvent>(1))["Produces"],
+        It("Customer") > It<IController>() | "request",
+        It<IController>() > It<IEvent>(1) | "Produces",
         
         //Worker
-        (It<IWorker>() > It<IEvent>(1))["Consumes"],
-        (It<IWorker>() > It<ICommand>())["Map to"],
-        (It<IWorker>() > It<IValidation>())["Call"],
+        It<IWorker>() > It<IEvent>(1) | "Consumes",
+        It<IWorker>() > It<ICommand>() | "Map to",
+        It<IWorker>() > It<IValidation>() | "Call",
 
         //Validation
-        (It<IValidation>() > It<IHandler>())["Call"],
-        (It<IValidation>() > It<IProducer>())["Produces"],
+        It<IValidation>() > It<IHandler>() |"Call",
+        It<IValidation>() > It<IProducer>() | "Produces",
         
         //Handler
-        (It<IHandler>() > It<ICommand>())["Execute"],
-        (It<IHandler>() >= It<IRepository>())["Write/Read"],
-        (It<IHandler>() > It<IProducer>())["Produces"],
+        It<IHandler>() > It<ICommand>() | "Execute",
+        It<IHandler>() >= It<IRepository>() | "Write/Read",
+        It<IHandler>() > It<IProducer>() | "Produces",
         
         //Producer
-        (It<IProducer>() > It<IEvent>(2))["Produces"],
-        (It<IProducer>() > It<IEvent>(3))["Produces"],
-        (It<IRepository>() >= It("Database"))["Write/Read"],
+        It<IProducer>() > It<IEvent>(2) | "Produces",
+        It<IProducer>() > It<IEvent>(3) | "Produces",
+        It<IRepository>() >= It("Database") | "Write/Read",
     };
 
     protected override IElementStyle? SetStyle()
