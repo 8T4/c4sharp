@@ -1,8 +1,7 @@
-namespace C4Sharp.Diagrams
+namespace C4Sharp.Diagrams;
+
+public enum DiagramLayout
 {
-    public enum DiagramLayout
-    {
-        TopDown,
-        LeftRight
-    }
+    TopDown,
+    LeftRight
 }

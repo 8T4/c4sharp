@@ -7,7 +7,8 @@ on:
     branches: [ main ]
     
 env:
-  VERSION: 4.1.${{ github.run_number }}
+  VERSION: 5.0.${{ github.run_number }}
+  CLI_VERSION: 1.0.${{ github.run_number }}-beta
   NUGET_INDEX: https://api.nuget.org/v3/index.json
   BUILD_TYPE: Release 
 
@@ -19,19 +20,22 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: Release version
+    - name: Release DLL version
       run: echo ${{env.VERSION}}
+      
+    - name: Release CLI version
+      run: echo ${{env.CLI_VERSION}}      
     
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0.x
+        dotnet-version: 6.0.x
         
     - name: Restore dependencies
       run: dotnet restore
       
     - name: Build
-      run: dotnet build --no-restore --configuration Release -p:PackageVersion=${{env.VERSION}}
+      run: dotnet build --no-restore --configuration Release
       
     - name: Unit Tests
       run: dotnet test ./tests/**/*.UnitTests.csproj --no-restore
@@ -39,8 +43,14 @@ jobs:
     - name: Integrated Tests
       run: dotnet test ./tests/**/*.IntegratedTests.csproj --no-restore      
 
-    - name: Publish Artifact
+    - name: Publish DLL Artifact
       if: github.ref == 'refs/heads/main'
       run: |
-        dotnet pack --no-restore --configuration ${{ env.BUILD_TYPE }} -p:PackageVersion=${{ env.VERSION }}
-        dotnet nuget push ./src/**/*.${{ env.VERSION }}.nupkg --api-key ${{ secrets.NUGET_KEY }} --source ${{ env.NUGET_INDEX }}
+        dotnet pack ./src/C4Sharp/C4Sharp.csproj --no-restore --configuration ${{ env.BUILD_TYPE }} -p:PackageVersion=${{ env.VERSION }}
+        dotnet nuget push ./src/C4Sharp/**/*.${{ env.VERSION }}.nupkg --api-key ${{ secrets.NUGET_KEY }} --source ${{ env.NUGET_INDEX }}
+        
+    - name: Publish CLI Artifact
+      if: github.ref == 'refs/heads/main'
+      run: |
+        dotnet pack ./src/C4Sharp.Tools/C4Sharp.Tools.csproj --no-restore --configuration ${{ env.BUILD_TYPE }} -p:PackageVersion=${{ env.CLI_VERSION }}
+        dotnet nuget push ./src/C4Sharp.Tools/**/*.${{ env.CLI_VERSION }}.nupkg --api-key ${{ secrets.NUGET_KEY }} --source ${{ env.NUGET_INDEX }}        

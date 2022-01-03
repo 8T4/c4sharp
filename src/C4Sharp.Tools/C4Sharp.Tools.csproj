@@ -1,0 +1,60 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <AssemblyName>c4scli</AssemblyName>
+        <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Title>C4SCLI - Tool for C4Sharp</Title>
+        <Authors>yanjustino, albertomonteiro</Authors>
+        <Description>C4Sharp (C4S) is a simple .NET superset of C4-PlantUML to generate C4 diagrams as code (C#). It's used for building Context, Container, Component and Deployment diagrams.</Description>
+        <PackageProjectUrl>https://github.com/orgs/8T4/teams/c4sharp</PackageProjectUrl>
+        <PackageIcon>icon.png</PackageIcon>
+        <RepositoryUrl>https://github.com/8T4/c4sharp</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>c4, diagrams</PackageTags>
+        <PackageVersion>1.0.0-beta</PackageVersion>
+        <PackageIconUrl>https://github.com/8T4/c4sharp/blob/main/LICENSE</PackageIconUrl>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <Nullable>enable</Nullable>
+
+        <PackAsTool>true</PackAsTool>
+        <ToolCommandName>c4scli</ToolCommandName>
+        
+        <!-- added this line -->
+        <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>        
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="ColoredConsole" Version="1.0.0" />
+        <PackageReference Include="Microsoft.Build.Locator" Version="1.4.1" />
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.0.1" />
+        <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="4.0.1" />
+        <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.21308.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="..\C4Sharp\Resources\icon.png">
+            <Pack>true</Pack>
+            <PackagePath>/</PackagePath>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\C4Sharp\C4Sharp.csproj">
+          <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+          <IncludeAssets>C4Sharp.dll</IncludeAssets>
+      </ProjectReference>
+    </ItemGroup>
+
+    <!-- added this section -->
+    <Target DependsOnTargets="ResolveReferences" Name="CopyProjectReferencesToPackage">
+        <ItemGroup>
+            <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths-&gt;WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))" />
+        </ItemGroup>
+    </Target>    
+
+</Project>

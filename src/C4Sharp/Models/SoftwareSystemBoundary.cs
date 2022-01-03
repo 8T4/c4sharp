@@ -1,13 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Reflection;
+using System.Reflection.Metadata;
 
-namespace C4Sharp.Models
+namespace C4Sharp.Models;
+
+/// <summary>
+/// Software System Boundary
+/// </summary>
+public sealed record SoftwareSystemBoundary(string Alias, string Label, params Container[] Containers) : Structure(Alias, Label), IBoundary
 {
-    /// <summary>
-    /// Software System Boundary
-    /// </summary>
-    public sealed record SoftwareSystemBoundary(string Alias, string Label) : Structure(Alias, Label)
+    public static SoftwareSystemBoundary New(string label, params Container[] containers)
     {
-        public IEnumerable<Container> Containers { get; init; } = Array.Empty<Container>();
+        return new SoftwareSystemBoundary(Guid.NewGuid().ToString("N"), label, containers);
     }
+    
+    public Structure[] GetBoundaryStructures() => Containers.Select(x => x as Structure).ToArray();
 }
+

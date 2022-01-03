@@ -1,6 +1,5 @@
-namespace C4Sharp.Diagrams
+namespace C4Sharp.Diagrams;
+
+public interface IElementStyle : IDiagramStyle
 {
-    public interface IElementStyle: IDiagramStyle
-    {
-    }
 }
