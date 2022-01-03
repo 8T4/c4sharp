@@ -28,24 +28,29 @@ This package is available through [Nuget Packages](https://www.nuget.org/package
 # DIAGRAM AS CODE
 > There are benefits to using these tools over the heavier alternatives, including easy version control and the ability to generate the DSLs from many sources. ools in this space that we like include Diagrams, Structurizr DSL, AsciiDoctor Diagram and stables such as WebSequenceDiagrams, PlantUML and the venerable Graphviz. It's also fairly simple to generate your own SVG these days, so don't rule out quickly writing your own tool either. One of our authors wrote a small Ruby script to quickly create SVGs, for example.    
 > [Thoughtworks Technology Radar](https://www.thoughtworks.com/en-br/radar/techniques/diagrams-as-code)
+
 ### Coding
 To build a diagram using the C4S library we need to identify the structures and their relationships through a class that inherits properties directly from DiagramBuildRunner. See the following example of building a container diagram:
+
 ```C#
+namespace C4Bank.Deposit.Architecure;
+
 public class ContainerDiagram : DiagramBuildRunner
 {
-    public override string Title => "C4Bank Deposit Area";
-    public override DiagramType DiagramType => DiagramType.Container;
+    protected override string Title => "C4Bank Context of Deposit Area";
+    protected override DiagramType DiagramType => DiagramType.Container;
     
+
     protected override IEnumerable<Structure> Structures() => new Structure[]
     {
         new Person("Customer", "Customer", "Bank Customer"),
-        new SoftwareSystem("OTBank.Finance", "Finance", "OTBank Finance", Boundary.External),
-        new SoftwareSystem("C4Bank.Account", "Account", "C4Bank Account"),
+        new SoftwareSystem("OTBank.Finance", "Finance", "OTBank Finance System", Boundary.External),
+        new SoftwareSystem("C4Bank.Account", "Account", "C4Bank Account System"),
         new Api<DepositReceived>("Aspnet/C#", "ACL"),
         new EventStreaming<RegisteredAccount>("kafka", "Partition 01"),
         
         SoftwareSystemBoundary.New("Deposit",
-            new ServerConsole<DepositoProcessingWorker>("C#", "Deposit Worker"),
+            new Api<DepositoProcessingWorker>("C#"),
             new Database<IDepositRepository>("SQL Server", "Deposit Data Base"),
             new ServerConsole<SynchronizeNewAccountConsumer>("C#", "Kafka Consumer"),
             new Database<IAccountRepository>("SQL Server", "Account Data Base")
@@ -64,7 +69,7 @@ public class ContainerDiagram : DiagramBuildRunner
         It<SynchronizeNewAccountConsumer>() > It<RegisteredAccount>() | "consumes",
         It<SynchronizeNewAccountConsumer>() > It<IAccountRepository>(),
         It<DepositoProcessingWorker>() > It<IAccountRepository>(),
-    };
+    };   
 }
 ```
 <small><strong>Code 1</strong> - container diagram as code</small>  
