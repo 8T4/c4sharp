@@ -20,7 +20,9 @@ public class RelationshipTag : IRelationshipTag
     public RelationshipTag AddRelTag(string tagStereo, string textColor, string lineColor = "#000000", LineStyle? lineStyle = null)
     {
         if (string.IsNullOrEmpty(tagStereo))
+        {
             throw new ArgumentNullException(nameof(tagStereo), $"{nameof(tagStereo)} is required");
+        }
 
         var value = lineStyle is null
             ? $"AddRelTag(\"{tagStereo}\", $textColor={textColor}, $lineColor={lineColor})"

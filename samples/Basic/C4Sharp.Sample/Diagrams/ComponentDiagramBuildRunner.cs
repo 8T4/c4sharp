@@ -12,14 +12,10 @@ namespace C4Sharp.Sample.Diagrams
     
     public class ComponentDiagramBuildRunner: DiagramBuildRunner
     {
-        public override string Title => "Internet Banking System API Application";
-        public override DiagramType DiagramType  => DiagramType.Component;
-
-        public ComponentDiagramBuildRunner()
-        {
-            FlowVisualization = DiagramLayout.LeftRight;
-            LayoutAsSketch = true;
-        }
+        protected override string Title => "Internet Banking System API Application";
+        protected override DiagramType DiagramType  => DiagramType.Component;
+        protected override DiagramLayout FlowVisualization => DiagramLayout.LeftRight;
+        protected override bool LayoutAsSketch => true;
 
         protected override IEnumerable<Structure> Structures() => new Structure[]
         {

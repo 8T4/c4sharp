@@ -28,7 +28,9 @@ public class BuildCommand : Command
         try
         {
             if (GetSolutionPath(path, out var slnPath, out var workspace) is false)
+            {
                 return 1;
+            }
 
             //RunDotnetBuild(slnPath);
             var runners = await StartAnalysis(workspace, slnPath);
@@ -59,7 +61,11 @@ public class BuildCommand : Command
         slnPath = path;
         workspace = CreateWorkspace();
 
-        if (slnPath != ".") return true;
+        if (slnPath != ".")
+        {
+            return true;
+        }
+
         var slnFound = Directory.EnumerateFiles(Environment.CurrentDirectory, "*.sln").FirstOrDefault();
 
         if (string.IsNullOrWhiteSpace(slnFound))

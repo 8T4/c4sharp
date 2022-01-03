@@ -64,7 +64,9 @@ public record Container : Structure
         };
 
         if (instance is null)
+        {
             _instances[id.Value] = container;
+        }
 
         return container;
     }

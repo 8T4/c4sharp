@@ -16,8 +16,8 @@ namespace C4Bank.Deposit.Architecure;
 
 public class ContainerDiagram : DiagramBuildRunner
 {
-    public override string Title => "C4Bank Context of Deposit Area";
-    public override DiagramType DiagramType => DiagramType.Container;
+    protected override string Title => "C4Bank Context of Deposit Area";
+    protected override DiagramType DiagramType => DiagramType.Container;
     
 
     protected override IEnumerable<Structure> Structures() => new Structure[]

@@ -7,8 +7,8 @@ namespace C4Sharp.Sample.Diagrams
 {
     public class DeploymentDiagramBuildRunner: DiagramBuildRunner
     {
-        public override string Title => "System Context diagram for Internet Banking System";
-        public override DiagramType DiagramType => DiagramType.Deployment;
+        protected override string Title => "System Context diagram for Internet Banking System";
+        protected override DiagramType DiagramType => DiagramType.Deployment;
 
         protected override IEnumerable<Structure> Structures() => new Structure[]
         {

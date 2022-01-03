@@ -24,7 +24,9 @@ public class ElementTag : IElementTag
     public ElementTag AddElementTag(string tagStereo, string bgColor, string fontColor = "#ffffff", string borderColor = "#00000000", bool shadowing = false, Shape? shape = null)
     {
         if (string.IsNullOrEmpty(tagStereo))
+        {
             throw new ArgumentNullException(nameof(tagStereo), $"{nameof(tagStereo)} is required");
+        }
 
         var value = shape is null
             ? $"AddElementTag(\"{tagStereo}\", $bgColor={bgColor}, $fontColor={fontColor}, $borderColor={borderColor}, $shadowing=\"{shadowing}\")"

@@ -17,8 +17,10 @@ public static class TypeNameMethods
             .FirstOrDefault(x => x is DescriptionAttribute);
 
         if (description is DescriptionAttribute attribute)
+        {
             return attribute.Description;
-        
+        }
+
         return null;
     }    
 }

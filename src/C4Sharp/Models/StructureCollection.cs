@@ -12,7 +12,10 @@ internal class StructureCollection
     public void AddRange(IEnumerable<Structure> structures)
     {
         var enumerable = structures as Structure[] ?? structures.ToArray();
-        if (!enumerable.Any()) return;
+        if (!enumerable.Any())
+        {
+            return;
+        }
 
         foreach (var structure in enumerable)
         {

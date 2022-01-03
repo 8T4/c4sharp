@@ -12,8 +12,8 @@ namespace C4Bank.Deposit.Architecure;
 
 public class ComponentDiagram : DiagramBuildRunner
 {
-    public override string Title => "C4Bank Componetns of Deposit Area";
-    public override DiagramType DiagramType => DiagramType.Component;
+    protected override string Title => "C4Bank Componetns of Deposit Area";
+    protected override DiagramType DiagramType => DiagramType.Component;
 
     protected override IEnumerable<Structure> Structures() => new Structure[]
     {

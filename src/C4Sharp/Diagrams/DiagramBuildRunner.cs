@@ -11,19 +11,21 @@ public abstract class DiagramBuildRunner : IDiagramBuildRunner
 {
     private readonly StructureCollection _structures;
 
-    protected bool LayoutWithLegend { get; set; } = false;
-    protected bool ShowLegend { get; set; } = false;
-    protected bool LayoutAsSketch { get; set; } = false;
-    protected DiagramLayout FlowVisualization { get; set; } = DiagramLayout.TopDown;
-
-
-    public abstract string Title { get; }
-    public abstract DiagramType DiagramType { get; }
-
+    protected virtual bool LayoutWithLegend { get; }
+    protected virtual bool ShowLegend { get; }
+    protected virtual bool LayoutAsSketch { get; }
+    protected virtual DiagramLayout FlowVisualization { get; }
+    protected abstract string Title { get; }
+    protected abstract DiagramType DiagramType { get; }
+    
 
     protected DiagramBuildRunner()
     {
         _structures = new StructureCollection();
+        LayoutWithLegend = false;
+        ShowLegend = false;
+        LayoutAsSketch = false;
+        FlowVisualization = DiagramLayout.TopDown;
     }
 
     public Structure It<T>() => It(StructureIdentity.New<T>().Value);

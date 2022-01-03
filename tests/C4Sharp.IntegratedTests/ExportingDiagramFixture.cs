@@ -6,14 +6,18 @@ public class ExportingDiagramFixture
 {
     protected static void Setup(string path = "c4")
     {
-        if (!Directory.Exists(path))
+        if (path is not null && !Directory.Exists(path))
+        {
             Directory.CreateDirectory(path);
+        }
     }
 
     protected static void CleanUp(string path = "c4")
     {
         if (Directory.Exists(path))
+        {
             Directory.Delete(path, true);
+        }
     }
 
     protected static void VerifyIfResourceFilesExists(string path = "c4")

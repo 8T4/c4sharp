@@ -2,7 +2,7 @@ using System.CommandLine.Parsing;
 
 namespace C4Sharp.Tools.Commands.Options;
 
-public class OutputPathOption
+public static class OutputPathOption
 {
     public static Option Get()
     {
@@ -17,7 +17,9 @@ public class OutputPathOption
             var path = opt.GetValueOrDefault<string?>();
 
             if (path is null)
+            {
                 return null;
+            }
 
             return path switch
             {

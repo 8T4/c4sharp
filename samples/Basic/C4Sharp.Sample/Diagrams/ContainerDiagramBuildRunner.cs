@@ -9,8 +9,8 @@ namespace C4Sharp.Sample.Diagrams
     
     public class ContainerDiagramBuildRunner: DiagramBuildRunner
     {
-        public override string Title => "Container diagram for Internet Banking System";
-        public override DiagramType DiagramType => DiagramType.Container;
+        protected override string Title => "Container diagram for Internet Banking System";
+        protected override DiagramType DiagramType => DiagramType.Container;
 
         protected override IEnumerable<Structure> Structures() => new Structure[]
         {
