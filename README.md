@@ -79,6 +79,7 @@ public class ContainerDiagram : DiagramBuildRunner
 There are two strategies for compiling diagrams in your project: self-compiling and using the `C4SCLI` tool. 
 
 #### a) self-compiling approach: 
+
 Code the following structure into `program.cs`. In this approach, it is preferable that you use a separate project. 
 ```c#
 internal static class Program
@@ -102,10 +103,13 @@ internal static class Program
 <small>see the complete code [here](./samples/Basic/C4Sharp.Sample/Program.cs)</small>
 
 #### b) Using the C4SCLI tool:
+
 The `C4SCLI` can be used in DevOps pipelines, removing the need to manually compile diagrams. For this, install `C4SCLI` tool and execute de the following command:
 ```shell
 $ c4scli build <solution path> [-o <output path>] 
 ```
+⚠️ *only compatible with projects using c4sharp version 5.0+*
+
 
 ### The Result
 The previous steps will result in the following image:
@@ -137,7 +141,7 @@ protected override IElementStyle? SetStyle()
 
 # THANKS
 
-### ☕︎ C4 community
+### C4 community
 
 - 🌟 [Simon Brown](https://twitter.com/simonbrown)
 - 🌟 [PlantUML Team](https://plantuml.com/)
