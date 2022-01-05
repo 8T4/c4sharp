@@ -1,4 +1,3 @@
-using System.CommandLine.Parsing;
 using System.Diagnostics;
 using System.Reflection;
 using C4Sharp.Diagrams;
@@ -165,17 +164,22 @@ public class BuildCommand : Command
     /// <param name="ouput"></param>
     private static void GenerateC4Diagrams(IEnumerable<IDiagramBuildRunner> runners, string? ouput)
     {
-        ColorConsole.WriteLine("Generating C4 diagram".White());
-        var path = Path.Combine(string.IsNullOrEmpty(ouput) ? Environment.CurrentDirectory : ouput, "c4");
+        var path = Path.Combine(string.IsNullOrEmpty(ouput) 
+            ? Environment.CurrentDirectory 
+            : ouput, "c4");
+        
+        var directory = new DirectoryInfo(path).FullName;
+        
+        ColorConsole.WriteLine("Generating C4 diagram in: ".White(), path.Green());
 
         new PlantumlSession()
             .UseDiagramImageBuilder()
             .UseDiagramSvgImageBuilder()
-            .Export(path, runners.Select(r => r.Build()));
+            .Export(directory, runners.Select(r => r.Build()));
 
-        PrintFileList(path, "png");
-        PrintFileList(path, "svg");
-        PrintFileList(path, "puml");
+        PrintFileList(directory, "png");
+        PrintFileList(directory, "svg");
+        PrintFileList(directory, "puml");
     }
 
     private static void PrintFileList(string path, string extension)

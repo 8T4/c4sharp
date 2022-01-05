@@ -46,12 +46,12 @@ public static class PlantumlFile
 
         if (session.GenerateDiagramImages)
         {
-            session.Execute(path, true, "png");
+            session.Execute(path, "png");
         }
 
         if (session.GenerateDiagramSvgImages)
         {
-            session.Execute(path, true, "svg");
+            session.Execute(path, "svg");
         }
     }
 

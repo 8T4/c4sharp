@@ -7,8 +7,8 @@ on:
     branches: [ main ]
     
 env:
-  VERSION: 5.0.${{ github.run_number }}
-  CLI_VERSION: 1.0.${{ github.run_number }}-beta
+  VERSION: 5.1.${{ github.run_number }}
+  CLI_VERSION: 1.1.${{ github.run_number }}-beta
   NUGET_INDEX: https://api.nuget.org/v3/index.json
   BUILD_TYPE: Release 
 

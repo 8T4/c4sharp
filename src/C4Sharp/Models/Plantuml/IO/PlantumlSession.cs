@@ -67,19 +67,16 @@ public class PlantumlSession : IDisposable
     /// Execute plantuml.jar
     /// </summary>
     /// <param name="path">puml files path</param>
-    /// <param name="processWholeDirectory">process all *.puml files</param>
     /// <param name="generatedImageFormat">specifies the format of the generated images</param>
     /// <exception cref="PlantumlException"></exception>
-    internal void Execute(string path, bool processWholeDirectory, string generatedImageFormat)
+    internal void Execute(string path, string generatedImageFormat)
     {
         try
         {
             PlantumlResources.LoadResources(path);
             PlantumlJarPath ??= PlantumlResources.LoadPlantumlJar();
 
-            var directory = processWholeDirectory
-                ? path
-                : new FileInfo(path)?.Directory?.FullName;
+            var directory = new DirectoryInfo(path).FullName;
 
             if (string.IsNullOrEmpty(directory))
             {

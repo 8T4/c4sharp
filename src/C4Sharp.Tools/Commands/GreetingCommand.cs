@@ -1,6 +1,3 @@
-using System.CommandLine;
-using System.CommandLine.Invocation;
-
 namespace C4Sharp.Tools.Commands;
 
 public class GreetingCommand: Command
