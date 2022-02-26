@@ -16,13 +16,14 @@ public abstract class DiagramBuildRunner : IDiagramBuildRunner
     protected virtual bool LayoutAsSketch { get; }
     protected virtual DiagramLayout FlowVisualization { get; }
     protected abstract string Title { get; }
+    protected virtual string Description { get; }
     protected abstract DiagramType DiagramType { get; }
     
-
     protected DiagramBuildRunner()
     {
         _structures = new StructureCollection();
         LayoutWithLegend = false;
+        Description = string.Empty;
         ShowLegend = false;
         LayoutAsSketch = false;
         FlowVisualization = DiagramLayout.TopDown;
@@ -70,12 +71,14 @@ public abstract class DiagramBuildRunner : IDiagramBuildRunner
             Structures = Structures().ToArray(),
             Relationships = Relationships().ToArray(),
             Title = Title,
+            Reference = this.CreateRef(),
             ShowLegend = ShowLegend,
+            Description = Description.GetDescriptionOrDefault(DiagramType),
             LayoutWithLegend = LayoutWithLegend,
             LayoutAsSketch = LayoutAsSketch,
             FlowVisualization = FlowVisualization
         };
-
+        
         return result.SetStyle(SetStyle())
             .SetTags(SetTags())
             .SetRelTags(SetRelTags());

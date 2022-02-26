@@ -5,7 +5,7 @@ using C4Sharp.Sample.Structures;
 
 namespace C4Sharp.Sample.Diagrams
 {
-    public class DeploymentDiagramBuildRunner: DiagramBuildRunner
+    public class DeploymentDiagram: DiagramBuildRunner
     {
         protected override string Title => "System Context diagram for Internet Banking System";
         protected override DiagramType DiagramType => DiagramType.Deployment;

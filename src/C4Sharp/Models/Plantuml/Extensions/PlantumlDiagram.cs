@@ -15,8 +15,7 @@ public static class PlantumlDiagram
     /// </summary>
     /// <param name="diagram"></param>
     /// <returns></returns>
-    public static string ToPumlString(this Diagram diagram) =>
-        ToPumlString(diagram, false);
+    public static string ToPumlString(this Diagram diagram) => ToPumlString(diagram, false);
 
     /// <summary>
     /// Create PUML content from Diagram
@@ -29,29 +28,7 @@ public static class PlantumlDiagram
             .BuildBody(diagram)
             .BuildFooter(diagram)
             .ToString();
-
-    /// <summary>
-    /// This call updates the default style of the elements (component, ...) and creates no additional legend entry.
-    /// perform this PUML comandUpdate ElementStyle(elementName, ?bgColor, ?fontColor, ?borderColor, ?shadowing)
-    /// </summary>
-    /// <param name="diagram"></param>
-    /// <param name="elementName">(component, person, container,...)</param>
-    /// <param name="bgColor">background color</param>
-    /// <param name="fontColor">font color</param>
-    /// <param name="borderColor">border color</param>
-    /// <param name="shadowing">shadowing</param>
-    /// <param name="shape"></param>              
-    public static Diagram UpdateElementStyle(this Diagram diagram, ElementName elementName, string bgColor, string fontColor, string borderColor, bool shadowing, Shape? shape = null)
-    {
-        if (elementName is null)
-            throw new ArgumentNullException(nameof(elementName), $"{nameof(elementName)} is required");
-
-        var shapeValue = shape is null ? string.Empty : $", ?shape={shape.Value}";
-        var item = $"UpdateElementStyle(\"{elementName}\", $bgColor={bgColor}, $fontColor={fontColor}, $borderColor={borderColor}, $shadowing=\"{shadowing}\"{shapeValue} )";
-        //diagram.UpdateElementStyle(elementName.Name, item);
-        return diagram;
-    }
-
+    
     private static StringBuilder BuildHeader(this StringBuilder stream, Diagram diagram, bool useStandardLibrary)
     {
         var path = GetPumlFilePath(diagram, useStandardLibrary);

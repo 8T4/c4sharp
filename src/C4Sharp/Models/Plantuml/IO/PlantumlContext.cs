@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Text;
 using C4Sharp.Diagrams;
+using C4Sharp.Extensions;
 using C4Sharp.FileSystem;
 using C4Sharp.Models.Plantuml.Extensions;
 
@@ -145,7 +146,7 @@ public partial class PlantumlContext
     {
         try
         {
-            var filePath = Path.Combine(path, $"{diagram.Slug()}.puml");
+            var filePath = Path.Combine(path, diagram.PumlFileName());
             Directory.CreateDirectory(path);
             File.WriteAllText(filePath, diagram.ToPumlString(StandardLibraryBaseUrl));
         }
@@ -237,16 +238,22 @@ public partial class PlantumlContext
     {
         try
         {
-            foreach (var diagram in diagrams)
+            Directory.CreateDirectory(path);
+            PlantumlResources.LoadHtmlResources(path);
+            var enumerable = diagrams as Diagram[] ?? diagrams.ToArray();
+            
+            var index = Path.Combine(path, "index.html");
+            File.WriteAllText(index, enumerable.ToIndexHtmlPage());
+            
+            foreach (var diagram in enumerable)
             {
-                var filePath = Path.Combine(path, $"{diagram.Slug()}.html");
-                Directory.CreateDirectory(path);
-                File.WriteAllText(filePath, diagram.ToPumlHtml());                
+                var filePath = Path.Combine(path, diagram.HtmlPageName());
+                File.WriteAllText(filePath, diagram.ToHtmlPage());                
             }
         }
         catch (Exception e)
         {
-            throw new PlantumlException($"{nameof(PlantumlException)}: Could not save puml file.", e);
+            throw new PlantumlException($"{nameof(PlantumlException)}: Could not save html file.", e);
         }        
     }
 }

@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- We use tailwindcss as design system -->
+    <!-- https://github.com/tailwindlabs/tailwindcss/blob/master/LICENSE -->
+    <script src="assets/ds.js"></script>
+</head>
+
+<body class="bg-slate-800 font-sans text-white">
+    <div class="container mx-auto max-w-7xl space-y-10 p-6">
+        <div class="mt-6 flex justify-center">
+            <img src="assets/icon.png" alt="logo">
+        </div>
+        <!-- Diagram description -->
+        <div class="mt-6">
+            <p class="text-3xl uppercase text-sky-400">Título do diagrama</p>
+            <p class="text-sm text-sky-300 ...">Container Diagram</p>
+            <p class="mt-3">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nostrum, tenetur voluptatum dignissimos, aut eius consectetur iusto voluptatibus laborum nobis reiciendis, dolore eaque modi hic quam fugit commodi quibusdam quisquam beatae!</p>
+        </div>
+
+        <!-- Diagram image -->
+        <div class="shadow-md bg-white rounded-lg flex justify-center p-6">        
+            <object class="max-w-full" type="image/svg+xml" data="image.svg">
+                <!-- Your fall back here -->
+                <img src="image.svg" />
+            </object>            
+            
+        </div>
+
+        <!-- Diagram structure -->
+        <div>
+            <p class="text-3xl uppercase text-sky-400">Structures</p>
+            <ul class="mt-6 space-y-4">
+                <li>
+                    <p class="font-bold">WebApp</p>
+                    <p class="text-sm text-sky-300">web.app.container | internal </p>
+                    <p class="">Delivers the static content and the Internet banking SPA</p>
+                </li>
+                <li>
+                    <p class="font-bold">WebApp</p>
+                    <p class="text-sm text-sky-300">web.app.container | external</p>
+                    <p class="">Delivers the static content and the Internet banking SPA</p>
+                </li>                
+            </ul>
+        </div>
+        <!-- ... -->
+        <div class="mt-6">
+            <hr>
+            <p class="text-sm mt-2">This document was build by <a class="underline decoration-2 decoration-pink-500" href="https://github.com/8T4/c4sharp">C4Sharp</a> </p>
+
+        </div>
+    </div>
+</body>
+
+</html>
