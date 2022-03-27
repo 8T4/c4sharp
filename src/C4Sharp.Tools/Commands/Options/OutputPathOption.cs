@@ -12,7 +12,14 @@ public static class OutputPathOption
         var option = new Option<string?>(new[] { "-o", "--output" }, description);
         option.SetDefaultValue(null);
 
-        option.AddValidator(opt =>
+        option.AddValidator(ValidateSymbol);
+
+        return option;
+    }
+
+    private static string? ValidateSymbol(OptionResult opt)
+    {
+        try
         {
             var path = opt.GetValueOrDefault<string?>();
 
@@ -27,8 +34,10 @@ public static class OutputPathOption
                 _ when !Directory.Exists(path) => $"The specified output path does not exists {path}",
                 _ => null
             };
-        });
-
-        return option;
-    }    
+        }
+        catch(Exception e)
+        {
+            return $"The specification of output path has fail:\r\n {e.Message}";
+        }
+    }
 }

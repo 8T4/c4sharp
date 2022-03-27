@@ -6,15 +6,20 @@ public static class OutputDocOption
 {
     public static Option Get()
     {
-        const string description = "set 'html' or 'md' to output a document as html page or markdown file";
+        const string description = "set 'html' to output a document as html page";
 
-        var option =  new Option<string?>(new[] { "--doc", "-d" }, description);
+        var option = new Option<string?>(new[] { "--doc", "-d" }, () => "html", description);
         option.SetDefaultValue("html");
+        option.AddValidator(ValidateSymbol);
         
-        option.AddValidator(opt =>
+        return option;        
+    }
+
+    private static string? ValidateSymbol(OptionResult opt)
+    {
+        try
         {
             var path = opt.GetValueOrDefault<string?>();
-
             if (path is null)
             {
                 return null;
@@ -26,8 +31,10 @@ public static class OutputDocOption
                 "md" => null,
                 _ => $"inválid format {path}",
             };
-        });
-        
-        return option;        
-    }    
+        }
+        catch
+        {
+            return $"An error was raised when try get option argument (--doc). Verify if the option value was typed correctly!";
+        }
+    }
 }

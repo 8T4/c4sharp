@@ -4,7 +4,7 @@ namespace C4Sharp.Sample.Structures;
 
 public static class Components
 {
-    private static Component _sign;
+    private static Component? _sign;
 
     public static Component Sign => _sign ??= new Component("sign", "Sign In Controller")
     {
@@ -12,7 +12,7 @@ public static class Components
         Technology = "MVC Rest Controller",
     };
 
-    private static Component _accounts;
+    private static Component? _accounts;
 
     public static Component Accounts => _accounts ??= new Component("accounts", "Accounts Summary Controller")
     {
@@ -20,7 +20,7 @@ public static class Components
         Technology = "MVC Rest Controller"
     };
 
-    private static Component _security;
+    private static Component? _security;
 
     public static Component Security => _security ??= new Component("security", "Security Component")
     {
@@ -28,7 +28,7 @@ public static class Components
         Technology = "Spring Bean"
     };
 
-    private static Component _mainframeFacade;
+    private static Component? _mainframeFacade;
     public static Component MainframeFacade => _mainframeFacade ??=
         new Component("mbsfacade", "Mainframe Banking System Facade")
         {
