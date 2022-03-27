@@ -13,7 +13,7 @@ namespace C4Sharp.Models;
 public abstract record Structure
 {
     public string Alias { get; }
-    public string Label { get; } = "";
+    public string Label { get; init; } = "";
     public string Description { get; init; } = string.Empty;
     public string[] Tags { get; init; } = Array.Empty<string>();
     public string Link { get; init; } = string.Empty;

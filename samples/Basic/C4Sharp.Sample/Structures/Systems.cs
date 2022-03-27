@@ -1,11 +1,13 @@
+using C4Sharp.Diagrams;
 using C4Sharp.Models;
 using C4Sharp.Models.Relationships;
+using C4Sharp.Sample.Diagrams;
 
 namespace C4Sharp.Sample.Structures;
 
 public static class Systems
 {
-    private static SoftwareSystem _bankingSystem;
+    private static SoftwareSystem? _bankingSystem;
 
     public static SoftwareSystem BankingSystem => _bankingSystem ??= new SoftwareSystem(
         "BankingSystem",
@@ -13,10 +15,11 @@ public static class Systems
     {
         Description = "Allows customers to view information about their " +
                       "bank accounts, and make payments.",
-        Tags = new[] { "services" }
+        Tags = new[] { "services" },
+        Link = DiagramHRef.LinkTo<ContainerDiagram>()
     };
 
-    private static SoftwareSystem _mainframe;
+    private static SoftwareSystem? _mainframe;
 
     public static SoftwareSystem Mainframe => _mainframe ??= new SoftwareSystem(
         "Mainframe",
@@ -27,7 +30,7 @@ public static class Systems
         Boundary = Boundary.External
     };
 
-    private static SoftwareSystem _mailSystem;
+    private static SoftwareSystem? _mailSystem;
 
     public static SoftwareSystem MailSystem => _mailSystem ??= new SoftwareSystem(
         "MailSystem",

@@ -1,12 +1,16 @@
 using System.Diagnostics;
 using System.Text;
+using C4Sharp.Diagrams;
+using C4Sharp.FileSystem;
+using C4Sharp.Models.Plantuml.Extensions;
 
 namespace C4Sharp.Models.Plantuml.IO;
 
 /// <summary>
 /// Session
 /// </summary>
-public class PlantumlSession : IDisposable
+[Obsolete("This class is deprecated! Please, use PlantumlContext")]
+public partial class PlantumlSession : IDisposable
 {
     public bool StandardLibraryBaseUrl { get; private set; }
     public bool GenerateDiagramImages { get; private set; }
@@ -69,7 +73,7 @@ public class PlantumlSession : IDisposable
     /// <param name="path">puml files path</param>
     /// <param name="generatedImageFormat">specifies the format of the generated images</param>
     /// <exception cref="PlantumlException"></exception>
-    internal void Execute(string path, string generatedImageFormat)
+    public void Execute(string path, string generatedImageFormat)
     {
         try
         {
@@ -175,6 +179,78 @@ public class PlantumlSession : IDisposable
         catch
         {
             // ignored
+        }
+    }
+}
+
+/// <summary>
+/// PUML File Utils
+/// </summary>
+public partial class PlantumlSession
+{
+    private static readonly object Lock = new();
+
+    /// <summary>
+    /// It creates a Puml file into the default directory "./c4"
+    /// If the attribute of Session GenerateDiagramImages is true
+    /// It generates png files of the diagram
+    /// </summary>
+    /// <param name="diagrams">C4 Diagrams</param>
+    public void Export(IEnumerable<Diagram> diagrams)
+    {
+        var dirPath = Directory.GetCurrentDirectory();
+        var path = Path.Join(dirPath, C4SharpDirectory.DirectoryName);
+        Export(path, diagrams);
+    }
+
+    /// <summary>
+    /// It creates a Puml file into the default directory "./c4"
+    /// If the attribute of Session GenerateDiagramImages is true
+    /// It generates png files of the diagram
+    /// </summary>
+    /// <param name="diagrams">C4 Diagrams</param>
+    /// <param name="path">
+    /// Full path of the directory
+    /// <example>For windows.: C:\users\user\projects\</example>
+    /// <example>For Unix.: users/user/projects/</example>
+    /// </param>
+    public void Export(string path, IEnumerable<Diagram> diagrams)
+    {
+        foreach (var diagram in diagrams)
+        {
+            Save(diagram, path);
+        }
+
+        if (GenerateDiagramImages)
+        {
+            Execute(path, "png");
+        }
+
+        if (GenerateDiagramSvgImages)
+        {
+            Execute(path, "svg");
+        }
+    }
+
+    /// <summary>
+    /// Save puml file. It's creates path if non exists.
+    /// </summary>
+    /// <param name="diagram">C4 Diagram</param>
+    /// <param name="path">Output path</param>
+    private void Save(Diagram diagram, string path)
+    {
+        try
+        {
+            lock (Lock)
+            {
+                var filePath = Path.Combine(path, $"{diagram.Slug()}.puml");
+                Directory.CreateDirectory(path);
+                File.WriteAllText(filePath, diagram.ToPumlString(StandardLibraryBaseUrl));
+            }
+        }
+        catch (Exception e)
+        {
+            throw new PlantumlException($"{nameof(PlantumlException)}: Could not save puml file.", e);
         }
     }
 }

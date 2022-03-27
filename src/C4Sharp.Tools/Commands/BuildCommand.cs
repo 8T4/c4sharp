@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Reflection;
 using C4Sharp.Diagrams;
+using C4Sharp.Models.Plantuml.Extensions;
 using C4Sharp.Models.Plantuml.IO;
 using C4Sharp.Tools.Commands.Arguments;
 using C4Sharp.Tools.Commands.Options;
@@ -13,16 +14,17 @@ public class BuildCommand : Command
         "Execute runners into solution that implements 'IDiagramBuildRunner' Interface")
     {
         RegisterArguments();
-        Handler = CommandHandler.Create<string, string?>(Execute);
+        Handler = CommandHandler.Create<string, string?, string?>(Execute);
     }
 
     private void RegisterArguments()
     {
         AddArgument(SolutionPathArgument.Get("path"));
         AddOption(OutputPathOption.Get());
+        AddOption(OutputDocOption.Get());
     }
 
-    private async Task<int> Execute(string path, string? output)
+    private async Task<int> Execute(string path, string? output, string? doc)
     {
         try
         {
@@ -33,7 +35,7 @@ public class BuildCommand : Command
 
             //RunDotnetBuild(slnPath);
             var runners = await StartAnalysis(workspace, slnPath);
-            GenerateC4Diagrams(runners, output);
+            GenerateC4Diagrams(runners, output, doc);
             return 0;
         }
         catch (Exception e)
@@ -162,7 +164,7 @@ public class BuildCommand : Command
     /// </summary>
     /// <param name="runners"></param>
     /// <param name="ouput"></param>
-    private static void GenerateC4Diagrams(IEnumerable<IDiagramBuildRunner> runners, string? ouput)
+    private static void GenerateC4Diagrams(IEnumerable<IDiagramBuildRunner> runners, string? ouput, string? doc)
     {
         var path = Path.Combine(string.IsNullOrEmpty(ouput) 
             ? Environment.CurrentDirectory 
@@ -172,13 +174,20 @@ public class BuildCommand : Command
         
         ColorConsole.WriteLine("Generating C4 diagram in: ".White(), path.Green());
 
-        new PlantumlSession()
+        var context = new PlantumlContext()
             .UseDiagramImageBuilder()
-            .UseDiagramSvgImageBuilder()
-            .Export(directory, runners.Select(r => r.Build()));
+            .UseDiagramSvgImageBuilder();
+
+        if (doc is not null && doc.Equals("html"))
+        {
+            context.UseHtmlPageBuilder();
+        }
+        
+        context.Export(directory, runners.Select(r => r.Build()));
 
         PrintFileList(directory, "png");
         PrintFileList(directory, "svg");
+        PrintFileList(directory, "html");
         PrintFileList(directory, "puml");
     }
 

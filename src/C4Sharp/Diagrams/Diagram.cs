@@ -11,11 +11,14 @@ namespace C4Sharp.Diagrams;
 public abstract record Diagram
 {
     internal string Name { get; }
+    public string Reference { get; init; }
     public bool LayoutWithLegend { get; init; }
     public bool ShowLegend { get; init; }
     public bool LayoutAsSketch { get; init; }
     public string? Title { get; init; }
+    public string? Description { get; init; }
     public DiagramLayout FlowVisualization { get; init; }
+    public DiagramType Type { get; }
     public Structure[] Structures { get; init; }
     public Relationship[] Relationships { get; init; }
     public IElementStyle? Style { get; private init; }
@@ -28,7 +31,11 @@ public abstract record Diagram
     /// <param name="type"></param>
     protected Diagram(DiagramType type)
     {
+        Type = type;
+        Reference = this.CreateRef();
         LayoutWithLegend = true;
+        Description = string.Empty;
+        Title = string.Empty;
         LayoutAsSketch = false;
         ShowLegend = false;
         FlowVisualization = DiagramLayout.TopDown;
@@ -40,10 +47,4 @@ public abstract record Diagram
     public Diagram SetStyle(IElementStyle? style) => this with { Style = style };
     public Diagram SetTags(IElementTag? tag) => this with { Tags = tag };
     public Diagram SetRelTags(IRelationshipTag? tag) => this with { RelTags = tag };
-
-    /// <summary>
-    /// Slugfy "title-name"
-    /// </summary>
-    /// <returns></returns>
-    public string Slug() => $"{Title}-{Name}".GenerateSlug();
 }

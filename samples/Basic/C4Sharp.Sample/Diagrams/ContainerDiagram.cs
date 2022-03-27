@@ -1,5 +1,7 @@
 using C4Sharp.Diagrams;
 using C4Sharp.Models;
+using C4Sharp.Models.Plantuml;
+using C4Sharp.Models.Plantuml.Constants;
 using C4Sharp.Models.Relationships;
 using C4Sharp.Sample.Structures;
 
@@ -7,7 +9,7 @@ namespace C4Sharp.Sample.Diagrams
 {
     using static Containers;
     
-    public class ContainerDiagramBuildRunner: DiagramBuildRunner
+    public class ContainerDiagram: DiagramBuildRunner
     {
         protected override string Title => "Container diagram for Internet Banking System";
         protected override DiagramType DiagramType => DiagramType.Container;
@@ -41,5 +43,11 @@ namespace C4Sharp.Sample.Diagrams
             (Systems.MailSystem < BackendApi)["Sends e-mails using", "sync, SMTP"],
             (BackendApi > Systems.BankingSystem)["Uses", "sync/async, XML/HTTPS"][Position.Neighbor]
         };
+
+        protected override IElementTag? SetTags()
+        {
+            return new ElementTag()
+                .AddElementTag("services", "#3F6684", shape: Shape.EightSidedShape);
+        }
     }
 }

@@ -14,12 +14,21 @@ internal static class PlantumlResources
             ? Path.Join(C4SharpDirectory.DirectoryName, C4SharpDirectory.ResourcesFolderName)
             : Path.Join(path, C4SharpDirectory.ResourcesFolderName);
 
-        LoadResource(local, "C4");
-        LoadResource(local, "C4_Component");
-        LoadResource(local, "C4_Container");
-        LoadResource(local, "C4_Context");
-        LoadResource(local, "C4_Deployment");
+        LoadResource(local, "C4.puml");
+        LoadResource(local, "C4_Component.puml");
+        LoadResource(local, "C4_Container.puml");
+        LoadResource(local, "C4_Context.puml");
+        LoadResource(local, "C4_Deployment.puml");
     }
+    
+    /// <summary>
+    /// Load all C4_Plantuml files
+    /// </summary>
+    public static void LoadHtmlResources(string path)
+    {
+        LoadResource(path, "ds.js");
+        LoadIconPngResource(path);
+    }    
 
     /// <summary>
     /// Load C4_Plantuml file
@@ -31,14 +40,14 @@ internal static class PlantumlResources
     {
         try
         {
-            var path = Path.Join(resourcesPath, $"{resourceName}.puml");
+            var path = Path.Join(resourcesPath, resourceName);
 
             if (File.Exists(path))
             {
                 return;
             }
 
-            var stream = ResourceMethods.GetResourceContent($"{resourceName}.puml");
+            var stream = ResourceMethods.GetResourceContent(resourceName);
             Directory.CreateDirectory(resourcesPath);
             File.WriteAllText(path, stream);
         }
@@ -59,10 +68,8 @@ internal static class PlantumlResources
         {
             const string resourceName = "plantuml.jar";
             var fileName = Path.GetTempFileName();
-
-            var stream = ResourceMethods.GetResourceStream(resourceName) ?? throw new InvalidOperationException();
-            using var file = new FileStream(fileName, FileMode.Create, FileAccess.Write);
-            stream.CopyTo(file);
+            
+            LoadStream(fileName, resourceName);
 
             return fileName;
         }
@@ -70,5 +77,38 @@ internal static class PlantumlResources
         {
             throw new PlantumlException($"{nameof(PlantumlException)}: Could not load plantuml engine.", e);
         }
+    }
+    
+    /// <summary>
+    /// Load Icon PNG file
+    /// </summary>
+    /// <param name="resourcesPath"></param>
+    /// <exception cref="C4FileException"></exception>
+    private static void LoadIconPngResource(string resourcesPath)
+    {
+        try
+        {
+            const string resourceName = "icon.png";
+            var path = Path.Join(resourcesPath, resourceName);
+
+            if (File.Exists(path))
+            {
+                return;
+            }
+            
+            LoadStream(path, resourceName);
+        }
+        catch (Exception e)
+        {
+            throw new PlantumlException($"{nameof(PlantumlException)}: Could not load plantuml engine.", e);
+        }
+    }
+
+    private static void LoadStream(string path, string resourceName)
+    {
+        var stream = ResourceMethods.GetResourceStream(resourceName) ?? throw new InvalidOperationException();
+        using var file = new FileStream(path, FileMode.Create, FileAccess.Write);
+        stream.CopyTo(file);
+        stream.Flush();        
     }
 }

@@ -1,6 +1,7 @@
 using C4Sharp.Diagrams;
-using C4Sharp.Diagrams.Core;
 using C4Sharp.Models;
+using C4Sharp.Models.Plantuml;
+using C4Sharp.Models.Plantuml.Constants;
 using C4Sharp.Models.Relationships;
 using C4Sharp.Sample.Structures;
 
@@ -10,7 +11,7 @@ namespace C4Sharp.Sample.Diagrams
     using static People;
     using static Systems;
     
-    public class EnterpriseDiagramBuildRunner: DiagramBuildRunner
+    public class EnterpriseDiagram: DiagramBuildRunner
     {
         protected override string Title => "System Enterprise diagram for Internet Banking System";
         protected override DiagramType DiagramType => DiagramType.Context;
@@ -57,5 +58,13 @@ namespace C4Sharp.Sample.Diagrams
             (BankingSystem > MailSystem)["Sends e-mails", "SMTP"][Neighbor],
             BankingSystem > Mainframe,
         };
+
+        protected override IElementStyle? SetStyle()
+        {
+            return new ElementStyle()
+                .UpdateElementStyle(ElementName.ExternalPerson, "#7f3b08", "#7f3b08")
+                .UpdateElementStyle(ElementName.Person, "#55ACEE", "#55ACEE")
+                .UpdateElementStyle(ElementName.ExternalSystem, "#3F6684", shape: Shape.RoundedBoxShape);
+        }
     }
 }

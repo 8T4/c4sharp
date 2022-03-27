@@ -4,7 +4,7 @@ namespace C4Sharp.Sample.Structures;
 
 public static class Containers
 {
-    private static Container _webApp;
+    private static Container? _webApp;
 
     public static Container WebApp => _webApp ??= new Container(
         "Corporate.Finance.Limits.Service.ServiceBus", "WebApp")
@@ -14,7 +14,7 @@ public static class Containers
         Technology = "C#, WebApi"
     };
 
-    private static Container _spa;
+    private static Container? _spa;
 
     public static Container Spa => _spa ??= new Container(
         "Spa", "SPA")
@@ -24,7 +24,7 @@ public static class Containers
         Technology = "JavaScript, Angular"
     };
 
-    private static Container _mobileApp;
+    private static Container? _mobileApp;
 
     public static Container MobileApp => _mobileApp ??= new Container(
         "MobileApp", "MobileApp")
@@ -35,7 +35,7 @@ public static class Containers
         Technology = "C#, Xamarin"
     };
 
-    private static Container _sqlDatabase;
+    private static Container? _sqlDatabase;
 
     public static Container SqlDatabase => _sqlDatabase ??= new Container(
         "Database", "SqlDatabase")
@@ -45,7 +45,7 @@ public static class Containers
         Technology = "SQL Database"
     };
 
-    private static Container _oracleDatabase;
+    private static Container? _oracleDatabase;
 
     public static Container OracleDatabase => _oracleDatabase ??= new Container(
         "Database", "OracleDatabase")
@@ -55,7 +55,7 @@ public static class Containers
         Technology = "Oracle Database"
     };
 
-    private static Container _backendApi;
+    private static Container? _backendApi;
 
     public static Container BackendApi => _backendApi ??= new Container(
         "BackendApi", "BackendApi")
