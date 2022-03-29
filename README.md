@@ -95,6 +95,7 @@ internal static class Program
             .UseDiagramImageBuilder()
             .UseDiagramSvgImageBuilder()
             .UseStandardLibraryBaseUrl()
+            .UseHtmlPageBuilder()
             .Export(diagrams);
     }
 }
@@ -106,7 +107,7 @@ internal static class Program
 
 The `C4SCLI` can be used in DevOps pipelines, removing the need to manually compile diagrams. For this, install `C4SCLI` tool and execute de the following command:
 ```shell
-$ c4scli build <solution path> [-o <output path>] 
+$ c4scli build <solution path> [-o <output path>] [-d <html>]
 ```
 ⚠️ *only compatible with projects using c4sharp version 5.0+*
 
