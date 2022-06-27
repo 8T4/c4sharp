@@ -16,23 +16,37 @@ public record Component : Structure
 {
     public string? Technology { get; init; }
     
+    public ComponentType ComponentType { get; init; }
+
     public Component(string alias, string label): base(alias, label)
     {
+        ComponentType = ComponentType.None;
     }
     
     public Component(StructureIdentity alias, string label): base(alias, label)
     {
+        ComponentType = ComponentType.None;
     }    
 
     public Component(string alias, string label, string technology): this(alias, label)
     {
         Technology = technology;
+    }    
+
+    public Component(string alias, string label, ComponentType componentType, string technology): this(alias, label, technology)
+    {
+        ComponentType = componentType;
     }
     
     public Component(string alias, string label, string technology, string description): this(alias, label)
     {
         Technology = technology;
         Description = description;
+    }
+    
+    public Component(string alias, string label, ComponentType componentType, string technology, string description): this(alias, label, technology, description)
+    {
+        ComponentType = componentType;
     }    
 }
 

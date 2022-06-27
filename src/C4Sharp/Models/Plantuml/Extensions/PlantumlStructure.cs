@@ -83,7 +83,13 @@ internal static class PlantumlStructure
 
     private static string ToPumlString(this Component component)
     {
-        var procedureName = $"Component{GetExternalSuffix(component)}";
+        var externalSuffix = GetExternalSuffix(component);
+        var procedureName = component.ComponentType switch
+        {
+            ComponentType.Database => $"ComponentDb{externalSuffix}",
+            ComponentType.Queue => $"ComponentQueue{externalSuffix}",
+            _ => $"Component{externalSuffix}"
+        };
 
         return
             $"{procedureName}({component.Alias}, \"{component.Label}\", \"{component.Technology}\", \"{component.Description}\""
