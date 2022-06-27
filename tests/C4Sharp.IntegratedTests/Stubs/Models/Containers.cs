@@ -20,7 +20,7 @@ public static class Containers
         "Spa", "SPA")
     {
         ContainerType = ContainerType.Spa,
-        Description = "Provides all the Internet banking functionality to cutomers via their web browser",
+        Description = "Provides all the Internet banking functionality to customers via their web browser",
         Technology = "JavaScript, Angular"
     };
 

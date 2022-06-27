@@ -6,7 +6,7 @@ public static class SynchronizeNewAccountInstaller
 {
     public static IServiceCollection AddSynchronizeNewAccount(this IServiceCollection services)
     {
-        //TODO: Dependecy Injection
+        //TODO: Dependency Injection
         
         return services;
     }

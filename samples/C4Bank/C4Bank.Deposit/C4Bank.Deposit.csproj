@@ -14,8 +14,4 @@
       <ProjectReference Include="..\..\..\src\C4Sharp\C4Sharp.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="UseCases" />
-    </ItemGroup>
-
 </Project>

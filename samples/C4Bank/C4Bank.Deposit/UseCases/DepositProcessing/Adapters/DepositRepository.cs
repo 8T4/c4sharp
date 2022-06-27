@@ -1,7 +1,8 @@
 using C4Bank.Deposit.UseCases.DepositoProcessing.Interfaces;
-using C4Bank.Deposit.UseCases.DepositoProcessing.UseCase.Entities;
+using C4Bank.Deposit.UseCases.DepositProcessing.Interfaces;
+using C4Bank.Deposit.UseCases.DepositProcessing.UseCase.Entities;
 
-namespace C4Bank.Deposit.UseCases.DepositoProcessing.Adapters;
+namespace C4Bank.Deposit.UseCases.DepositProcessing.Adapters;
 
 public class DepositRepository: IDepositRepository
 {

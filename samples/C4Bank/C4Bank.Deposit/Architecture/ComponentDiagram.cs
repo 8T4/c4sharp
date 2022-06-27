@@ -1,6 +1,5 @@
 using C4Bank.Deposit.Shared;
-using C4Bank.Deposit.UseCases.DepositoProcessing.Adapters;
-using C4Bank.Deposit.UseCases.SynchronizeNewAccount.Interfaces;
+using C4Bank.Deposit.UseCases.DepositProcessing.Adapters;
 using C4Sharp.Diagrams;
 using C4Sharp.Models;
 using C4Sharp.Models.Containers;
@@ -8,11 +7,11 @@ using C4Sharp.Models.Plantuml;
 using C4Sharp.Models.Plantuml.Constants;
 using C4Sharp.Models.Relationships;
 
-namespace C4Bank.Deposit.Architecure;
+namespace C4Bank.Deposit.Architecture;
 
 public class ComponentDiagram : DiagramBuildRunner
 {
-    protected override string Title => "C4Bank Componetns of Deposit Area";
+    protected override string Title => "C4Bank Components of Deposit Area";
     protected override DiagramType DiagramType => DiagramType.Component;
 
     protected override IEnumerable<Structure> Structures() => new Structure[]
@@ -21,7 +20,7 @@ public class ComponentDiagram : DiagramBuildRunner
         new EventStreaming<IEvent>("kafka", "Partition")[1],
         new EventStreaming<IEvent>("kafka", "Partition")[2],
         new EventStreaming<IEvent>("kafka", "DLQ")[3],
-        new ContainerBoundary<DepositoProcessingWorker>
+        new ContainerBoundary<DepositProcessingWorker>
         {
             Components = new Component[]
             {

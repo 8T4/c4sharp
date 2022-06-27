@@ -4,6 +4,6 @@ namespace C4Bank.Deposit.UseCases.SynchronizeNewAccount.Interfaces;
 
 public interface ISynchronizeNewAccountProducer
 {
-    Task Compleat(AccountSynchronized @event);
+    Task Complete(AccountSynchronized @event);
     Task Reject(AccountSynchronizationRejected @event);
 }
