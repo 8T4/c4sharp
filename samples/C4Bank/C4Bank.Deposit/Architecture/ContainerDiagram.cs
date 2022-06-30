@@ -1,9 +1,9 @@
-using C4Bank.Deposit.UseCases.DepositoProcessing.Adapters;
 using C4Bank.Deposit.UseCases.DepositoProcessing.Interfaces;
-using C4Bank.Deposit.UseCases.DepositoProcessing.UseCase.Messages.Events;
+using C4Bank.Deposit.UseCases.DepositProcessing.Adapters;
+using C4Bank.Deposit.UseCases.DepositProcessing.Interfaces;
+using C4Bank.Deposit.UseCases.DepositProcessing.UseCase.Messages.Events;
 using C4Bank.Deposit.UseCases.SynchronizeNewAccount.Adapters;
 using C4Bank.Deposit.UseCases.SynchronizeNewAccount.Interfaces;
-using C4Bank.Deposit.UseCases.SynchronizeNewAccount.UseCase.Messages.Commands;
 using C4Bank.Deposit.UseCases.SynchronizeNewAccount.UseCase.Messages.Events;
 using C4Sharp.Diagrams;
 using C4Sharp.Models;
@@ -12,7 +12,7 @@ using C4Sharp.Models.Plantuml;
 using C4Sharp.Models.Plantuml.Constants;
 using C4Sharp.Models.Relationships;
 
-namespace C4Bank.Deposit.Architecure;
+namespace C4Bank.Deposit.Architecture;
 
 public class ContainerDiagram : DiagramBuildRunner
 {
@@ -29,7 +29,7 @@ public class ContainerDiagram : DiagramBuildRunner
         new EventStreaming<RegisteredAccount>("kafka", "Partition 01"),
         
         SoftwareSystemBoundary.New("Deposit",
-            new Api<DepositoProcessingWorker>("C#"),
+            new Api<DepositProcessingWorker>("C#"),
             new Database<IDepositRepository>("SQL Server", "Deposit Data Base"),
             new ServerConsole<SynchronizeNewAccountConsumer>("C#", "Kafka Consumer"),
             new Database<IAccountRepository>("SQL Server", "Account Data Base")
@@ -40,14 +40,14 @@ public class ContainerDiagram : DiagramBuildRunner
     {
         It("Customer") > It("OTBank.Finance") | "send deposit",
         It("OTBank.Finance") > It<DepositReceived>() | ("POST", "HTTP"),
-        It<DepositoProcessingWorker>() < It<DepositReceived>() | ("POST", "HTTP"),
-        It<DepositoProcessingWorker>() > It<IDepositRepository>(),
+        It<DepositProcessingWorker>() < It<DepositReceived>() | ("POST", "HTTP"),
+        It<DepositProcessingWorker>() > It<IDepositRepository>(),
         
         It("Customer") > It("C4Bank.Account") | "register",
         It("C4Bank.Account") > It<RegisteredAccount>() | "produces",
         It<SynchronizeNewAccountConsumer>() > It<RegisteredAccount>() | "consumes",
         It<SynchronizeNewAccountConsumer>() > It<IAccountRepository>(),
-        It<DepositoProcessingWorker>() > It<IAccountRepository>(),
+        It<DepositProcessingWorker>() > It<IAccountRepository>(),
     };
     
     protected override IElementStyle? SetStyle()

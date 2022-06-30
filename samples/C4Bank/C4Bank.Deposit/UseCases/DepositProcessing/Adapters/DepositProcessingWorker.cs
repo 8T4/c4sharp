@@ -2,17 +2,18 @@ using System.ComponentModel;
 using C4Bank.Deposit.Shared;
 using C4Bank.Deposit.UseCases.DepositoProcessing.Interfaces;
 using C4Bank.Deposit.UseCases.DepositoProcessing.UseCase;
-using C4Bank.Deposit.UseCases.DepositoProcessing.UseCase.Messages.Commands;
-using C4Bank.Deposit.UseCases.DepositoProcessing.UseCase.Messages.Events;
+using C4Bank.Deposit.UseCases.DepositProcessing.Interfaces;
+using C4Bank.Deposit.UseCases.DepositProcessing.UseCase.Messages.Commands;
+using C4Bank.Deposit.UseCases.DepositProcessing.UseCase.Messages.Events;
 
-namespace C4Bank.Deposit.UseCases.DepositoProcessing.Adapters;
+namespace C4Bank.Deposit.UseCases.DepositProcessing.Adapters;
 
 [Description("Deposit Worker API")]
-public class DepositoProcessingWorker: IWorker
+public class DepositProcessingWorker: IWorker
 {
-    private readonly IDepositoProcessingHandler _handler;
+    private readonly IDepositProcessingHandler _handler;
 
-    public DepositoProcessingWorker(IDepositoProcessingHandler handler)
+    public DepositProcessingWorker(IDepositProcessingHandler handler)
     {
         _handler = handler;
     }

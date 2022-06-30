@@ -21,6 +21,6 @@ public class SynchronizeNewAccountHandler : ISynchronizeNewAccountHandler
         await _repository.Register(deposit);
 
         var @event = SynchronizeNewAccountMapper.Map<AccountSynchronized>(deposit);
-        await _producer.Compleat(@event);
+        await _producer.Complete(@event);
     }
 }

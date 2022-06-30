@@ -1,7 +1,6 @@
 using C4Bank.Deposit.Shared;
-using C4Bank.Deposit.UseCases.DepositoProcessing.UseCase.Messages.Commands;
 
-namespace C4Bank.Deposit.UseCases.DepositoProcessing.UseCase.Messages.Events;
+namespace C4Bank.Deposit.UseCases.DepositProcessing.UseCase.Messages.Events;
 
 public record DepositReceived: IEvent
 {

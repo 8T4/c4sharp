@@ -5,7 +5,7 @@ using C4Sharp.Models.Plantuml.Constants;
 using C4Sharp.Models.Relationships;
 using static C4Sharp.Models.Relationships.Position;
 
-namespace C4Bank.Deposit.Architecure;
+namespace C4Bank.Deposit.Architecture;
 
 public class ContextDiagram : DiagramBuildRunner
 {
