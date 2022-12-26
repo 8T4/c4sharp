@@ -1,6 +1,6 @@
 using C4Sharp.Diagrams;
-using C4Sharp.Models;
-using C4Sharp.Models.Relationships;
+using C4Sharp.Elements;
+using C4Sharp.Elements.Relationships;
 using C4Sharp.Sample.Structures;
 
 namespace C4Sharp.Sample.Diagrams
@@ -10,14 +10,14 @@ namespace C4Sharp.Sample.Diagrams
         protected override string Title => "System Context diagram for Internet Banking System";
         protected override DiagramType DiagramType => DiagramType.Deployment;
 
-        protected override IEnumerable<Structure> Structures() => new Structure[]
+        protected override IEnumerable<Structure> Structures => new Structure[]
         {
             BigBankNode(),
             Nodes.Ios("ios", Containers.MobileApp),
             Nodes.PersonalComputer("computer", Nodes.Browser("browser", Containers.Spa))
         };
 
-        protected override IEnumerable<Relationship> Relationships() => new[]
+        protected override IEnumerable<Relationship> Relationships => new[]
         {
             (Containers.MobileApp > Containers.BackendApi)["Makes API calls to", "json/HTTPS"],
             (Containers.Spa > Containers.BackendApi)["Makes API calls to", "json/HTTPS"],
@@ -30,7 +30,7 @@ namespace C4Sharp.Sample.Diagrams
 
         private static DeploymentNode BigBankNode()
         {
-            return new ("plc", "Big Bank plc")
+            return new DeploymentNode("plc", "Big Bank plc")
             {
                 Description = "Big Bank plc data center",
                 Nodes = new[]

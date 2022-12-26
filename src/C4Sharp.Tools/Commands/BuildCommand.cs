@@ -1,8 +1,8 @@
 using System.Diagnostics;
 using System.Reflection;
 using C4Sharp.Diagrams;
-using C4Sharp.Models.Plantuml.Extensions;
-using C4Sharp.Models.Plantuml.IO;
+using C4Sharp.Diagrams.Interfaces;
+using C4Sharp.Elements.Plantuml.IO;
 using C4Sharp.Tools.Commands.Arguments;
 using C4Sharp.Tools.Commands.Options;
 
@@ -33,7 +33,7 @@ public class BuildCommand : Command
                 return 1;
             }
 
-            //RunDotnetBuild(slnPath);
+            await RunDotnetBuild(slnPath);
             var runners = await StartAnalysis(workspace, slnPath);
             GenerateC4Diagrams(runners, output, doc);
             return 0;
@@ -103,7 +103,7 @@ public class BuildCommand : Command
     /// Run dotnet build \"{slnPath}\"
     /// </summary>
     /// <param name="slnPath">solution path</param>
-    private static void RunDotnetBuild(string slnPath)
+    private static async Task RunDotnetBuild(string slnPath)
     {
         ColorConsole.WriteLine("Running dotnet build".White());
         var dotnetProcess = Process.Start(new ProcessStartInfo(@"dotnet", $"build \"{slnPath}\"")
@@ -112,7 +112,7 @@ public class BuildCommand : Command
             RedirectStandardInput = true,
             RedirectStandardOutput = true
         });
-        dotnetProcess!.WaitForExitAsync();
+        await dotnetProcess!.WaitForExitAsync();
         ColorConsole.WriteLine("dotnet build complete".White());
     }
 
@@ -178,16 +178,10 @@ public class BuildCommand : Command
             .UseDiagramImageBuilder()
             .UseDiagramSvgImageBuilder();
 
-        if (doc is not null && doc.Equals("html"))
-        {
-            context.UseHtmlPageBuilder();
-        }
-        
         context.Export(directory, runners.Select(r => r.Build()));
 
         PrintFileList(directory, "png");
         PrintFileList(directory, "svg");
-        PrintFileList(directory, "html");
         PrintFileList(directory, "puml");
     }
 

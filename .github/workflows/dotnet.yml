@@ -7,8 +7,8 @@ on:
     branches: [ main ]
     
 env:
-  VERSION: 5.2.${{ github.run_number }}
-  CLI_VERSION: 1.2.${{ github.run_number }}-beta
+  VERSION: 6.0.${{ github.run_number }}
+  CLI_VERSION: 2.0.${{ github.run_number }}
   NUGET_INDEX: https://api.nuget.org/v3/index.json
   BUILD_TYPE: Release 
 
@@ -36,9 +36,6 @@ jobs:
       
     - name: Build
       run: dotnet build --no-restore --configuration Release
-      
-    - name: Unit Tests
-      run: dotnet test ./tests/**/*.UnitTests.csproj --no-restore
       
     - name: Integrated Tests
       run: dotnet test ./tests/**/*.IntegratedTests.csproj --no-restore      

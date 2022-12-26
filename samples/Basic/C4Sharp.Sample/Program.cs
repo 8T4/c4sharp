@@ -1,4 +1,4 @@
-﻿using C4Sharp.Models.Plantuml.IO;
+﻿using C4Sharp.Elements.Plantuml.IO;
 using C4Sharp.Sample.Diagrams;
 
 namespace C4Sharp.Sample;
@@ -16,11 +16,12 @@ internal static class Program
             new EnterpriseDiagram().Build(),
         };
         
-        new PlantumlContext()
+        var context = new PlantumlContext();
+        
+        context
             .UseDiagramImageBuilder()
             .UseDiagramSvgImageBuilder()
-            .UseStandardLibraryBaseUrl()
-            .UseHtmlPageBuilder()
+            //.UseStandardLibraryBaseUrl() //load the resources from github C4plantuml repository
             .Export(diagrams);
     }
 }
