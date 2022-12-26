@@ -1,27 +1,27 @@
 using C4Sharp.Diagrams;
-using C4Sharp.IntegratedTests.Stubs.Diagrams;
-using C4Sharp.Models.Plantuml.IO;
+using C4Sharp.Elements.Plantuml.IO;
 using Xunit;
+using ComponentDiagram = C4Sharp.Sample.Diagrams.ComponentDiagram;
+using ContainerDiagram = C4Sharp.Sample.Diagrams.ContainerDiagram;
+using ContextDiagram = C4Sharp.Sample.Diagrams.ContextDiagram;
+using DeploymentDiagram = C4Sharp.Sample.Diagrams.DeploymentDiagram;
 
 namespace C4Sharp.IntegratedTests;
 
-public class ExportingDiagramTests : ExportingDiagramFixture, IDisposable
+public class ExportingDiagramTests : ExportingDiagramFixture, IAsyncLifetime
 {
-    public ExportingDiagramTests() => Setup();
-
     [Fact]
     public void TestExportWithoutImages()
     {
         var diagrams = new Diagram[]
         {
-            ContextDiagramBuilder.Build() with { Title = "Diagram" },
-            ContainerDiagramBuilder.Build() with { Title = "Diagram" },
-            ComponentDiagramBuilder.Build() with { Title = "Diagram" },
-            DeploymentDiagramBuilder.Build() with { Title = "Diagram" }
+            new ContextDiagram().Build() with { Title = "Diagram" },
+            new ContainerDiagram().Build() with { Title = "Diagram" },
+            new ComponentDiagram().Build() with { Title = "Diagram" },
+            new DeploymentDiagram().Build() with { Title = "Diagram" }
         };
 
-        using var session = new PlantumlSession();
-        session.Export(diagrams);
+        new PlantumlContext().Export(diagrams);
 
         VerifyIfResourceFilesExists();
         VerifyIfPumlFilesExists("diagram");
@@ -36,15 +36,14 @@ public class ExportingDiagramTests : ExportingDiagramFixture, IDisposable
 
         var diagrams = new Diagram[]
         {
-            ContextDiagramBuilder.Build() with { Title = "Diagram" },
-            ContainerDiagramBuilder.Build() with { Title = "Diagram" },
-            ComponentDiagramBuilder.Build() with { Title = "Diagram" },
-            DeploymentDiagramBuilder.Build() with { Title = "Diagram" }
+            new ContextDiagram().Build() with { Title = "Diagram" },
+            new ContainerDiagram().Build() with { Title = "Diagram" },
+            new ComponentDiagram().Build() with { Title = "Diagram" },
+            new DeploymentDiagram().Build() with { Title = "Diagram" }
         };
 
         var pathSave = new DirectoryInfo(path).FullName;
-
-        new PlantumlSession()
+        new PlantumlContext()
             .UseDiagramImageBuilder()
             .Export(pathSave, diagrams);
 
@@ -60,13 +59,13 @@ public class ExportingDiagramTests : ExportingDiagramFixture, IDisposable
     {
         var diagrams = new Diagram[]
         {
-            ContextDiagramBuilder.Build() with { Title = "Diagram" },
-            ContainerDiagramBuilder.Build() with { Title = "Diagram" },
-            ComponentDiagramBuilder.Build() with { Title = "Diagram" },
-            DeploymentDiagramBuilder.Build() with { Title = "Diagram" }
+            new ContextDiagram().Build() with { Title = "Diagram" },
+            new ContainerDiagram().Build() with { Title = "Diagram" },
+            new ComponentDiagram().Build() with { Title = "Diagram" },
+            new DeploymentDiagram().Build() with { Title = "Diagram" }
         };
 
-        new PlantumlSession()
+        new PlantumlContext()
             .UseDiagramImageBuilder()
             .Export(diagrams);
 
@@ -81,13 +80,13 @@ public class ExportingDiagramTests : ExportingDiagramFixture, IDisposable
     {
         var diagrams = new Diagram[]
         {
-            ContextDiagramBuilder.Build() with { Title = "Diagram" },
-            ContainerDiagramBuilder.Build() with { Title = "Diagram" },
-            ComponentDiagramBuilder.Build() with { Title = "Diagram" },
-            DeploymentDiagramBuilder.Build() with { Title = "Diagram" }
+            new ContextDiagram().Build() with { Title = "Diagram" },
+            new ContainerDiagram().Build() with { Title = "Diagram" },
+            new ComponentDiagram().Build() with { Title = "Diagram" },
+            new DeploymentDiagram().Build() with { Title = "Diagram" }
         };
 
-        new PlantumlSession()
+        new PlantumlContext()
             .UseDiagramSvgImageBuilder()
             .Export(diagrams);
 
@@ -102,13 +101,13 @@ public class ExportingDiagramTests : ExportingDiagramFixture, IDisposable
     {
         var diagrams = new Diagram[]
         {
-            ContextDiagramBuilder.Build() with { Title = "Diagram" },
-            ContainerDiagramBuilder.Build() with { Title = "Diagram" },
-            ComponentDiagramBuilder.Build() with { Title = "Diagram" },
-            DeploymentDiagramBuilder.Build() with { Title = "Diagram" }
+            new ContextDiagram().Build() with { Title = "Diagram" },
+            new ContainerDiagram().Build() with { Title = "Diagram" },
+            new ComponentDiagram().Build() with { Title = "Diagram" },
+            new DeploymentDiagram().Build() with { Title = "Diagram" }
         };
 
-        new PlantumlSession()
+        new PlantumlContext()
             .UseDiagramImageBuilder()
             .UseDiagramSvgImageBuilder()
             .Export(diagrams);
@@ -119,5 +118,15 @@ public class ExportingDiagramTests : ExportingDiagramFixture, IDisposable
         VerifyIfSvgFilesExists("diagram");
     }
 
-    public void Dispose() => CleanUp();
+    public Task InitializeAsync()
+    {
+        Setup();
+        return Task.CompletedTask;
+    }
+
+    public Task DisposeAsync()
+    {
+        CleanUp();
+        return Task.CompletedTask;
+    }
 }
