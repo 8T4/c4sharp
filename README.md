@@ -40,8 +40,7 @@ public class ContainerDiagram : DiagramBuildRunner
     protected override string Title => "C4Bank Context of Deposit Area";
     protected override DiagramType DiagramType => DiagramType.Container;
     
-
-    protected override IEnumerable<Structure> Structures() => new Structure[]
+    protected override IEnumerable<Structure> Structures => new Structure[]
     {
         new Person("Customer", "Customer", "Bank Customer"),
         new SoftwareSystem("OTBank.Finance", "Finance", "OTBank Finance System", Boundary.External),
@@ -57,7 +56,7 @@ public class ContainerDiagram : DiagramBuildRunner
         ),
     };
 
-    protected override IEnumerable<Relationship> Relationships() => new[]
+    protected override IEnumerable<Relationship> Relationships => new[]
     {
         It("Customer") > It("OTBank.Finance") | "send deposit",
         It("OTBank.Finance") > It<DepositReceived>() | ("POST", "HTTP"),
@@ -73,7 +72,6 @@ public class ContainerDiagram : DiagramBuildRunner
 }
 ```
 <small><strong>Code 1</strong> - container diagram as code</small>  
-<small>see the complete code [here](./samples/C4Bank/C4Bank.Deposit/Architecure/ContainerDiagram.cs)</small>
 
 ### Compiling
 There are two strategies for compiling diagrams in your project: self-compiling and using the `C4SCLI` tool. 
@@ -94,8 +92,6 @@ internal static class Program
         new PlantumlSession()
             .UseDiagramImageBuilder()
             .UseDiagramSvgImageBuilder()
-            .UseStandardLibraryBaseUrl()
-            .UseHtmlPageBuilder()
             .Export(diagrams);
     }
 }
@@ -107,7 +103,7 @@ internal static class Program
 
 The `C4SCLI` can be used in DevOps pipelines, removing the need to manually compile diagrams. For this, install `C4SCLI` tool and execute de the following command:
 ```shell
-$ c4scli build <solution path> [-o <output path>] [-d <html>]
+$ c4scli build <solution path> [-o <output path>]
 ```
 ⚠️ *only compatible with projects using c4sharp version 5.0+*
 
