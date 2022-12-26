@@ -115,8 +115,8 @@ public record Relationship
     
     public static Relationship operator |(Relationship a, (string label, string protocolo) b)
     {
-        var (label, protocolo) = b;
-        return new Relationship(a.From, a.Direction, a.To, label, protocolo, a.Position);
+        var (label, protocol) = b;
+        return new Relationship(a.From, a.Direction, a.To, label, protocol, a.Position);
     }    
     
     public static Relationship operator |(Relationship a, Position position)

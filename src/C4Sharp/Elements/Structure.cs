@@ -14,8 +14,7 @@ public abstract record Structure
     public string Alias { get; }
     public string Label { get; init; } = "";
     public string Description { get; init; } = string.Empty;
-    public string[] Tags { get; init; } = Array.Empty<string>();
-    public string Link { get; init; } = string.Empty;
+    public IEnumerable<string> Tags { get; init; }
     public Boundary Boundary { get; init; } = Boundary.Internal;
 
     /// <summary>
@@ -23,9 +22,11 @@ public abstract record Structure
     /// </summary>
     /// <param name="alias">Should be unique</param>
     /// <param name="label"></param>
-    protected Structure(string alias, string label) => (Alias, Label) = (alias, label);
+    protected Structure(string alias, string label, string[]? tags = null) => 
+        (Alias, Label, Tags) = (alias, label, tags ?? Array.Empty<string>());
 
-    protected Structure(StructureIdentity identity, string label) : this(identity.Value, label)
+    protected Structure(StructureIdentity identity, string label, string[]? tags = null) 
+        : this(identity.Value, label, tags)
     {
     }
 

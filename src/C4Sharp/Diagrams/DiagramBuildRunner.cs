@@ -1,9 +1,6 @@
-using System.Reflection.Metadata.Ecma335;
-using C4Sharp.Diagrams.Core;
-using C4Sharp.Diagrams.Supplementary;
-using C4Sharp.Extensions;
-using C4Sharp.Models;
-using C4Sharp.Models.Relationships;
+using C4Sharp.Diagrams.Interfaces;
+using C4Sharp.Elements;
+using C4Sharp.Elements.Relationships;
 
 namespace C4Sharp.Diagrams;
 
@@ -18,6 +15,8 @@ public abstract class DiagramBuildRunner : IDiagramBuildRunner
     protected abstract string Title { get; }
     protected virtual string Description { get; }
     protected abstract DiagramType DiagramType { get; }
+    protected abstract IEnumerable<Structure> Structures { get; }
+    protected abstract IEnumerable<Relationship> Relationships { get;  }
     
     protected DiagramBuildRunner()
     {
@@ -33,7 +32,7 @@ public abstract class DiagramBuildRunner : IDiagramBuildRunner
     public Structure It<T>(int instance) => It(StructureIdentity.New<T>(instance.ToString()).Value);
     public Structure It<T>(string instance) => It(StructureIdentity.New<T>(instance).Value);
 
-    public Structure It(string key)
+    private Structure It(string key)
         => _structures.Items[key]
            ?? throw new KeyNotFoundException($"Structure {key} not found");
 
@@ -45,42 +44,27 @@ public abstract class DiagramBuildRunner : IDiagramBuildRunner
         => _structures.Items[new StructureIdentity(key, instance).Value]
            ?? throw new KeyNotFoundException($"Structure {key} not found");
 
-
-    protected abstract IEnumerable<Structure> Structures();
-    protected abstract IEnumerable<Relationship> Relationships();
     protected virtual IElementStyle? SetStyle() => null;
     protected virtual IElementTag? SetTags() => null;
     protected virtual IRelationshipTag? SetRelTags() => null;
 
-
     public Diagram Build()
     {
-        _structures.AddRange(Structures());
+        _structures.AddRange(Structures);
 
-        Diagram? diagram = DiagramType.Value switch
+        return new Diagram(DiagramType) with
         {
-            DiagramConstants.Component => Activator.CreateInstance<ComponentDiagram>(),
-            DiagramConstants.Container => Activator.CreateInstance<ContainerDiagram>(),
-            DiagramConstants.Context => Activator.CreateInstance<ContextDiagram>(),
-            DiagramConstants.Deployment => Activator.CreateInstance<DeploymentDiagram>(),
-            _ => throw new ArgumentNullException(nameof(DiagramType), $"{nameof(DiagramType)} is required")
-        };
-
-        var result = diagram with
-        {
-            Structures = Structures().ToArray(),
-            Relationships = Relationships().ToArray(),
+            Structures = Structures,
+            Relationships = Relationships,
             Title = Title,
-            Reference = this.CreateRef(),
             ShowLegend = ShowLegend,
-            Description = Description.GetDescriptionOrDefault(DiagramType),
+            Description = Description,
             LayoutWithLegend = LayoutWithLegend,
             LayoutAsSketch = LayoutAsSketch,
-            FlowVisualization = FlowVisualization
+            FlowVisualization = FlowVisualization,
+            Tags = SetTags(),
+            RelTags = SetRelTags(),
+            Style = SetStyle()
         };
-        
-        return result.SetStyle(SetStyle())
-            .SetTags(SetTags())
-            .SetRelTags(SetRelTags());
     }
 }

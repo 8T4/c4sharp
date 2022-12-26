@@ -1,3 +1,5 @@
+using C4Sharp.Elements.Boundaries;
+
 namespace C4Sharp.Elements;
 
 internal class StructureCollection

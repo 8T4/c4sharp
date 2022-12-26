@@ -36,6 +36,9 @@ public enum ContainerType
 
     [Description("API")]
     Api,
+    
+    [Description("Microservice")]
+    Microservice,
 
     [Description("Queue")]
     Queue,

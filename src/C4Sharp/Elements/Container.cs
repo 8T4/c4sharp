@@ -22,13 +22,15 @@ public record Container : Structure
     public Container this[int index] => GetInstance(index.ToString());
     public Container this[string instanceName] => GetInstance(instanceName);
 
-    public Container(string alias, string label) : base(alias, label)
+    public Container(string alias, string label) 
+        : base(alias, label)
     {
         ContainerType = ContainerType.None;
         Technology = $"{ContainerType.ToString().SplitCapitalizedWords()}";
     }
 
-    public Container(string alias, string label, ContainerType type, string? technology) : this(alias, label)
+    public Container(string alias, string label, ContainerType type, string? technology) 
+        : this(alias, label)
     {
         ContainerType = type;
         Technology = technology is null
@@ -41,6 +43,12 @@ public record Container : Structure
     {
         Description = description ?? string.Empty;
     }
+    
+    public Container(string alias, string label, ContainerType type, string? technology, string? description, IEnumerable<string> tags)
+        : this(alias, label, type, technology, description)
+    {
+        Tags = tags;
+    }    
 
     /// <summary>
     /// Get or Create a instance of current container
@@ -73,12 +81,13 @@ public record Container : Structure
 
 public record Container<T> : Container
 {
-    private protected Container(ContainerType type, string? technology = null, string? description = null)
+    private protected Container(ContainerType type, string? technology = null, string? description = null, IEnumerable<string>? tags = null)
         : base(
             StructureIdentity.New<T>().Value,
             typeof(T).ToNamingConvention(),
             type,
             technology,
-            description ?? typeof(T).ToNamingConvention()
+            description ?? typeof(T).ToNamingConvention(),
+            tags ?? Array.Empty<string>()
         ) { }
 }
