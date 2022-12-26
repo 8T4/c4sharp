@@ -1,6 +1,6 @@
 using C4Sharp.Diagrams;
-using C4Sharp.Models;
-using C4Sharp.Models.Relationships;
+using C4Sharp.Elements;
+using C4Sharp.Elements.Relationships;
 using C4Sharp.Sample.Diagrams;
 
 namespace C4Sharp.Sample.Structures;
@@ -16,7 +16,6 @@ public static class Systems
         Description = "Allows customers to view information about their " +
                       "bank accounts, and make payments.",
         Tags = new[] { "services" },
-        Link = DiagramHRef.LinkTo<ContainerDiagram>()
     };
 
     private static SoftwareSystem? _mainframe;

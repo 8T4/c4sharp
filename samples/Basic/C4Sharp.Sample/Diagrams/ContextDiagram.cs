@@ -1,8 +1,9 @@
 using C4Sharp.Diagrams;
-using C4Sharp.Models;
-using C4Sharp.Models.Plantuml;
-using C4Sharp.Models.Plantuml.Constants;
-using C4Sharp.Models.Relationships;
+using C4Sharp.Diagrams.Interfaces;
+using C4Sharp.Elements;
+using C4Sharp.Elements.Plantuml;
+using C4Sharp.Elements.Plantuml.Constants;
+using C4Sharp.Elements.Relationships;
 using C4Sharp.Sample.Structures;
 
 namespace C4Sharp.Sample.Diagrams
@@ -16,7 +17,7 @@ namespace C4Sharp.Sample.Diagrams
         protected override string Title => "System Context diagram for Internet Banking System";
         protected override DiagramType DiagramType => DiagramType.Context;
 
-        protected override IEnumerable<Structure> Structures() => new Structure[]
+        protected override IEnumerable<Structure> Structures => new Structure[]
         {
             Customer,
             BankingSystem,
@@ -24,15 +25,15 @@ namespace C4Sharp.Sample.Diagrams
             MailSystem
         };
 
-        protected override IEnumerable<Relationship> Relationships() => new[]
+        protected override IEnumerable<Relationship> Relationships => new[]
         {
             (Customer > BankingSystem).AddTags("error"),
-            (Customer < MailSystem)["Sends e-mails to"],
-            (BankingSystem > MailSystem)["Sends e-mails", "SMTP"][Neighbor],
-            BankingSystem > Mainframe,
+            Customer < MailSystem | "Sends e-mails to",
+            BankingSystem > MailSystem | ("Sends e-mails", "SMTP") | Neighbor,
+            BankingSystem > Mainframe
         };
 
-        protected override IElementStyle? SetStyle()
+        protected override IElementStyle SetStyle()
         {
             return new ElementStyle()
                 .UpdateElementStyle(ElementName.ExternalPerson, "#7f3b08", "#7f3b08")
