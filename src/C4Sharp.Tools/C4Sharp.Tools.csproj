@@ -14,7 +14,7 @@
         <RepositoryUrl>https://github.com/8T4/c4sharp</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>c4, diagrams</PackageTags>
-        <PackageVersion>1.2.0</PackageVersion>
+        <PackageVersion>2.0.0</PackageVersion>
         <PackageIconUrl>https://github.com/8T4/c4sharp/blob/main/LICENSE</PackageIconUrl>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <IncludeSymbols>true</IncludeSymbols>
