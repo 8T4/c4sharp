@@ -32,7 +32,7 @@ public abstract class DiagramBuildRunner : IDiagramBuildRunner
     public Structure It<T>(int instance) => It(StructureIdentity.New<T>(instance.ToString()).Value);
     public Structure It<T>(string instance) => It(StructureIdentity.New<T>(instance).Value);
 
-    private Structure It(string key)
+    public Structure It(string key)
         => _structures.Items[key]
            ?? throw new KeyNotFoundException($"Structure {key} not found");
 
