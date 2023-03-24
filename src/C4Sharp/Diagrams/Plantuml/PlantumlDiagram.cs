@@ -1,4 +1,5 @@
 using System.Text;
+using C4Sharp.Elements.Relationships;
 using C4Sharp.FileSystem;
 
 namespace C4Sharp.Diagrams.Plantuml;
@@ -150,8 +151,8 @@ public static partial class PlantumlDiagram
     public static string ToMermaidString(this Diagram diagram) => new StringBuilder()
         .AppendLine("```mermaid")
         .BuildMermaidHeader(diagram)
-        .BuildBody(diagram)
-        .BuildStyleSession(diagram)
+        .BuildMermaidBody(diagram)
+        //.BuildStyleSession(diagram)
         .AppendLine("```")
         .ToString();    
     
@@ -172,6 +173,27 @@ public static partial class PlantumlDiagram
         {
             stream.AppendLine($"title {diagram.Title}");
             stream.AppendLine();
+        }
+
+        return stream;
+    }
+    
+    private static StringBuilder BuildMermaidBody(this StringBuilder stream, Diagram diagram)
+    {
+        foreach (var structure in diagram.Structures)
+        {
+            stream.AppendLine(structure.ToPumlString());
+        }
+
+        stream.AppendLine();
+
+        foreach (var relationship in diagram.Relationships)
+        {
+            var item = (relationship.Position == Position.Neighbor)
+                ? relationship[Position.None]
+                : relationship;
+            
+            stream.AppendLine(item.ClearTags().ToPumlString());
         }
 
         return stream;

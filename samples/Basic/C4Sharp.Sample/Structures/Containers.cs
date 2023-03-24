@@ -43,6 +43,15 @@ public static class Containers
         Technology: "SQL Database"
     );
 
+    public static Queue _rabbitMQ;
+
+    public static Queue RabbitMQ => _rabbitMQ ?? new Queue(
+        Alias: "Queue",
+        Label: "RabbitMQ",
+        Description: "Stores user registration information, hashed auth credentials, access logs, etc.",
+        Technology: "RabbitMQ"
+    );
+
     private static Database? _oracleDatabase;
 
     public static Database OracleDatabase => _oracleDatabase ??= new Database(

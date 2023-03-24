@@ -26,6 +26,7 @@ namespace C4Sharp.Sample.Diagrams
                 Spa,
                 MobileApp,
                 SqlDatabase,
+                RabbitMQ,
                 BackendApi
             )
         };
@@ -40,6 +41,7 @@ namespace C4Sharp.Sample.Diagrams
             Spa > BackendApi | ("Uses", "async, JSON/HTTPS"),
             MobileApp > BackendApi | ("Uses", "async, JSON/HTTPS"),
             SqlDatabase < BackendApi | ("Uses", "async, JSON/HTTPS") | Position.Neighbor,
+            RabbitMQ < BackendApi | ("Uses", "async, JSON"),
 
             People.Customer < Systems.MailSystem | "Sends e-mails to",
             Systems.MailSystem < BackendApi | ("Sends e-mails using", "sync, SMTP"),
