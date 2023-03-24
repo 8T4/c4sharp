@@ -6,7 +6,7 @@ namespace C4Sharp.Diagrams.Plantuml;
 /// <summary>
 /// Parser Diagram to PlantUML
 /// </summary>
-public static class PlantumlDiagram
+public static partial class PlantumlDiagram
 {
     /// <summary>
     /// Create PUML content from Diagram
@@ -14,6 +14,7 @@ public static class PlantumlDiagram
     /// <param name="diagram"></param>
     /// <returns></returns>
     public static string ToPumlString(this Diagram diagram) => ToPumlString(diagram, false);
+
 
     /// <summary>
     /// Create PUML content from Diagram
@@ -59,7 +60,7 @@ public static class PlantumlDiagram
         return stream;
     }
 
-    private static void BuildStyleSession(StringBuilder stream, Diagram diagram)
+    private static StringBuilder BuildStyleSession(this StringBuilder stream, Diagram diagram)
     {
         if (diagram.Tags is not null)
         {
@@ -90,6 +91,8 @@ public static class PlantumlDiagram
 
             stream.AppendLine();
         }
+
+        return stream;
     }
 
     private static StringBuilder BuildBody(this StringBuilder stream, Diagram diagram)
@@ -132,3 +135,48 @@ public static class PlantumlDiagram
             : Path.Join(C4SharpDirectory.ResourcesFolderName, pumlFileName);
     }
 }
+
+/// <summary>
+/// Mermaid methods
+/// </summary>
+public static partial class PlantumlDiagram
+{
+    /// <summary>
+    /// Create mermaid based on puml content from Diagram
+    /// </summary>
+    /// <param name="diagram"></param>
+    /// <param name="useStandardLibrary"></param>
+    /// <returns></returns>
+    public static string ToMermaidString(this Diagram diagram) => new StringBuilder()
+        .AppendLine("```mermaid")
+        .BuildMermaidHeader(diagram)
+        .BuildBody(diagram)
+        .BuildStyleSession(diagram)
+        .AppendLine("```")
+        .ToString();    
+    
+    private static StringBuilder BuildMermaidHeader(this StringBuilder stream, Diagram diagram)
+    {
+        var diagramType = diagram.Type.Value switch
+        {
+            DiagramConstants.Context => "C4Context",
+            DiagramConstants.Container => "C4Container",
+            DiagramConstants.Component => "C4Component",
+            DiagramConstants.Deployment => "C4Deployment"
+        };
+        
+        stream.AppendLine(diagramType);
+        stream.AppendLine();
+
+        if (!string.IsNullOrWhiteSpace(diagram.Title))
+        {
+            stream.AppendLine($"title {diagram.Title}");
+            stream.AppendLine();
+        }
+
+        return stream;
+    }
+}
+
+
+

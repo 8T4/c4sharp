@@ -128,8 +128,37 @@ protected override IElementStyle? SetStyle()
 
 ![img](./docs/images/c4bank-deposit-area-c4container-bw.png)
 
+```mermaid
+C4Container
+
+title Container diagram for Internet Banking System
+
+Person_Ext(customer, "Personal Banking Customer", "A customer of the bank, with personal bank accounts.")
+System(BankingSystem, "Internet Banking System", "Allows customers to view information about their bank accounts, and make payments.", $tags="services")
+System_Ext(MailSystem, "E-mail system", "The internal Microsoft Exchange e-mail system.")
+
+System_Boundary(c1, "Internet Banking") {
+    Container(Corporate.Finance.Limits.Service.ServiceBus, "WebApp", "Web Application:C#, WebApi", "Delivers the static content and the Internet banking SPA")
+    Container(Spa, "SPA", "Spa:JavaScript, Angular", "Provides all the Internet banking functionality to customers via their web browser")
+    Container(MobileApp, "MobileApp", "Mobile:C#, Xamarin", "Provides a limited subset of the Internet banking functionality to customers via their mobile device")
+    ContainerDb(Database, "SqlDatabase", "Database:SQL Database", "Stores user registration information, hashed auth credentials, access logs, etc.")
+    Container(BackendApi, "BackendApi", "Api:Dotnet, Docker Container", "Provides Internet banking functionality via API.")
+}
 
 
+Rel(customer, Corporate.Finance.Limits.Service.ServiceBus, "Uses", "HTTPS")
+Rel(customer, Spa, "Uses", "HTTPS")
+Rel(customer, MobileApp, "Uses")
+Rel_Neighbor(Corporate.Finance.Limits.Service.ServiceBus, Spa, "Delivers")
+Rel(Spa, BackendApi, "Uses", "async, JSON/HTTPS")
+Rel(MobileApp, BackendApi, "Uses", "async, JSON/HTTPS")
+Rel_Back_Neighbor(Database, BackendApi, "Uses", "async, JSON/HTTPS")
+Rel_Back(customer, MailSystem, "Sends e-mails to")
+Rel_Back(MailSystem, BackendApi, "Sends e-mails using", "sync, SMTP")
+Rel_Neighbor(BackendApi, BankingSystem, "Uses", "sync/async, XML/HTTPS")
+AddElementTag("services", $bgColor=#3F6684, $fontColor=#ffffff, $borderColor=#00000000, $shadowing="False", $shape=EightSidedShape())
+
+```
 
 
 # LEARN

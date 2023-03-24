@@ -100,6 +100,7 @@ public partial class PlantumlContext : IDisposable
         foreach (var diagram in enumerable)
         {
             SavePumlFiles(diagram, path);
+            SaveMermaidFiles(diagram, path);
         }
 
         if (GenerateDiagramImages) SaveDiagramFiles(path, "png");
@@ -131,6 +132,26 @@ public partial class PlantumlContext
             throw new PlantumlException($"{nameof(PlantumlException)}: Could not save puml file.", e);
         }
     }
+    
+    /// <summary>
+    /// Save puml file. It's creates path if non exists.
+    /// </summary>
+    /// <param name="diagram">C4 Diagram</param>
+    /// <param name="path">Output path</param>
+    private string SaveMermaidFiles(Diagram diagram, string path)
+    {
+        try
+        {
+            var filePath = Path.Combine(path, diagram.MermaidFileName());
+            Directory.CreateDirectory(path);
+            File.WriteAllText(filePath, diagram.ToMermaidString());
+            return filePath;
+        }
+        catch (Exception e)
+        {
+            throw new PlantumlException($"{nameof(PlantumlException)}: Could not save puml file.", e);
+        }
+    }    
 
     /// <summary>
     /// Execute plantuml.jar
