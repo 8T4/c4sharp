@@ -105,6 +105,43 @@ The `C4SCLI` can be used in DevOps pipelines, removing the need to manually comp
 ```shell
 $ c4scli build <solution path> [-o <output path>]
 ```
+see the following sample
+
+```bash
+$ mkdir assets
+$ c4scli build /src/c4sharp.sln -o /c4
+
+... 
+
+C4 diagram PNG files
+C4 diagram generated: file:////c4/internet-banking-system-api-application-c4component.png
+C4 diagram generated: file:////c4/system-context-diagram-for-internet-banking-system-c4context.png
+C4 diagram generated: file:////c4/container-diagram-for-internet-banking-system-c4container.png
+C4 diagram generated: file:////c4/system-context-diagram-for-internet-banking-system-c4deployment.png
+C4 diagram generated: file:////c4/system-enterprise-diagram-for-internet-banking-system-c4context.png
+
+C4 diagram SVG files
+C4 diagram generated: file:////c4/internet-banking-system-api-application-c4component.svg
+C4 diagram generated: file:////c4/system-enterprise-diagram-for-internet-banking-system-c4context.svg
+C4 diagram generated: file:////c4/system-context-diagram-for-internet-banking-system-c4deployment.svg
+C4 diagram generated: file:////c4/container-diagram-for-internet-banking-system-c4container.svg
+C4 diagram generated: file:////c4/system-context-diagram-for-internet-banking-system-c4context.svg
+
+C4 diagram MD files
+C4 diagram generated: file:////c4/internet-banking-system-api-application-c4component.mermaid.md
+C4 diagram generated: file:////c4/system-context-diagram-for-internet-banking-system-c4context.mermaid.md
+C4 diagram generated: file:////c4/container-diagram-for-internet-banking-system-c4container.mermaid.md
+C4 diagram generated: file:////c4/system-enterprise-diagram-for-internet-banking-system-c4context.mermaid.md
+
+C4 diagram PUML files
+C4 diagram generated: file:////c4/system-enterprise-diagram-for-internet-banking-system-c4context.puml
+C4 diagram generated: file:////c4/internet-banking-system-api-application-c4component.puml
+C4 diagram generated: file:////c4/system-context-diagram-for-internet-banking-system-c4context.puml
+C4 diagram generated: file:////c4/container-diagram-for-internet-banking-system-c4container.puml
+C4 diagram generated: file:////c4/system-context-diagram-for-internet-banking-system-c4deployment.puml
+```
+
+
 ⚠️ *only compatible with projects using c4sharp version 5.0+*
 
 
