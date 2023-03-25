@@ -2,13 +2,22 @@
 <img src="https://raw.githubusercontent.com/8T4/c4sharp/main/docs/images/8t4-c4-brand-2.png" alt="logo" width='600'>  
 </p>
 
+
+
 <p align="center">
 
 C4Sharp (`C4S`) is a .net library for building diagram as code, based on [C4 Model](https://c4model.com/). It's works
 like a superset of [C4-PlantUML](https://github.com/plantuml-stdlib/C4-PlantUML) through which developers can create,
 share, and consume [C4 Model diagrams](https://c4model.com/) as code (C#) such as Context, Container, Component and
-Deployment diagrams.
+Deployment diagrams. The library generates the following diagram types:
+
+![](https://img.shields.io/badge/-png-green)
+![](https://img.shields.io/badge/-svg-green)
+![](https://img.shields.io/badge/-puml-green) 
+![](https://img.shields.io/badge/-mermaid-green)
+
 </p>
+
 
 # GETTING STARTED
 
@@ -166,7 +175,7 @@ protected override IElementStyle? SetStyle()
 ![img](./docs/images/c4bank-deposit-area-c4container-bw.png)
 
 ## Compiling Mermaid Markdown
-Now, C4Sharp can compile the mermaid markdown file. For this, you should use the function `UseDiagramMermaidBuilder()`. The following code shows how to compile these files. 
+Now, C4Sharp can compile the [Mermaid](https://github.com/mermaid-js/mermaid) markdown file. For this, you should use the function `UseDiagramMermaidBuilder()`. The following code shows how to compile these files. 
 
 ```c#
       context
