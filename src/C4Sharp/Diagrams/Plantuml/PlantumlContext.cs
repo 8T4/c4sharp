@@ -12,6 +12,7 @@ public partial class PlantumlContext : IDisposable
     private bool StandardLibraryBaseUrl { get; set; }
     private bool GenerateDiagramImages { get; set; }
     private bool GenerateDiagramSvgImages { get; set; }
+    private bool GenerateMermaidFiles { get; set; }
     private string? PlantumlJarPath { get; set; }
     private ProcessStartInfo ProcessInfo { get; }
 
@@ -24,6 +25,7 @@ public partial class PlantumlContext : IDisposable
         StandardLibraryBaseUrl = false;
         GenerateDiagramImages = false;
         GenerateDiagramSvgImages = false;
+        GenerateMermaidFiles = false;
 
         ProcessInfo = new ProcessStartInfo
         {
@@ -69,6 +71,16 @@ public partial class PlantumlContext : IDisposable
     }
     
     /// <summary>
+    /// The C4Sharp will generate *.mermaid.md files of your diagram.
+    /// </summary>
+    /// <returns></returns>
+    public PlantumlContext UseDiagramMermaidBuilder()
+    {
+        GenerateMermaidFiles = true;
+        return this;
+    }    
+    
+    /// <summary>
     /// It creates a Puml file into the default directory "./c4"
     /// If the attribute of Session GenerateDiagramImages is true
     /// It generates png files of the diagram
@@ -100,6 +112,7 @@ public partial class PlantumlContext : IDisposable
         foreach (var diagram in enumerable)
         {
             SavePumlFiles(diagram, path);
+            SaveMermaidFiles(diagram, path);
         }
 
         if (GenerateDiagramImages) SaveDiagramFiles(path, "png");
@@ -131,6 +144,29 @@ public partial class PlantumlContext
             throw new PlantumlException($"{nameof(PlantumlException)}: Could not save puml file.", e);
         }
     }
+    
+    /// <summary>
+    /// Save puml file. It's creates path if non exists.
+    /// </summary>
+    /// <param name="diagram">C4 Diagram</param>
+    /// <param name="path">Output path</param>
+    private string SaveMermaidFiles(Diagram diagram, string path)
+    {
+        if (!GenerateMermaidFiles || diagram.Type.Value == DiagramConstants.Deployment)
+            return string.Empty;
+        
+        try
+        {
+            var filePath = Path.Combine(path, diagram.MermaidFileName());
+            Directory.CreateDirectory(path);
+            File.WriteAllText(filePath, diagram.ToMermaidString());
+            return filePath;
+        }
+        catch (Exception e)
+        {
+            throw new PlantumlException($"{nameof(PlantumlException)}: Could not save mermaid.md file.", e);
+        }
+    }    
 
     /// <summary>
     /// Execute plantuml.jar

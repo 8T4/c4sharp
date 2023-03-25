@@ -176,12 +176,14 @@ public class BuildCommand : Command
 
         var context = new PlantumlContext()
             .UseDiagramImageBuilder()
+            .UseDiagramMermaidBuilder()
             .UseDiagramSvgImageBuilder();
 
         context.Export(directory, runners.Select(r => r.Build()));
 
         PrintFileList(directory, "png");
         PrintFileList(directory, "svg");
+        PrintFileList(directory, "md");
         PrintFileList(directory, "puml");
     }
 

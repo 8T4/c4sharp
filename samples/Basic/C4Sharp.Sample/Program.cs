@@ -21,6 +21,7 @@ internal static class Program
         context
             .UseDiagramImageBuilder()
             .UseDiagramSvgImageBuilder()
+            .UseDiagramMermaidBuilder()
             //.UseStandardLibraryBaseUrl() //load the resources from github C4plantuml repository
             .Export(diagrams);
     }

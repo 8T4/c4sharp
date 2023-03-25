@@ -107,6 +107,7 @@ public record Relationship
     }
 
     public Relationship AddTags(params string[] values) => this with { Tags = values };
+    public Relationship ClearTags() => this with { Tags = Array.Empty<string>() };
 
     public static Relationship operator |(Relationship a, string value)
     {

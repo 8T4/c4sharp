@@ -2,13 +2,22 @@
 <img src="https://raw.githubusercontent.com/8T4/c4sharp/main/docs/images/8t4-c4-brand-2.png" alt="logo" width='600'>  
 </p>
 
+
+
 <p align="center">
 
 C4Sharp (`C4S`) is a .net library for building diagram as code, based on [C4 Model](https://c4model.com/). It's works
 like a superset of [C4-PlantUML](https://github.com/plantuml-stdlib/C4-PlantUML) through which developers can create,
 share, and consume [C4 Model diagrams](https://c4model.com/) as code (C#) such as Context, Container, Component and
-Deployment diagrams.
+Deployment diagrams. The library generates the following diagram types:
+
+![](https://img.shields.io/badge/-png-green)
+![](https://img.shields.io/badge/-svg-green)
+![](https://img.shields.io/badge/-puml-green) 
+![](https://img.shields.io/badge/-mermaid-green)
+
 </p>
+
 
 # GETTING STARTED
 
@@ -105,6 +114,43 @@ The `C4SCLI` can be used in DevOps pipelines, removing the need to manually comp
 ```shell
 $ c4scli build <solution path> [-o <output path>]
 ```
+see the following sample
+
+```bash
+$ mkdir assets
+$ c4scli build /src/c4sharp.sln -o /c4
+
+... 
+
+C4 diagram PNG files
+C4 diagram generated: file:////c4/internet-banking-system-api-application-c4component.png
+C4 diagram generated: file:////c4/system-context-diagram-for-internet-banking-system-c4context.png
+C4 diagram generated: file:////c4/container-diagram-for-internet-banking-system-c4container.png
+C4 diagram generated: file:////c4/system-context-diagram-for-internet-banking-system-c4deployment.png
+C4 diagram generated: file:////c4/system-enterprise-diagram-for-internet-banking-system-c4context.png
+
+C4 diagram SVG files
+C4 diagram generated: file:////c4/internet-banking-system-api-application-c4component.svg
+C4 diagram generated: file:////c4/system-enterprise-diagram-for-internet-banking-system-c4context.svg
+C4 diagram generated: file:////c4/system-context-diagram-for-internet-banking-system-c4deployment.svg
+C4 diagram generated: file:////c4/container-diagram-for-internet-banking-system-c4container.svg
+C4 diagram generated: file:////c4/system-context-diagram-for-internet-banking-system-c4context.svg
+
+C4 diagram MD files
+C4 diagram generated: file:////c4/internet-banking-system-api-application-c4component.mermaid.md
+C4 diagram generated: file:////c4/system-context-diagram-for-internet-banking-system-c4context.mermaid.md
+C4 diagram generated: file:////c4/container-diagram-for-internet-banking-system-c4container.mermaid.md
+C4 diagram generated: file:////c4/system-enterprise-diagram-for-internet-banking-system-c4context.mermaid.md
+
+C4 diagram PUML files
+C4 diagram generated: file:////c4/system-enterprise-diagram-for-internet-banking-system-c4context.puml
+C4 diagram generated: file:////c4/internet-banking-system-api-application-c4component.puml
+C4 diagram generated: file:////c4/system-context-diagram-for-internet-banking-system-c4context.puml
+C4 diagram generated: file:////c4/container-diagram-for-internet-banking-system-c4container.puml
+C4 diagram generated: file:////c4/system-context-diagram-for-internet-banking-system-c4deployment.puml
+```
+
+
 ⚠️ *only compatible with projects using c4sharp version 5.0+*
 
 
@@ -128,8 +174,51 @@ protected override IElementStyle? SetStyle()
 
 ![img](./docs/images/c4bank-deposit-area-c4container-bw.png)
 
+## Compiling Mermaid Markdown
+Now, C4Sharp can compile the [Mermaid](https://github.com/mermaid-js/mermaid) markdown file. For this, you should use the function `UseDiagramMermaidBuilder()`. The following code shows how to compile these files. 
 
+```c#
+      context
+            .UseDiagramImageBuilder()
+            .UseDiagramSvgImageBuilder()
+            .UseDiagramMermaidBuilder()
+            .Export(diagrams);
+```
+Using the code above you'll have the following result:
 
+```mermaid
+C4Context
+
+title System Enterprise diagram for Internet Banking System
+
+Person_Ext(customer, "Personal Banking Customer", "A customer of the bank, with personal bank accounts.")
+
+Enterprise_Boundary(enterprise.boundary, "Domain A") {
+    System(BankingSystem, "Internet Banking System", "Allows customers to view information about their bank accounts, and make payments.", $tags="services")
+    
+Enterprise_Boundary(enterprise.boundary.1, "Domain Internal Users") {
+    Person(internalcustomer, "Personal Banking Customer", "An internal customer of the bank, with personal bank accounts.")
+}
+
+    
+Enterprise_Boundary(enterprise.boundary.2, "Domain Managers") {
+    Person(manager, "Manager Banking Customer", "A manager of the bank, with personal bank accounts.")
+}
+
+}
+
+System_Ext(Mainframe, "Mainframe Banking System", "Stores all of the core banking information about customers, accounts, transactions, etc.")
+System_Ext(MailSystem, "E-mail system", "The internal Microsoft Exchange e-mail system.")
+
+Rel(customer, BankingSystem, "uses")
+Rel(internalcustomer, BankingSystem, "uses")
+Rel(manager, BankingSystem, "uses")
+Rel_Back(customer, MailSystem, "Sends e-mails to")
+Rel(BankingSystem, MailSystem, "Sends e-mails", "SMTP")
+Rel(BankingSystem, Mainframe, "uses")
+```
+
+See the complete code [here](./docs/system-enterprise-diagram-for-internet-banking-system-c4context.mermaid.md).
 
 
 # LEARN
