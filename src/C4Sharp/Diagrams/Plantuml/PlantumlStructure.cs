@@ -25,6 +25,7 @@ internal static class PlantumlStructure
             Container container => container.ToPumlString(),
             ContainerBoundary containerBoundary => containerBoundary.ToPumlString(),
             EnterpriseBoundary enterpriseBoundary => enterpriseBoundary.ToPumlString(),
+            SequenceContainerBoundary sequenceContainerBoundary => sequenceContainerBoundary.ToPumlString(),
             _ => string.Empty
         };
 
@@ -136,6 +137,22 @@ internal static class PlantumlStructure
 
         return stream.ToString();
     }
+    
+    private static string ToPumlString(this SequenceContainerBoundary boundary)
+    {
+        var stream = new StringBuilder();
+
+        stream.AppendLine();
+        stream.AppendLine($"Container_Boundary({boundary.Alias}, \"{boundary.Label}\")");
+        foreach (var component in boundary.Components)
+        {
+            stream.AppendLine($"{TabIndentation.Indent()}{component.ToPumlString()}");
+        }
+
+        stream.AppendLine("Boundary_End()");
+
+        return stream.ToString();
+    }    
 
     private static string ToPumlString(this DeploymentNode deployment, int concat = 0)
     {

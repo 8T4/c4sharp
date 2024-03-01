@@ -1,11 +1,8 @@
 using System.Diagnostics;
-using System.Runtime.InteropServices.ComTypes;
 using System.Text;
-using C4Sharp.Diagrams;
-using C4Sharp.Diagrams.Plantuml;
-using C4Sharp.FileSystem;
+using C4Sharp.Commons.FileSystem;
 
-namespace C4Sharp.Elements.Plantuml.IO;
+namespace C4Sharp.Diagrams.Plantuml;
 
 public partial class PlantumlContext : IDisposable
 {
@@ -42,9 +39,10 @@ public partial class PlantumlContext : IDisposable
     /// use this method
     /// </summary>
     /// <returns>PlantumlSession instance</returns>
+    [Obsolete("Now, we are suporting just embended version")]
     public PlantumlContext UseStandardLibraryBaseUrl()
     {
-        StandardLibraryBaseUrl = true;
+        StandardLibraryBaseUrl = false;
         return this;
     }
 

@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-using C4Sharp.Elements.Plantuml.IO;
+using C4Sharp.Diagrams.Plantuml;
 
 namespace C4Sharp.Commons;
 

@@ -1,4 +1,4 @@
-namespace C4Sharp.FileSystem;
+namespace C4Sharp.Commons.FileSystem;
 
 /// <summary>
 /// Manipulate the C4 folder and their resourcers

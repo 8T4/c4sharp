@@ -1,7 +1,7 @@
 using C4Sharp.Commons;
-using C4Sharp.FileSystem;
+using C4Sharp.Commons.FileSystem;
 
-namespace C4Sharp.Elements.Plantuml.IO;
+namespace C4Sharp.Diagrams.Plantuml;
 
 internal static class PlantumlResources
 {
@@ -19,6 +19,7 @@ internal static class PlantumlResources
         LoadResource(local, "C4_Container.puml");
         LoadResource(local, "C4_Context.puml");
         LoadResource(local, "C4_Deployment.puml");
+        LoadResource(local, "C4_Sequence.puml");
     }
     
     /// <summary>

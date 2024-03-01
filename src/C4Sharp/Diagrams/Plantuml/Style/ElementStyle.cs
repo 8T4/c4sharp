@@ -1,8 +1,7 @@
-using C4Sharp.Diagrams;
 using C4Sharp.Diagrams.Interfaces;
-using C4Sharp.Elements.Plantuml.Constants;
+using C4Sharp.Diagrams.Plantuml.Constants;
 
-namespace C4Sharp.Elements.Plantuml;
+namespace C4Sharp.Diagrams.Plantuml.Style;
 
 public class ElementStyle : IElementStyle
 {
@@ -17,18 +16,37 @@ public class ElementStyle : IElementStyle
     /// <param name="borderColor"></param>
     /// <param name="shadowing"></param>
     /// <param name="shape"></param>
+    /// <param name="borderStyle"></param>
+    /// <param name="borderThickness"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public ElementStyle UpdateElementStyle(ElementName elementName, string bgColor, string fontColor = "#ffffff", string borderColor = "#00000000", bool shadowing = false, Shape? shape = null)
+    public ElementStyle UpdateElementStyle(ElementName elementName, string? bgColor = null, string? fontColor = null, string? borderColor = null , bool shadowing = false, Shape? shape = null, BorderStyle? borderStyle = null, int? borderThickness = null)
     {
         if (elementName is null)
             throw new ArgumentNullException(nameof(elementName), $"{nameof(elementName)} is required");
 
-        var value = shape is null
-            ? $"UpdateElementStyle(\"{elementName.Name}\", $bgColor={bgColor}, $fontColor={fontColor}, $borderColor={borderColor}, $shadowing=\"{shadowing}\")"
-            : $"UpdateElementStyle(\"{elementName.Name}\", $bgColor={bgColor}, $fontColor={fontColor}, $borderColor={borderColor}, $shadowing=\"{shadowing}\", $shape={shape.Value})";
+        var styles = new List<string>();
+        if (fontColor is not null)
+            styles.Add($"$bgColor={bgColor}");
+        
+        if (bgColor is not null)
+            styles.Add($"$fontColor={fontColor}");  
+        
+        if (borderColor is not null)
+            styles.Add($"$borderColor={borderColor}"); 
+        
+        styles.Add($"$shadowing=\"{shadowing.ToString().ToLower()}\"");
+        
+        if (shape is not null)
+            styles.Add($"$shape={shape.Value}");
+        
+        if (borderStyle is not null)
+            styles.Add($"borderStyle={borderStyle.Value}");
 
-        Items[elementName.Name] = value;
+        if (borderThickness is not null)
+            styles.Add($"$borderThickness={borderThickness}");
+
+        Items[elementName.Name] = $"UpdateElementStyle(\"{elementName.Name}\", {string.Join(",", styles)})";
         return this;
     }
 }

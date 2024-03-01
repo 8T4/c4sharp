@@ -43,9 +43,9 @@ public static class Containers
         Technology: "SQL Database"
     );
 
-    public static Queue _rabbitMQ;
+    private static Queue? _rabbitMq = null;
 
-    public static Queue RabbitMQ => _rabbitMQ ?? new Queue(
+    public static Queue RabbitMq => _rabbitMq ?? new Queue(
         Alias: "Queue",
         Label: "RabbitMQ",
         Description: "Stores user registration information, hashed auth credentials, access logs, etc.",

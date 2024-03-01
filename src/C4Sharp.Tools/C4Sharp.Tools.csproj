@@ -4,7 +4,7 @@
         <OutputType>Exe</OutputType>
         <ImplicitUsings>enable</ImplicitUsings>
         <AssemblyName>c4scli</AssemblyName>
-        <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+        <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>C4SCLI - Tool for C4Sharp</Title>
         <Authors>yanjustino, albertomonteiro</Authors>
