@@ -2,7 +2,6 @@
 <img src="https://raw.githubusercontent.com/8T4/c4sharp/main/docs/images/8t4-c4-brand-2.png" alt="logo" width='600'>  
 </p>
 
-
 C4Sharp (`C4S`) is a .net library for building diagrams as code, based on [C4 Model](https://c4model.com/). It works
 like a superset of [C4-PlantUML](https://github.com/plantuml-stdlib/C4-PlantUML) through which developers can create,
 share, and consume [C4 Model diagrams](https://c4model.com/) as code (C#) such as Context, Container, Component and
