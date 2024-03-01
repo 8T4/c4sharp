@@ -1,8 +1,7 @@
-using C4Sharp.Diagrams;
 using C4Sharp.Diagrams.Interfaces;
-using C4Sharp.Elements.Plantuml.Constants;
+using C4Sharp.Diagrams.Plantuml.Constants;
 
-namespace C4Sharp.Elements.Plantuml;
+namespace C4Sharp.Diagrams.Plantuml.Style;
 
 public class RelationshipTag : IRelationshipTag
 {

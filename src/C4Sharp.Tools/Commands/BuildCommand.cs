@@ -2,7 +2,7 @@ using System.Diagnostics;
 using System.Reflection;
 using C4Sharp.Diagrams;
 using C4Sharp.Diagrams.Interfaces;
-using C4Sharp.Elements.Plantuml.IO;
+using C4Sharp.Diagrams.Plantuml;
 using C4Sharp.Tools.Commands.Arguments;
 using C4Sharp.Tools.Commands.Options;
 

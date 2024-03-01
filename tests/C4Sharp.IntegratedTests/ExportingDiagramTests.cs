@@ -1,5 +1,5 @@
 using C4Sharp.Diagrams;
-using C4Sharp.Elements.Plantuml.IO;
+using C4Sharp.Diagrams.Plantuml;
 using Xunit;
 using ComponentDiagram = C4Sharp.Sample.Diagrams.ComponentDiagram;
 using ContainerDiagram = C4Sharp.Sample.Diagrams.ContainerDiagram;

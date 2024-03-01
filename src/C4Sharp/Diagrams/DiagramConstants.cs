@@ -6,4 +6,5 @@ public static class DiagramConstants
     public const string Container = "C4_Container";
     public const string Context = "C4_Context";
     public const string Deployment = "C4_Deployment";
+    public const string Sequence = "C4_Sequence";
 }

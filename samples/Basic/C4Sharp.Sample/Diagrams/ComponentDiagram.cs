@@ -25,7 +25,7 @@ namespace C4Sharp.Sample.Diagrams
          
         protected override DiagramType DiagramType  => DiagramType.Component;
         protected override DiagramLayout FlowVisualization => DiagramLayout.LeftRight;
-        protected override bool LayoutAsSketch => true;
+        protected override bool LayoutAsSketch => false;
 
         protected override IEnumerable<Structure> Structures => new Structure[]
         {

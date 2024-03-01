@@ -1,4 +1,4 @@
-namespace C4Sharp.Elements.Plantuml.Constants;
+namespace C4Sharp.Diagrams.Plantuml.Constants;
 
 public record LineStyle
 {

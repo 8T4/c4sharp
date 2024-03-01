@@ -1,4 +1,4 @@
-namespace C4Sharp.Elements.Plantuml.IO;
+namespace C4Sharp.Diagrams.Plantuml;
 
 /// <summary>
 /// PlantumlException

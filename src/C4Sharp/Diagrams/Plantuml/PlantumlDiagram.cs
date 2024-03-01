@@ -1,6 +1,6 @@
 using System.Text;
+using C4Sharp.Commons.FileSystem;
 using C4Sharp.Elements.Relationships;
-using C4Sharp.FileSystem;
 
 namespace C4Sharp.Diagrams.Plantuml;
 
@@ -49,7 +49,12 @@ public static partial class PlantumlDiagram
         }
 
         stream.AppendLine("SHOW_PERSON_PORTRAIT()");
-        stream.AppendLine($"{(diagram.FlowVisualization == DiagramLayout.TopDown ? "LAYOUT_TOP_DOWN()" : "LAYOUT_LEFT_RIGHT()")}");
+        if (diagram.Type != DiagramType.Sequence)
+        {
+            stream.AppendLine(
+                $"{(diagram.FlowVisualization == DiagramLayout.TopDown ? "LAYOUT_TOP_DOWN()" : "LAYOUT_LEFT_RIGHT()")}");
+        }
+
         stream.AppendLine();
 
         if (!string.IsNullOrWhiteSpace(diagram.Title))
@@ -163,7 +168,8 @@ public static partial class PlantumlDiagram
             DiagramConstants.Context => "C4Context",
             DiagramConstants.Container => "C4Container",
             DiagramConstants.Component => "C4Component",
-            DiagramConstants.Deployment => "C4Deployment"
+            DiagramConstants.Deployment => "C4Deployment",
+            _ => throw new ArgumentOutOfRangeException()
         };
         
         stream.AppendLine(diagramType);

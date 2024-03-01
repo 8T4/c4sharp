@@ -1,9 +1,9 @@
 using C4Sharp.Diagrams;
 using C4Sharp.Diagrams.Interfaces;
+using C4Sharp.Diagrams.Plantuml.Constants;
+using C4Sharp.Diagrams.Plantuml.Style;
 using C4Sharp.Elements;
 using C4Sharp.Elements.Boundaries;
-using C4Sharp.Elements.Plantuml;
-using C4Sharp.Elements.Plantuml.Constants;
 using C4Sharp.Elements.Relationships;
 using C4Sharp.Sample.Structures;
 
@@ -26,7 +26,7 @@ namespace C4Sharp.Sample.Diagrams
                 Spa,
                 MobileApp,
                 SqlDatabase,
-                RabbitMQ,
+                RabbitMq,
                 BackendApi
             )
         };
@@ -41,7 +41,7 @@ namespace C4Sharp.Sample.Diagrams
             Spa > BackendApi | ("Uses", "async, JSON/HTTPS"),
             MobileApp > BackendApi | ("Uses", "async, JSON/HTTPS"),
             SqlDatabase < BackendApi | ("Uses", "async, JSON/HTTPS") | Position.Neighbor,
-            RabbitMQ < BackendApi | ("Uses", "async, JSON"),
+            RabbitMq < BackendApi | ("Uses", "async, JSON"),
 
             People.Customer < Systems.MailSystem | "Sends e-mails to",
             Systems.MailSystem < BackendApi | ("Sends e-mails using", "sync, SMTP"),

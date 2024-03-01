@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.Serialization;
 
-namespace C4Sharp.FileSystem;
+namespace C4Sharp.Commons.FileSystem;
 
 /// <summary>
 /// C4File Exception
@@ -27,6 +26,8 @@ public class C4FileException : Exception
     {
     }
 
+
+#if NET6
     /// <summary>
     /// Constructor
     /// </summary>
@@ -35,4 +36,5 @@ public class C4FileException : Exception
     public C4FileException([NotNull] SerializationInfo info, StreamingContext context) : base(info, context)
     {
     }
+#endif
 }

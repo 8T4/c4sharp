@@ -1,8 +1,7 @@
-using C4Sharp.Diagrams;
 using C4Sharp.Diagrams.Interfaces;
-using C4Sharp.Elements.Plantuml.Constants;
+using C4Sharp.Diagrams.Plantuml.Constants;
 
-namespace C4Sharp.Elements.Plantuml;
+namespace C4Sharp.Diagrams.Plantuml.Style;
 
 public class ElementTag : IElementTag
 {
@@ -30,8 +29,8 @@ public class ElementTag : IElementTag
         }
 
         var value = shape is null
-            ? $"AddElementTag(\"{tagStereo}\", $bgColor={bgColor}, $fontColor={fontColor}, $borderColor={borderColor}, $shadowing=\"{shadowing}\")"
-            : $"AddElementTag(\"{tagStereo}\", $bgColor={bgColor}, $fontColor={fontColor}, $borderColor={borderColor}, $shadowing=\"{shadowing}\", $shape={shape.Value})";
+            ? $"AddElementTag(\"{tagStereo}\", $bgColor={bgColor}, $fontColor={fontColor}, $borderColor={borderColor}, $shadowing=\"{shadowing.ToString().ToLower()}\")"
+            : $"AddElementTag(\"{tagStereo}\", $bgColor={bgColor}, $fontColor={fontColor}, $borderColor={borderColor}, $shadowing=\"{shadowing.ToString().ToLower()}\", $shape={shape.Value})";
 
         Items[tagStereo] = value;
         return this;
