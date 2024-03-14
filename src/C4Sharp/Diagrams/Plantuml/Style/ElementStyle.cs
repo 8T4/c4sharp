@@ -43,7 +43,7 @@ public class ElementStyle : IElementStyle
             styles.Add($"$shape={shape.Value}");
 
         if (borderStyle is not null)
-            styles.Add($"borderStyle={borderStyle.Value}");
+            styles.Add($"$borderStyle={borderStyle.Value}");
 
         if (borderThickness is not null)
             styles.Add($"$borderThickness={borderThickness}");

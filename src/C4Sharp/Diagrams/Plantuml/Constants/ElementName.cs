@@ -10,6 +10,7 @@ public record ElementName
     public static ElementName ExternalComponent => new() { Name = "external_component" };
     public static ElementName Container => new() { Name = "container" };
     public static ElementName ExternalContainer => new() { Name = "external_container" };
+    public static ElementName Enterprise => new() { Name = "enterprise" };
 
     public string Name { get; private init; } = string.Empty;
 }

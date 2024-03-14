@@ -77,16 +77,17 @@ public partial class PlantumlContext : IDisposable
     {
         GenerateMermaidFiles = true;
         return this;
-    }    
-    
+    }
+
     /// <summary>
     /// It creates a Puml file into the default directory "./c4"
     /// If the attribute of Session GenerateDiagramImages is true
     /// It generates png files of the diagram
     /// </summary>
     /// <param name="diagrams">C4 Diagrams</param>
-    public void Export(IEnumerable<IDiagramBuilder> diagrams) => 
-        Export(diagrams.Select(d => d.Build()));
+    /// <param name="theme"></param>
+    public void Export(IEnumerable<IDiagramBuilder> diagrams, IDiagramTheme? theme = null) => 
+        Export(diagrams.Select(d => d.Build(theme)));
 
     /// <summary>
     /// It creates a Puml file into the default directory "./c4"
@@ -112,9 +113,10 @@ public partial class PlantumlContext : IDisposable
     /// <example>For windows.: C:\users\user\projects\</example>
     /// <example>For Unix.: users/user/projects/</example>
     /// </param>
+    /// <param name="theme"></param>
     /// ReSharper disable once MemberCanBePrivate.Global
-    public void Export(string path, IEnumerable<IDiagramBuilder> diagrams) => 
-        Export(path, diagrams.Select(d => d.Build()));
+    public void Export(string path, IEnumerable<IDiagramBuilder> diagrams, IDiagramTheme? theme = null) => 
+        Export(path, diagrams.Select(d => d.Build(theme)));
 
     /// <summary>
     /// It creates a Puml file into the default directory "./c4"

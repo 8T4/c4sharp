@@ -8,5 +8,5 @@ public interface IDiagramBuildRunner
 
 public interface IDiagramBuilder
 {
-    Diagram Build();
+    Diagram Build(IDiagramTheme? theme);
 }
