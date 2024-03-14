@@ -5,17 +5,8 @@ namespace C4Sharp.Elements.Boundaries;
 /// <summary>
 /// Container Boundary
 /// </summary>
-public record SequenceContainerBoundary: Structure, IBoundary
+public record SequenceContainerBoundary(string Alias, string Lablel, params Component[] Components): Structure(Alias, Lablel), IBoundary
 {
-    public SequenceContainerBoundary(string alias, string label):base(alias, label)
-    {
-    }
-    
-    public SequenceContainerBoundary(StructureIdentity alias, string label):base(alias, label)
-    {
-    }
-    
-    public IEnumerable<Component> Components { get; init; } = Array.Empty<Component>();
     public Structure[] GetBoundaryStructures() => Components.Select(x => x as Structure).ToArray();
 }
 

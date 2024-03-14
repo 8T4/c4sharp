@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Text;
 using C4Sharp.Commons.FileSystem;
+using C4Sharp.Diagrams.Interfaces;
 
 namespace C4Sharp.Diagrams.Plantuml;
 
@@ -84,12 +85,36 @@ public partial class PlantumlContext : IDisposable
     /// It generates png files of the diagram
     /// </summary>
     /// <param name="diagrams">C4 Diagrams</param>
+    public void Export(IEnumerable<IDiagramBuilder> diagrams) => 
+        Export(diagrams.Select(d => d.Build()));
+
+    /// <summary>
+    /// It creates a Puml file into the default directory "./c4"
+    /// If the attribute of Session GenerateDiagramImages is true
+    /// It generates png files of the diagram
+    /// </summary>
+    /// <param name="diagrams">C4 Diagrams</param>
     public void Export(IEnumerable<Diagram> diagrams)
     {
         var dirPath = Directory.GetCurrentDirectory();
         var path = Path.Join(dirPath, C4SharpDirectory.DirectoryName);
         Export(path, diagrams);
     }
+
+    /// <summary>
+    /// It creates a Puml file into the default directory "./c4"
+    /// If the attribute of Session GenerateDiagramImages is true
+    /// It generates png files of the diagram
+    /// </summary>
+    /// <param name="diagrams">C4 Diagrams</param>
+    /// <param name="path">
+    /// Full path of the directory
+    /// <example>For windows.: C:\users\user\projects\</example>
+    /// <example>For Unix.: users/user/projects/</example>
+    /// </param>
+    /// ReSharper disable once MemberCanBePrivate.Global
+    public void Export(string path, IEnumerable<IDiagramBuilder> diagrams) => 
+        Export(path, diagrams.Select(d => d.Build()));
 
     /// <summary>
     /// It creates a Puml file into the default directory "./c4"

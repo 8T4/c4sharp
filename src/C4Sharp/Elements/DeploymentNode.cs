@@ -7,9 +7,8 @@ namespace C4Sharp.Elements;
 /// server, Microsoft IIS), etc. Deployment nodes can be nested.
 /// <see href="https://c4model.com/#DeploymentDiagram"/>
 /// </summary>
-public sealed record DeploymentNode(string Alias, string Label) : Structure(Alias, Label)
+public sealed record DeploymentNode(string Alias, string Label, params DeploymentNode[] Nodes) : Structure(Alias, Label)
 {
-    public IEnumerable<DeploymentNode> Nodes { get; init; } = Array.Empty<DeploymentNode>();
     public Dictionary<string, string> Properties { get; init; } = new();
     public Container? Container { get; init; }
 }

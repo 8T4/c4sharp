@@ -12,6 +12,11 @@ public record ContainerBoundary: Structure, IBoundary
     {
     }
     
+    public ContainerBoundary(string alias, string label, params Component[] components):base(alias, label)
+    {
+        Components = components;
+    }    
+    
     public ContainerBoundary(StructureIdentity alias, string label):base(alias, label)
     {
     }

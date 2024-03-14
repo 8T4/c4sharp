@@ -4,12 +4,7 @@ namespace C4Sharp.Elements;
 
 internal class StructureCollection
 {
-    public IDictionary<string, Structure> Items { get; }
-    
-    public StructureCollection()
-    {
-        Items = new Dictionary<string, Structure>();
-    }
+    public IDictionary<string, Structure> Items { get; } = new Dictionary<string, Structure>();
 
     public void AddRange(IEnumerable<Structure> structures)
     {
@@ -36,5 +31,5 @@ internal class StructureCollection
         }
 
         Items[structure.Alias] = structure;
-    }    
+    }
 }
