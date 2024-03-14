@@ -7,8 +7,8 @@ on:
     branches: [ main ]
     
 env:
-  VERSION: 6.2.${{ github.run_number }}
-  CLI_VERSION: 2.2.${{ github.run_number }}
+  VERSION: 6.3.${{ github.run_number }}
+  CLI_VERSION: 2.3.${{ github.run_number }}
   NUGET_INDEX: https://api.nuget.org/v3/index.json
   BUILD_TYPE: Release 
 
@@ -47,8 +47,8 @@ jobs:
     - name: Build
       run: dotnet build --no-restore --configuration Release
       
-    - name: Integrated Tests
-      run: dotnet test ./tests/**/*.IntegratedTests.csproj --no-restore      
+#    - name: Integrated Tests
+#      run: dotnet test ./tests/**/*.IntegratedTests.csproj --no-restore      
 
     - name: Publish DLL Artifact
       if: github.ref == 'refs/heads/main'

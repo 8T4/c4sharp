@@ -20,7 +20,9 @@ public class ElementStyle : IElementStyle
     /// <param name="borderThickness"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public ElementStyle UpdateElementStyle(ElementName elementName, string? bgColor = null, string? fontColor = null, string? borderColor = null , bool shadowing = false, Shape? shape = null, BorderStyle? borderStyle = null, int? borderThickness = null)
+    public ElementStyle UpdateElementStyle(ElementName elementName, string? bgColor = null, string? fontColor = null,
+        string? borderColor = null, bool shadowing = false, Shape? shape = null, BorderStyle? borderStyle = null,
+        int? borderThickness = null)
     {
         if (elementName is null)
             throw new ArgumentNullException(nameof(elementName), $"{nameof(elementName)} is required");
@@ -28,18 +30,18 @@ public class ElementStyle : IElementStyle
         var styles = new List<string>();
         if (fontColor is not null)
             styles.Add($"$bgColor={bgColor}");
-        
+
         if (bgColor is not null)
-            styles.Add($"$fontColor={fontColor}");  
-        
+            styles.Add($"$fontColor={fontColor}");
+
         if (borderColor is not null)
-            styles.Add($"$borderColor={borderColor}"); 
-        
+            styles.Add($"$borderColor={borderColor}");
+
         styles.Add($"$shadowing=\"{shadowing.ToString().ToLower()}\"");
-        
+
         if (shape is not null)
             styles.Add($"$shape={shape.Value}");
-        
+
         if (borderStyle is not null)
             styles.Add($"borderStyle={borderStyle.Value}");
 
@@ -47,6 +49,40 @@ public class ElementStyle : IElementStyle
             styles.Add($"$borderThickness={borderThickness}");
 
         Items[elementName.Name] = $"UpdateElementStyle(\"{elementName.Name}\", {string.Join(",", styles)})";
+        return this;
+    }
+
+    public ElementStyle UpdateBoundaryStyle(ElementName elementName, string? bgColor = null, string? fontColor = null,
+        string? borderColor = null, bool shadowing = false, Shape? shape = null, BorderStyle? borderStyle = null,
+        int? borderThickness = null)
+    {
+        if (elementName is null)
+            throw new ArgumentNullException(nameof(elementName), $"{nameof(elementName)} is required");
+
+        var styles = new List<string>();
+        styles.Add($"$elementName={elementName.Name}");
+
+        if (fontColor is not null)
+            styles.Add($"$bgColor={bgColor}");
+
+        if (bgColor is not null)
+            styles.Add($"$fontColor={fontColor}");
+
+        if (borderColor is not null)
+            styles.Add($"$borderColor={borderColor}");
+
+        styles.Add($"$shadowing=\"{shadowing.ToString().ToLower()}\"");
+
+        if (shape is not null)
+            styles.Add($"$shape={shape.Value}");
+
+        if (borderStyle is not null)
+            styles.Add($"borderStyle={borderStyle.Value}");
+
+        if (borderThickness is not null)
+            styles.Add($"$borderThickness={borderThickness}");
+
+        Items[elementName.Name] = $"UpdateBoundaryStyle({string.Join(",", styles)})";
         return this;
     }
 }
