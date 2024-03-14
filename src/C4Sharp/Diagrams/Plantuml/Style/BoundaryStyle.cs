@@ -3,12 +3,12 @@ using C4Sharp.Diagrams.Plantuml.Constants;
 
 namespace C4Sharp.Diagrams.Plantuml.Style;
 
-public class ElementStyle : IElementStyle
+public class BoundaryStyle : IBoundaryStyle
 {
     public IDictionary<string, string> Items { get; } = new Dictionary<string, string>();
 
     /// <summary>
-    /// This call updates the default style of the elements (component, ...) and creates no additional legend entry.
+    /// Set the style of the boundary of the element (component, ...) and creates no additional legend entry.
     /// </summary>
     /// <param name="elementName"></param>
     /// <param name="bgColor"></param>
@@ -20,7 +20,7 @@ public class ElementStyle : IElementStyle
     /// <param name="borderThickness"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public ElementStyle UpdateElementStyle(ElementName elementName, string? bgColor = null, string? fontColor = null,
+    public BoundaryStyle UpdateBoundaryStyle(ElementName elementName, string? bgColor = null, string? fontColor = null,
         string? borderColor = null, bool shadowing = false, Shape? shape = null, BorderStyle? borderStyle = null,
         int? borderThickness = null)
     {
@@ -28,6 +28,8 @@ public class ElementStyle : IElementStyle
             throw new ArgumentNullException(nameof(elementName), $"{nameof(elementName)} is required");
 
         var styles = new List<string>();
+        styles.Add($"$elementName={elementName.Name}");
+
         if (fontColor is not null)
             styles.Add($"$bgColor={bgColor}");
 
@@ -48,7 +50,7 @@ public class ElementStyle : IElementStyle
         if (borderThickness is not null)
             styles.Add($"$borderThickness={borderThickness}");
 
-        Items[elementName.Name] = $"UpdateElementStyle(\"{elementName.Name}\", {string.Join(",", styles)})";
+        Items[elementName.Name] = $"UpdateBoundaryStyle({string.Join(",", styles)})";
         return this;
     }
 }

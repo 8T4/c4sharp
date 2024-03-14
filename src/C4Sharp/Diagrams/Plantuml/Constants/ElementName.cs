@@ -10,9 +10,7 @@ public record ElementName
     public static ElementName ExternalComponent => new() { Name = "external_component" };
     public static ElementName Container => new() { Name = "container" };
     public static ElementName ExternalContainer => new() { Name = "external_container" };
-    public static ElementName SystemBoundary => new() { Name = "system_boundary" };
-    public static ElementName ContainerBoundary => new() { Name = "container_boundary" };
-    public static ElementName EnterpriseBoundary => new() { Name = "enterprise_boundary" };
+    public static ElementName Enterprise => new() { Name = "enterprise" };
 
     public string Name { get; private init; } = string.Empty;
 }
