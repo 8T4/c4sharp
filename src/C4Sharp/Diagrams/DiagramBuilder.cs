@@ -24,7 +24,7 @@ public abstract partial class DiagramBuilder : IDiagramBuilder
     protected abstract IEnumerable<Structure> Structures { get; }
     protected abstract IEnumerable<Relationship> Relationships { get; }
     
-    public Diagram Build(IDiagramTheme? theme)
+    public Diagram Build(IDiagramTheme? theme = null)
     {
         _structures.AddRange(Structures);
         
