@@ -121,14 +121,14 @@ public class BuildCommand : Command
     /// </summary>
     /// <param name="workspace"></param>
     /// <param name="slnPath"></param>
-    private static async Task<IEnumerable<IDiagramBuildRunner>> StartAnalysis(MSBuildWorkspace workspace,
+    private static async Task<IEnumerable<IDiagramBuilder>> StartAnalysis(MSBuildWorkspace workspace,
         string slnPath)
     {
         ColorConsole.WriteLine("Starting analysis".White());
 
         var solution = await workspace.OpenSolutionAsync(slnPath);
 
-        var result = new List<IDiagramBuildRunner>();
+        var result = new List<IDiagramBuilder>();
         foreach (var project in solution.Projects)
         {
             ColorConsole.WriteLine("Analyzing project: ".White(), project.Name.Green());
@@ -139,11 +139,11 @@ public class BuildCommand : Command
                 continue;
             }
 
-            var type = typeof(IDiagramBuildRunner);
+            var type = typeof(IDiagramBuilder);
 
             var runners = Assembly.LoadFrom(project.OutputFilePath).GetTypes()
-                .Where(p => type.IsAssignableFrom(p) && p.IsClass && p != typeof(DiagramBuildRunner))
-                .Select(r => (IDiagramBuildRunner)Activator.CreateInstance(r)!).ToArray();
+                .Where(p => type.IsAssignableFrom(p) && p.IsClass && p != typeof(DiagramBuilder))
+                .Select(r => (IDiagramBuilder)Activator.CreateInstance(r)!).ToArray();
 
             if (!runners.Any())
             {
@@ -164,7 +164,7 @@ public class BuildCommand : Command
     /// </summary>
     /// <param name="runners"></param>
     /// <param name="ouput"></param>
-    private static void GenerateC4Diagrams(IEnumerable<IDiagramBuildRunner> runners, string? ouput, string? doc)
+    private static void GenerateC4Diagrams(IEnumerable<IDiagramBuilder> runners, string? ouput, string? doc)
     {
         var path = Path.Combine(string.IsNullOrEmpty(ouput) 
             ? Environment.CurrentDirectory 
@@ -179,7 +179,7 @@ public class BuildCommand : Command
             .UseDiagramMermaidBuilder()
             .UseDiagramSvgImageBuilder();
 
-        context.Export(directory, runners.Select(r => r.Build()));
+        context.Export(directory, runners);
 
         PrintFileList(directory, "png");
         PrintFileList(directory, "svg");

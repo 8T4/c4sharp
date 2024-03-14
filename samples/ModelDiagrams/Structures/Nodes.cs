@@ -1,6 +1,6 @@
 using C4Sharp.Elements;
 
-namespace C4Sharp.Sample.Structures;
+namespace ModelDiagrams.Structures;
 
 public static class Nodes
 {
