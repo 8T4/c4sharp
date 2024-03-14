@@ -21,6 +21,7 @@ public record Diagram
     public IEnumerable<Structure> Structures { get; init; }
     public IEnumerable<Relationship> Relationships { get; init; }
     public IElementStyle? Style { get; init; }
+    public IBoundaryStyle? BoundaryStyle { get; init; }
     public IElementTag? Tags { get; init; }
     public IRelationshipTag? RelTags { get; init; }
 

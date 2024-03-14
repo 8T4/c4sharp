@@ -23,8 +23,7 @@ public abstract partial class DiagramBuilder : IDiagramBuilder
     protected abstract DiagramType DiagramType { get; }
     protected abstract IEnumerable<Structure> Structures { get; }
     protected abstract IEnumerable<Relationship> Relationships { get; }
-
-
+    
     public Diagram Build()
     {
         _structures.AddRange(Structures);
@@ -41,7 +40,8 @@ public abstract partial class DiagramBuilder : IDiagramBuilder
             FlowVisualization = FlowVisualization,
             Tags = SetTags(),
             RelTags = SetRelTags(),
-            Style = SetStyle()
+            Style = SetStyle(),
+            BoundaryStyle = SetBoundaryStyle()
         };
     }
 }
@@ -70,4 +70,5 @@ public abstract partial class DiagramBuilder
     protected virtual IElementStyle? SetStyle() => null;
     protected virtual IElementTag? SetTags() => null;
     protected virtual IRelationshipTag? SetRelTags() => null;
+    protected virtual IBoundaryStyle? SetBoundaryStyle() => null;
 }

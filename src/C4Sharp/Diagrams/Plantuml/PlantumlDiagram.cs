@@ -1,6 +1,8 @@
 using System.Text;
 using C4Sharp.Commons.FileSystem;
 using C4Sharp.Elements.Relationships;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace C4Sharp.Diagrams.Plantuml;
 
@@ -24,11 +26,11 @@ public static partial class PlantumlDiagram
     /// <param name="useStandardLibrary"></param>
     /// <returns></returns>
     public static string ToPumlString(this Diagram diagram, bool useStandardLibrary) => new StringBuilder()
-            .BuildHeader(diagram, useStandardLibrary)
-            .BuildBody(diagram)
-            .BuildFooter(diagram)
-            .ToString();
-    
+        .BuildHeader(diagram, useStandardLibrary)
+        .BuildBody(diagram)
+        .BuildFooter(diagram)
+        .ToString();
+
     private static StringBuilder BuildHeader(this StringBuilder stream, Diagram diagram, bool useStandardLibrary)
     {
         var path = GetPumlFilePath(diagram, useStandardLibrary);
@@ -68,35 +70,10 @@ public static partial class PlantumlDiagram
 
     private static StringBuilder BuildStyleSession(this StringBuilder stream, Diagram diagram)
     {
-        if (diagram.Tags is not null)
-        {
-            foreach (var (_, value) in diagram.Tags.Items)
-            {
-                stream.AppendLine(value);
-            }
-
-            stream.AppendLine();
-        }
-
-        if (diagram.Style is not null)
-        {
-            foreach (var (_, value) in diagram.Style.Items)
-            {
-                stream.AppendLine(value);
-            }
-
-            stream.AppendLine();
-        }
-
-        if (diagram.RelTags is not null)
-        {
-            foreach (var (_, value) in diagram.RelTags.Items)
-            {
-                stream.AppendLine(value);
-            }
-
-            stream.AppendLine();
-        }
+        diagram.Tags?.Items.ToList().ForEach(x => stream.AppendLine(x.Value));
+        diagram.Style?.Items.ToList().ForEach(x => stream.AppendLine(x.Value));
+        diagram.BoundaryStyle?.Items.ToList().ForEach(x => stream.AppendLine(x.Value));
+        diagram.RelTags?.Items.ToList().ForEach(x => stream.AppendLine(x.Value));
 
         return stream;
     }
@@ -159,8 +136,8 @@ public static partial class PlantumlDiagram
         .BuildMermaidBody(diagram)
         //.BuildStyleSession(diagram)
         .AppendLine("```")
-        .ToString();    
-    
+        .ToString();
+
     private static StringBuilder BuildMermaidHeader(this StringBuilder stream, Diagram diagram)
     {
         var diagramType = diagram.Type.Value switch
@@ -171,7 +148,7 @@ public static partial class PlantumlDiagram
             DiagramConstants.Deployment => "C4Deployment",
             _ => throw new ArgumentOutOfRangeException()
         };
-        
+
         stream.AppendLine(diagramType);
         stream.AppendLine();
 
@@ -183,7 +160,7 @@ public static partial class PlantumlDiagram
 
         return stream;
     }
-    
+
     private static StringBuilder BuildMermaidBody(this StringBuilder stream, Diagram diagram)
     {
         foreach (var structure in diagram.Structures)
@@ -198,13 +175,10 @@ public static partial class PlantumlDiagram
             var item = (relationship.Position == Position.Neighbor)
                 ? relationship[Position.None]
                 : relationship;
-            
+
             stream.AppendLine(item.ClearTags().ToPumlString());
         }
 
         return stream;
     }
 }
-
-
-
