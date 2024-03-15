@@ -26,7 +26,10 @@ This package is available through [Nuget Packages](https://www.nuget.org/package
 |`C4SHARP`| dotnet library for building diagrams | [![NuGet](https://img.shields.io/nuget/v/C4Sharp.svg)](https://www.nuget.org/packages/C4Sharp) | [![Nuget](https://img.shields.io/nuget/dt/C4Sharp.svg)](https://www.nuget.org/packages/C4Sharp) | [![Codacy Badge](https://app.codacy.com/project/badge/Grade/51ea16a0d91548cb9e84bd6ab3e8cb9e)](https://www.codacy.com/gh/8T4/c4sharp/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=8T4/c4sharp&amp;utm_campaign=Badge_Grade) | [![.NET](https://github.com/8T4/c4sharp/actions/workflows/dotnet.yml/badge.svg)](https://github.com/8T4/c4sharp/actions/workflows/dotnet.yml) |
 |`C4SCLI` | cli for compiling C4S projects       | [![NuGet](https://img.shields.io/nuget/v/c4scli.svg)](https://www.nuget.org/packages/c4scli)   | [![Nuget](https://img.shields.io/nuget/dt/c4scli.svg)](https://www.nuget.org/packages/c4scli) | [![Codacy Badge](https://app.codacy.com/project/badge/Grade/51ea16a0d91548cb9e84bd6ab3e8cb9e)](https://www.codacy.com/gh/8T4/c4sharp/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=8T4/c4sharp&amp;utm_campaign=Badge_Grade) | [![.NET](https://github.com/8T4/c4sharp/actions/workflows/dotnet.yml/badge.svg)](https://github.com/8T4/c4sharp/actions/workflows/dotnet.yml) |
 
-To build a diagram using the C4S library we need to identify the structures and their relationships through a class that inherits properties directly from DiagramBuildRunner. See the following example of building a container diagram:
+
+### Create a new diagram from scratch
+To build a diagram using the C4S library we need to identify the structures and their relationships through a class that inherits properties directly from `DiagramBuilder` (_ContainerDiagram, ComponentDiagram, ContextDiagram, SequenceDiagram, DeploymentDiagram_). See the following example of building a container diagram:
+
 
 ```C#
 public class ContainerDiagramSample : ContainerDiagram
@@ -83,13 +86,63 @@ public class ContainerDiagramSample : ContainerDiagram
     };
 }
 ```
-The following code shows how to compile the diagram:
+
+### Create a new diagram from existing code
+
+you can create structures that will be used in the diagram, as in the following example:
 
 ```c#
 
-There are two strategies for compiling diagrams in your project: self-compiling and using the `C4SCLI` tool. 
+//Person
+public static Person Customer => new ("customer", "Personal Banking Customer", 
+    "A customer of the bank, with personal bank accounts.", Boundary.External);
 
-#### a) self-compiling approach: 
+public static Person InternalCustomer => new Person("internalcustomer", "Personal Banking Customer", 
+    "An customer of the bank, with personal bank accounts.");
+
+public static Person Manager => new ("manager", "Manager Banking Customer", 
+    "A manager of the bank, with personal bank accounts.");
+
+//SoftwareSystem
+public static SoftwareSystem BankingSystem => new("BankingSystem", "Internet Banking System",
+    "Allows customers to view information about their bank accounts, and make payments.");
+
+public static SoftwareSystem Mainframe => new("Mainframe", "Mainframe Banking System",
+    "Stores all of the core banking information about customers, accounts, transactions, etc.", Boundary.External);
+
+public static SoftwareSystem MailSystem => new ("MailSystem", "E-mail system", 
+    "The internal Microsoft Exchange e-mail system.", Boundary.External);
+
+
+```
+
+```c#
+public class ContextDiagramSample : ContextDiagram
+{
+    protected override string Title => "Component diagram for Internet Banking System";
+    
+    protected override IEnumerable<Structure> Structures => new Structure[]
+    {
+        Customer,
+        BankingSystem,
+        Mainframe,
+        MailSystem
+    };
+
+    protected override IEnumerable<Relationship> Relationships => new[]
+    {
+        Customer > BankingSystem,
+        Customer < MailSystem | "Sends e-mails to",
+        BankingSystem > MailSystem | ("Sends e-mails", "SMTP") | Neighbor,
+        BankingSystem > Mainframe
+    };
+}
+```
+### Compiling the diagram
+There are two strategies for compiling diagrams in your project: self-compiling and using the `C4SCLI` tool.
+The following code shows how to compile the diagram:
+
+#### Self-compiling approach: 
 
 ```c#
 using C4Sharp.Diagrams;
@@ -117,7 +170,7 @@ new PlantumlContext()
 The result of the previous code is the following diagram:
 ![img](./docs/images/container-diagram-for-internet-banking-system-c4container.png)
 
-### Using the C4SCLI tool:
+#### Using the C4SCLI tool:
 
 > [!TIP]\
 > The `C4SCLI` can be used in DevOps pipelines, removing the need to manually compile diagrams. For this, install `C4SCLI` tool and execute de the following command:
@@ -126,7 +179,7 @@ $ c4scli build <solution path> [-o <output path>]
 ```
 
 ### Customizing the diagram
-
+#### Using Themes
 Themes are used to customize the diagram. The following code shows how to use the `ParadisoTheme` theme to compile the diagram:
 
 ```c#
@@ -138,6 +191,52 @@ new PlantumlContext()
 The result of the previous code is the following diagram:
 ![img](./docs/images/container-diagram-for-internet-banking-system-v2-c4container.png)
 
+#### Creating a custom theme
+
+You can create a custom theme by implementing the `ITheme` interface. The following code shows how to create a custom theme:
+
+```c#
+public class DefaultTheme: IDiagramTheme
+{
+    private const string ComponentBackground = "#85bbf0";
+    private const string ComponentBorder = "#78a8d9";
+    private const string ComponentText = "#000000";
+    
+    private const string ContainerBackground = "#438dd4";
+    private const string ContainerBorder = "#3e82c5";
+    private const string ContainerText = "#FFFFFF";
+    
+    private const string PersonBackground = "#0d437b";
+    private const string PersonBorder = "#0d437b";
+    private const string PersonText = "#FFFFFF";
+    
+    private const string ExternalBackground = "#999999";
+    private const string ExternalBorder = "#8a8a8a";
+    private const string ExternalText = "#FFFFFF";
+
+    private const string SystemBackground = "#1a67be";
+    private const string SystemBorder = "#175eaa";
+    private const string SystemText = "#FFFFFF";
+
+    public IElementStyle? Style => new ElementStyle()
+        .UpdateElementStyle(ElementName.System, SystemBackground, SystemText, SystemBorder, false, Shape.RoundedBoxShape, BorderStyle.SolidLine, 2)
+        .UpdateElementStyle(ElementName.ExternalSystem, ExternalBackground, ExternalText, ExternalBorder, false, Shape.RoundedBoxShape, BorderStyle.SolidLine, 1)
+        .UpdateElementStyle(ElementName.Person, PersonBackground, PersonText, PersonBorder, false, Shape.RoundedBoxShape, BorderStyle.SolidLine, 2)
+        .UpdateElementStyle(ElementName.Component, ComponentBackground, ComponentText, ComponentBorder, false, Shape.RoundedBoxShape, BorderStyle.SolidLine, 2)
+        .UpdateElementStyle(ElementName.ExternalComponent, ExternalBackground, ExternalText, ExternalBorder, false, Shape.RoundedBoxShape, BorderStyle.SolidLine, 1)
+        .UpdateElementStyle(ElementName.Container, ContainerBackground, ContainerText, ContainerBorder, false, Shape.RoundedBoxShape, BorderStyle.SolidLine, 2)
+        .UpdateElementStyle(ElementName.ExternalContainer, ExternalBackground, ExternalText, ExternalBorder, false, Shape.RoundedBoxShape, BorderStyle.SolidLine, 1);
+
+    public IBoundaryStyle? BoundaryStyle => new BoundaryStyle()
+        .UpdateBoundaryStyle(ElementName.System, "#FFFFFF", "#000000", "#000000", false, Shape.RoundedBoxShape)
+        .UpdateBoundaryStyle(ElementName.Container, "#FFFFFF", "#000000", "#000000", false, Shape.RoundedBoxShape)
+        .UpdateBoundaryStyle(ElementName.Enterprise, "#FFFFFF", "#000000", "#000000", false, Shape.RoundedBoxShape);
+
+    public IElementTag? Tags { get; } = null;
+    public IRelationshipTag? RelTags { get; } = null;
+}
+```
+#### Customizing the diagram through the SetStyle method
 
 Using the `C4S` library, you can customize the diagram by implementing the SetStyle() method, as in the following example:
 
@@ -153,6 +252,8 @@ protected override IElementStyle? SetStyle()
 ```
 
 ![img](./docs/images/c4bank-deposit-area-c4container-bw.png)
+
+### Exporting the diagram to different formats
 
 Now, C4Sharp can compile the [Mermaid](https://github.com/mermaid-js/mermaid) markdown file. For this, you should use the function `UseDiagramMermaidBuilder()`. The following code shows how to compile these files. 
 

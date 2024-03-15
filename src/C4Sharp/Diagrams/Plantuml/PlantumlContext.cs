@@ -88,7 +88,7 @@ public partial class PlantumlContext : IDisposable
     /// <param name="diagrams">C4 Diagrams</param>
     /// <param name="theme"></param>
     public void Export(IEnumerable<IDiagramBuilder> diagrams, IDiagramTheme? theme = null) => 
-        Export(diagrams.Select(d => d.Build(theme ?? new DefaultTheme())));
+        InternalExport(diagrams.Select(d => d.Build(theme ?? new DefaultTheme())));
 
     /// <summary>
     /// It creates a Puml file into the default directory "./c4"
@@ -97,12 +97,21 @@ public partial class PlantumlContext : IDisposable
     /// </summary>
     /// <param name="diagrams">C4 Diagrams</param>
     [Obsolete("Use the method with IDiagramBuilder")]
-    public void Export(IEnumerable<Diagram> diagrams)
+    public void Export(IEnumerable<Diagram> diagrams) => 
+        InternalExport(diagrams);
+
+    /// <summary>
+    /// It creates a Puml file into the default directory "./c4"
+    /// If the attribute of Session GenerateDiagramImages is true
+    /// It generates png files of the diagram
+    /// </summary>
+    /// <param name="diagrams">C4 Diagrams</param>
+    private void InternalExport(IEnumerable<Diagram> diagrams)
     {
         var dirPath = Directory.GetCurrentDirectory();
         var path = Path.Join(dirPath, C4SharpDirectory.DirectoryName);
-        Export(path, diagrams);
-    }
+        InternalExport(path, diagrams);
+    }    
 
     /// <summary>
     /// It creates a Puml file into the default directory "./c4"
@@ -118,7 +127,7 @@ public partial class PlantumlContext : IDisposable
     /// <param name="theme"></param>
     /// ReSharper disable once MemberCanBePrivate.Global
     public void Export(string path, IEnumerable<IDiagramBuilder> diagrams, IDiagramTheme? theme = null) => 
-        Export(path, diagrams.Select(d => d.Build(theme)));
+        InternalExport(path, diagrams.Select(d => d.Build(theme)));
 
     /// <summary>
     /// It creates a Puml file into the default directory "./c4"
@@ -133,7 +142,9 @@ public partial class PlantumlContext : IDisposable
     /// </param>
     /// ReSharper disable once MemberCanBePrivate.Global
     [Obsolete("Use the method with IDiagramBuilder")]
-    public void Export(string path, IEnumerable<Diagram> diagrams)
+    public void Export(string path, IEnumerable<Diagram> diagrams) => InternalExport(path, diagrams);
+
+    private void InternalExport(string path, IEnumerable<Diagram> diagrams)
     {
         var enumerable = diagrams as Diagram[] ?? diagrams.ToArray();
         
