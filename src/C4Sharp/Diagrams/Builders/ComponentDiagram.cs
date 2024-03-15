@@ -9,6 +9,6 @@ public abstract class ComponentDiagram: DiagramBuilder
     protected override string Title { get; } = "Component Diagram";
     protected override DiagramType DiagramType { get; } = DiagramType.Component;
     
-    protected ContainerBoundary Boundary(string tag, string name, params Component[] components) 
+    protected ContainerBoundary Bound(string tag, string name, params Component[] components) 
         => new(tag, name, components);
 }

@@ -13,7 +13,7 @@ public class SequenceDiagramSample : SequenceDiagram
         new Container("cA", "Single-Page Application", ContainerType.None, "JavaScript and Angular",
             "Provides all of the Internet banking functionality to customers via their web browser."),
 
-        Boundary("b", "Api Application",
+        Bound("b", "Api Application",
             new("cB", "Sign In Controller", ComponentType.None, "Spring MVC Rest Controller",
                 "Allows users to sign in to the Internet Banking System."),
             new("cC", "Security Component", ComponentType.None, "Spring Bean",

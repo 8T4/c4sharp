@@ -6,12 +6,10 @@ namespace C4Sharp.Elements;
 /// A person represents one of the human users of your software system (e.g. actors, roles, personas, etc)
 /// <see href="https://c4model.com/"/>
 /// </summary>
-public sealed record Person : Structure
+public sealed record Person(string Alias, string Label) : Structure(Alias, Label)
 {
-    public Person(string alias, string label) : base(alias, label)
-    {
-    }
-
+    public static Person None => new("none", "None");
+    
     public Person(string alias, string label, string description) : this(alias, label)
     {
         Description = description;
@@ -22,4 +20,8 @@ public sealed record Person : Structure
         Description = description;
         Boundary = boundary;
     }
+    
+    public static Person operator |(Person a, Boundary boundary) => a with{ Boundary = boundary };
+    public static Person operator |(Person a, (string alias, string label) b) => new (b.alias, b.label);
+    public static Person operator |(Person a, (string alias, string label, string description) b) => new (b.alias, b.label, b.description);
 }

@@ -1,4 +1,5 @@
 ﻿using C4Sharp.Commons.Extensions;
+using C4Sharp.Elements.Relationships;
 
 namespace C4Sharp.Elements;
 
@@ -12,18 +13,13 @@ namespace C4Sharp.Elements;
 /// space. In the C4 model, components are not separately deployable units.
 /// <see href="https://c4model.com/"/>
 /// </summary>
-public record Component : Structure
+public record Component(string Alias, string Label) : Structure(Alias, Label)
 {
     public string? Technology { get; init; }
+    public ComponentType ComponentType { get; init; } = ComponentType.None;
+    public static Component None => new("none", "None");
     
-    public ComponentType ComponentType { get; init; }
-
-    public Component(string alias, string label): base(alias, label)
-    {
-        ComponentType = ComponentType.None;
-    }
-    
-    public Component(StructureIdentity alias, string label): base(alias, label)
+    public Component(StructureIdentity alias, string label): this(alias.Value, label)
     {
         ComponentType = ComponentType.None;
     }    
@@ -47,7 +43,14 @@ public record Component : Structure
     public Component(string alias, string label, ComponentType componentType, string technology, string description): this(alias, label, technology, description)
     {
         ComponentType = componentType;
-    }    
+    } 
+    
+    public static Component operator |(Component a, Boundary boundary) => a with{ Boundary = boundary};
+    public static Component operator |(Component a, ComponentType b) => a with{ ComponentType = b };
+    public static Component operator |(Component a, (string alias, string label) b) => new (b.alias, b.label);
+    public static Component operator |(Component a, (string alias, string label, string technology) b) => new Component(b.alias, b.label, b.technology);
+    public static Component operator |(Component a, (string alias, string label, string technology , string description) b) => new (b.alias, b.label, b.technology, b.description);    
+    
 }
 
 public record Component<T> : Component

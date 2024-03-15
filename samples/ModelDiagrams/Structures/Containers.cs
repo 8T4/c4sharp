@@ -1,4 +1,6 @@
+using C4Sharp.Elements;
 using C4Sharp.Elements.Containers;
+using C4Sharp.Elements.Relationships;
 
 namespace ModelDiagrams.Structures;
 
@@ -11,7 +13,7 @@ public static class Containers
         Technology: "C#, WebApi"
     );
 
-    public static ClientSideWebApp Spa => new (
+    public static ClientSideWebApp SpaApp => new (
         Alias: "Spa",
         Label: "SPA",
         Technology: "JavaScript, Angular",

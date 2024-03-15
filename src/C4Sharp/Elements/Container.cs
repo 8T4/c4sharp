@@ -1,4 +1,5 @@
 ﻿using C4Sharp.Commons.Extensions;
+using C4Sharp.Elements.Relationships;
 
 namespace C4Sharp.Elements;
 
@@ -21,6 +22,8 @@ public record Container : Structure
     public string? Technology { get; init; }
     public Container this[int index] => GetInstance(index.ToString());
     public Container this[string instanceName] => GetInstance(instanceName);
+    
+    public static Container None => new("None", "None", ContainerType.None, "None");
 
     public Container(string alias, string label) 
         : base(alias, label)
@@ -44,11 +47,22 @@ public record Container : Structure
         Description = description ?? string.Empty;
     }
     
+    public Container(string alias, string label, ContainerType type, string? technology, string? description, Boundary? boundary)
+        : this(alias, label, type, technology, description)
+    {
+        Boundary = boundary ?? Boundary.Internal;
+    }    
+    
     public Container(string alias, string label, ContainerType type, string? technology, string? description, IEnumerable<string> tags)
         : this(alias, label, type, technology, description)
     {
         Tags = tags;
     }    
+    
+    public static Container operator |(Container a, Boundary boundary) => a with{ Boundary = boundary};
+    public static Container operator |(Container a, (ContainerType type, string alias, string label) b) => new (b.alias, b.label);
+    public static Container operator |(Container a, (ContainerType type, string alias, string label, string? technology) b) => new (b.alias, b.label, b.type, b.technology);
+    public static Container operator |(Container a, (ContainerType type, string alias, string label,string? technology , string? description) b) => new (b.alias, b.label, b.type, b.technology, b.description);        
 
     /// <summary>
     /// Get or Create a instance of current container

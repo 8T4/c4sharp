@@ -16,7 +16,6 @@ LAYOUT_LEFT_RIGHT()
 
 title Internet Banking System API Application
 
-Container(Spa, "SPA", "Spa:JavaScript, Angular", "Provides all the Internet banking functionality to customers via their web browser")
 Container(MobileApp, "MobileApp", "Mobile:C#, Xamarin", "Provides a limited subset of the Internet banking functionality to customers via their mobile device")
 ContainerDb(Database, "SqlDatabase", "Database:SQL Database", "Stores user registration information, hashed auth credentials, access logs, etc.")
 System_Ext(Mainframe, "Mainframe Banking System", "Stores all of the core banking information about customers, accounts, transactions, etc.")
