@@ -47,9 +47,21 @@ public record Component(string Alias, string Label) : Structure(Alias, Label)
     
     public static Component operator |(Component a, Boundary boundary) => a with{ Boundary = boundary};
     public static Component operator |(Component a, ComponentType b) => a with{ ComponentType = b };
-    public static Component operator |(Component a, (string alias, string label) b) => new (b.alias, b.label);
-    public static Component operator |(Component a, (string alias, string label, string technology) b) => new Component(b.alias, b.label, b.technology);
-    public static Component operator |(Component a, (string alias, string label, string technology , string description) b) => new (b.alias, b.label, b.technology, b.description);    
+    public static Component operator |(Component a, (string alias, string label) b) => new (b.alias, b.label)
+    {
+        Boundary = a.Boundary,
+        ComponentType = a.ComponentType
+    };
+    public static Component operator |(Component a, (string alias, string label, string technology) b) => new Component(b.alias, b.label, b.technology)
+    {
+        Boundary = a.Boundary,
+        ComponentType = a.ComponentType
+    };
+    public static Component operator |(Component a, (string alias, string label, string technology , string description) b) => new (b.alias, b.label, b.technology, b.description)
+    {
+        Boundary = a.Boundary,
+        ComponentType = a.ComponentType
+    };   
     
 }
 

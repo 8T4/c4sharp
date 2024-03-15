@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Text;
 using C4Sharp.Commons.FileSystem;
 using C4Sharp.Diagrams.Interfaces;
+using C4Sharp.Diagrams.Themes;
 
 namespace C4Sharp.Diagrams.Plantuml;
 
@@ -87,7 +88,7 @@ public partial class PlantumlContext : IDisposable
     /// <param name="diagrams">C4 Diagrams</param>
     /// <param name="theme"></param>
     public void Export(IEnumerable<IDiagramBuilder> diagrams, IDiagramTheme? theme = null) => 
-        Export(diagrams.Select(d => d.Build(theme)));
+        Export(diagrams.Select(d => d.Build(theme ?? new DefaultTheme())));
 
     /// <summary>
     /// It creates a Puml file into the default directory "./c4"
@@ -95,6 +96,7 @@ public partial class PlantumlContext : IDisposable
     /// It generates png files of the diagram
     /// </summary>
     /// <param name="diagrams">C4 Diagrams</param>
+    [Obsolete("Use the method with IDiagramBuilder")]
     public void Export(IEnumerable<Diagram> diagrams)
     {
         var dirPath = Directory.GetCurrentDirectory();
@@ -130,6 +132,7 @@ public partial class PlantumlContext : IDisposable
     /// <example>For Unix.: users/user/projects/</example>
     /// </param>
     /// ReSharper disable once MemberCanBePrivate.Global
+    [Obsolete("Use the method with IDiagramBuilder")]
     public void Export(string path, IEnumerable<Diagram> diagrams)
     {
         var enumerable = diagrams as Diagram[] ?? diagrams.ToArray();

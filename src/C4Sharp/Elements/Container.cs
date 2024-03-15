@@ -59,10 +59,21 @@ public record Container : Structure
         Tags = tags;
     }    
     
-    public static Container operator |(Container a, Boundary boundary) => a with{ Boundary = boundary};
-    public static Container operator |(Container a, (ContainerType type, string alias, string label) b) => new (b.alias, b.label);
-    public static Container operator |(Container a, (ContainerType type, string alias, string label, string? technology) b) => new (b.alias, b.label, b.type, b.technology);
-    public static Container operator |(Container a, (ContainerType type, string alias, string label,string? technology , string? description) b) => new (b.alias, b.label, b.type, b.technology, b.description);        
+    public static Container operator |(Container a, Boundary boundary) => a with{ Boundary = boundary };
+    public static Container operator |(Container a, (ContainerType type, string alias, string label) b) => new (b.alias, b.label)
+    {
+        Boundary = a.Boundary
+    };
+    
+    public static Container operator |(Container a, (ContainerType type, string alias, string label, string? technology) b) => new (b.alias, b.label, b.type, b.technology)
+    {
+        Boundary = a.Boundary
+    };
+    
+    public static Container operator |(Container a, (ContainerType type, string alias, string label,string? technology , string? description) b) => new (b.alias, b.label, b.type, b.technology, b.description)
+    {
+        Boundary = a.Boundary
+    };
 
     /// <summary>
     /// Get or Create a instance of current container

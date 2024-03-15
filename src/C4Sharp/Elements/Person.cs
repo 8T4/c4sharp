@@ -22,6 +22,14 @@ public sealed record Person(string Alias, string Label) : Structure(Alias, Label
     }
     
     public static Person operator |(Person a, Boundary boundary) => a with{ Boundary = boundary };
-    public static Person operator |(Person a, (string alias, string label) b) => new (b.alias, b.label);
-    public static Person operator |(Person a, (string alias, string label, string description) b) => new (b.alias, b.label, b.description);
+    
+    public static Person operator |(Person a, (string alias, string label) b) => new (b.alias, b.label)
+    {
+        Boundary = a.Boundary
+    };
+    
+    public static Person operator |(Person a, (string alias, string label, string description) b) => new (b.alias, b.label, b.description)
+    {
+        Boundary = a.Boundary
+    };
 }

@@ -16,29 +16,29 @@ LAYOUT_TOP_DOWN()
 
 title Container diagram for Internet Banking System
 
-Person_Ext(customer, "Personal Banking Customer", "A customer of the bank, with personal bank accounts.")
+Person_Ext(Customer, "Personal Banking Customer", "A customer of the bank, with personal bank accounts.")
 System(BankingSystem, "Internet Banking System", "Allows customers to view information about their bank accounts, and make payments.")
 System_Ext(MailSystem, "E-mail system", "The internal Microsoft Exchange e-mail system.")
 
 System_Boundary(c1, "Internet Banking") {
-    Container(Corporate.Finance.Limits.Service.ServiceBus, "WebApp", "Web Application:C#, WebApi", "Delivers the static content and the Internet banking SPA")
+    Container(WebApp, "WebApp", "Web Application:C#, WebApi", "Delivers the static content and the Internet banking SPA")
     Container(Spa, "Spa", "Spa:JavaScript, Angular", "Delivers the static content and the Internet banking SPA")
-    Container(MobileApp, "MobileApp", "Mobile:C#, Xamarin", "Provides a limited subset of the Internet banking functionality to customers via their mobile device")
-    ContainerDb(Database, "SqlDatabase", "Database:SQL Database", "Stores user registration information, hashed auth credentials, access logs, etc.")
-    ContainerQueue(Queue, "RabbitMQ", "Queue:RabbitMQ", "Stores user registration information, hashed auth credentials, access logs, etc.")
+    Container(MobileApp, "Mobile App", "Mobile:C#, Xamarin", "Provides a mobile banking experience")
+    ContainerDb(SqlDatabase, "SqlDatabase", "Database:SQL Database", "Stores user registration information, hashed auth credentials, access logs, etc.")
+    ContainerQueue(RabbitMQ, "RabbitMQ", "Queue:RabbitMQ", "Stores user registration information, hashed auth credentials, access logs, etc.")
     Container(BackendApi, "BackendApi", "Api:Dotnet, Docker Container", "Provides Internet banking functionality via API.")
 }
 
 
-Rel(customer, Corporate.Finance.Limits.Service.ServiceBus, "Uses", "HTTPS")
-Rel(customer, Spa, "Uses", "HTTPS")
-Rel(customer, MobileApp, "Uses")
-Rel_Neighbor(Corporate.Finance.Limits.Service.ServiceBus, Spa, "Delivers")
+Rel(Customer, WebApp, "Uses", "HTTPS")
+Rel(Customer, Spa, "Uses", "HTTPS")
+Rel(Customer, MobileApp, "Uses")
+Rel_Neighbor(WebApp, Spa, "Delivers")
 Rel(Spa, BackendApi, "Uses", "async, JSON/HTTPS")
 Rel(MobileApp, BackendApi, "Uses", "async, JSON/HTTPS")
-Rel_Back_Neighbor(Database, BackendApi, "Uses", "async, JSON/HTTPS")
-Rel_Back(Queue, BackendApi, "Uses", "async, JSON")
-Rel_Back(customer, MailSystem, "Sends e-mails to")
+Rel_Back_Neighbor(SqlDatabase, BackendApi, "Uses", "async, JSON/HTTPS")
+Rel_Back(RabbitMQ, BackendApi, "Uses", "async, JSON")
+Rel_Back(Customer, MailSystem, "Sends e-mails to")
 Rel_Back(MailSystem, BackendApi, "Sends e-mails using", "sync, SMTP")
 Rel_Neighbor(BackendApi, BankingSystem, "Uses", "sync/async, XML/HTTPS")
 @enduml
