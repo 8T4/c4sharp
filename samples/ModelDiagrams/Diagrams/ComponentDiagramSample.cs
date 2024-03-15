@@ -1,7 +1,9 @@
 using C4Sharp.Diagrams;
 using C4Sharp.Diagrams.Builders;
 using C4Sharp.Elements;
+using C4Sharp.Elements.Containers;
 using C4Sharp.Elements.Relationships;
+using static C4Sharp.Elements.Relationships.Boundary;
 using static ModelDiagrams.Structures.Systems;
 using static ModelDiagrams.Structures.Containers;
 using static ModelDiagrams.Structures.Components;
@@ -15,11 +17,10 @@ public class ComponentDiagramSample : ComponentDiagram
 
     protected override IEnumerable<Structure> Structures => new Structure[]
     {
-        Spa,
         MobileApp,
         SqlDatabase,
         Mainframe,
-        Boundary("c1", "API Application",
+        Bound("c1", "API Application",
             Sign,
             Accounts,
             Security,
@@ -34,8 +35,8 @@ public class ComponentDiagramSample : ComponentDiagram
         Security > SqlDatabase | ("Read & write to", "JDBC"),
         MainframeFacade > Mainframe | ("Uses", "XML/HTTPS"),
 
-        Spa > Sign | ("Uses", "JSON/HTTPS"),
-        Spa > Accounts | ("Uses", "JSON/HTTPS"),
+        SpaApp > Sign | ("Uses", "JSON/HTTPS"),
+        SpaApp > Accounts | ("Uses", "JSON/HTTPS"),
         MobileApp > Sign | ("Uses", "JSON/HTTPS"),
         MobileApp > Accounts | ("Uses", "JSON/HTTPS")
     };

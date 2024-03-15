@@ -9,12 +9,10 @@ namespace C4Sharp.Elements;
 /// a single software development team.
 /// <see href="https://c4model.com/"/>
 /// </summary>
-public sealed record SoftwareSystem : Structure
+public sealed record SoftwareSystem(string Alias, string Label) : Structure(Alias, Label)
 {
-    public SoftwareSystem(string alias, string label) : base(alias, label)
-    {
-    }
-    
+    public static SoftwareSystem None => new("none", "None");
+
     public SoftwareSystem(string alias, string label, string description) : this(alias, label)
     {
         Description = description;
@@ -24,5 +22,10 @@ public sealed record SoftwareSystem : Structure
     {
         Description = description;
         Boundary = boundary;
-    }    
+    }  
+    
+    public static SoftwareSystem operator |(SoftwareSystem a, Boundary boundary) => a with{ Boundary = boundary};
+    public static SoftwareSystem operator |(SoftwareSystem a, (string alias, string label) b) => new (b.alias, b.label);
+    public static SoftwareSystem operator |(SoftwareSystem a, (string alias, string label, string description) b) => new (b.alias, b.label, b.description);
+    
 }

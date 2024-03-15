@@ -16,10 +16,10 @@ public class EnterpriseDiagramSample: ContextDiagram
     protected override IEnumerable<Structure> Structures => new Structure[]
     {
         Customer,
-        Boundary("enterprise.boundary", "Domain A",
+        Bound("enterprise.boundary", "Domain A",
             BankingSystem,
-            Boundary("enterprise.boundary.1", "Domain Internal Users", InternalCustomer),
-            Boundary("enterprise.boundary.2", "Domain Managers", Manager)
+            Bound("enterprise.boundary.1", "Domain Internal Users", InternalCustomer),
+            Bound("enterprise.boundary.2", "Domain Managers", Manager)
         ),
         Mainframe,
         MailSystem

@@ -18,14 +18,14 @@ public class DeploymentDiagramSample: DeploymentDiagram
             Nodes.Ubuntu("bigbankdb02", "bigbank-db02", Nodes.OracleNode("oracle2", Containers.OracleDatabase["Data Reader"])),
             Nodes.Ubuntu("bb2", "bigbank-web***\tx4", Nodes.ApacheTomCat("apache2", Containers.WebApp))),
         Nodes.Ios("ios", Containers.MobileApp),
-        Nodes.PersonalComputer("computer", Nodes.Browser("browser", Containers.Spa))
+        Nodes.PersonalComputer("computer", Nodes.Browser("browser", Containers.SpaApp))
     };
 
     protected override IEnumerable<Relationship> Relationships => new[]
     {
         Containers.MobileApp > Containers.BackendApi | ("Makes API calls to", "json/HTTPS"),
-        Containers.Spa > Containers.BackendApi | ("Makes API calls to", "json/HTTPS"),
-        Containers.WebApp > Containers.Spa | "Delivers to the customer's web browser"| Position.Up,
+        Containers.SpaApp > Containers.BackendApi | ("Makes API calls to", "json/HTTPS"),
+        Containers.WebApp > Containers.SpaApp | "Delivers to the customer's web browser"| Position.Up,
         Containers.BackendApi > Containers.OracleDatabase[1] | ("Writes to", "JDBC"),
         Containers.BackendApi < Containers.OracleDatabase["Data Reader"] | ("Reads from", "JDBC"),
         Containers.OracleDatabase[1] > Containers.OracleDatabase["Data Reader"] | ("Replicates data to", "JDBC") | Position.Right,
