@@ -38,10 +38,10 @@ public abstract partial class DiagramBuilder : IDiagramBuilder
             LayoutWithLegend = LayoutWithLegend,
             LayoutAsSketch = LayoutAsSketch,
             FlowVisualization = FlowVisualization,
-            Tags = theme?.Tags ?? SetTags(),
-            RelTags = theme?.RelTags ?? SetRelTags(),
-            Style = theme?.Style ?? SetStyle(),
-            BoundaryStyle = theme?.BoundaryStyle ?? SetBoundaryStyle()
+            Tags = SetTags() ?? theme?.Tags,
+            RelTags = SetRelTags() ?? theme?.RelTags,
+            Style = SetStyle() ?? theme?.Style,
+            BoundaryStyle = SetBoundaryStyle() ?? theme?.BoundaryStyle 
         };
     }    
 }
@@ -51,16 +51,20 @@ public abstract partial class DiagramBuilder : IDiagramBuilder
 /// </summary>
 public abstract partial class DiagramBuilder
 {
+    public Structure this[string key] => It(key);
+    public Structure this[string key, int instance] => It(key, instance);
+    public Structure this[string key, string instance] => It(key, instance);
+    
     public Structure It<T>() => It(StructureIdentity.New<T>().Value);
     public Structure It<T>(int instance) => It(StructureIdentity.New<T>(instance.ToString()).Value);
     public Structure It<T>(string instance) => It(StructureIdentity.New<T>(instance).Value);
 
     public Structure It(string key)
-        => _structures.Items[key]
+        => _structures.Items[key] 
            ?? throw new KeyNotFoundException($"Structure {key} not found");
 
     public Structure It(string key, int instance)
-        => _structures.Items[new StructureIdentity(key, instance.ToString()).Value]
+        => _structures.Items[new StructureIdentity(key, instance.ToString()).Value] 
            ?? throw new KeyNotFoundException($"Structure {key} not found");
 
     public Structure It(string key, string instance)

@@ -1,16 +1,16 @@
 @startuml sequence-diagram-for-internet-banking-system-c4sequence
 !include ../.c4s/C4_Sequence.puml
 
-UpdateElementStyle("system", $bgColor=#1a67be,$fontColor=#FFFFFF,$borderColor=#175eaa,$shadowing="false",$shape=RoundedBoxShape(),$borderStyle=SolidLine(),$borderThickness=2)
-UpdateElementStyle("external_system", $bgColor=#999999,$fontColor=#FFFFFF,$borderColor=#8a8a8a,$shadowing="false",$shape=RoundedBoxShape(),$borderStyle=SolidLine(),$borderThickness=1)
-UpdateElementStyle("person", $bgColor=#0d437b,$fontColor=#FFFFFF,$borderColor=#0d437b,$shadowing="false",$shape=RoundedBoxShape(),$borderStyle=SolidLine(),$borderThickness=2)
-UpdateElementStyle("component", $bgColor=#85bbf0,$fontColor=#000000,$borderColor=#78a8d9,$shadowing="false",$shape=RoundedBoxShape(),$borderStyle=SolidLine(),$borderThickness=2)
-UpdateElementStyle("external_component", $bgColor=#999999,$fontColor=#FFFFFF,$borderColor=#8a8a8a,$shadowing="false",$shape=RoundedBoxShape(),$borderStyle=SolidLine(),$borderThickness=1)
-UpdateElementStyle("container", $bgColor=#438dd4,$fontColor=#FFFFFF,$borderColor=#3e82c5,$shadowing="false",$shape=RoundedBoxShape(),$borderStyle=SolidLine(),$borderThickness=2)
-UpdateElementStyle("external_container", $bgColor=#999999,$fontColor=#FFFFFF,$borderColor=#8a8a8a,$shadowing="false",$shape=RoundedBoxShape(),$borderStyle=SolidLine(),$borderThickness=1)
-UpdateBoundaryStyle($elementName=system,$bgColor=#FFFFFF,$fontColor=#000000,$borderColor=#000000,$shadowing="false",$shape=RoundedBoxShape())
-UpdateBoundaryStyle($elementName=container,$bgColor=#FFFFFF,$fontColor=#000000,$borderColor=#000000,$shadowing="false",$shape=RoundedBoxShape())
-UpdateBoundaryStyle($elementName=enterprise,$bgColor=#FFFFFF,$fontColor=#000000,$borderColor=#000000,$shadowing="false",$shape=RoundedBoxShape())
+UpdateElementStyle("system", $bgColor=#D4E6F1,$fontColor=#1A5276,$borderColor=#1A5276,$shadowing="false",$shape=RoundedBoxShape(),$borderStyle=SolidLine(),$borderThickness=2)
+UpdateElementStyle("external_system", $bgColor=#F8F9F9,$fontColor=#797D7F,$borderColor=#797D7F,$shadowing="false",$shape=RoundedBoxShape(),$borderStyle=SolidLine(),$borderThickness=1)
+UpdateElementStyle("person", $bgColor=#797D7F,$fontColor=#797D7F,$borderColor=#797D7F,$shadowing="false",$shape=RoundedBoxShape(),$borderStyle=SolidLine(),$borderThickness=2)
+UpdateElementStyle("component", $bgColor=#FAE5D3,$fontColor=#CA6F1E,$borderColor=#CA6F1E,$shadowing="false",$shape=RoundedBoxShape(),$borderStyle=SolidLine(),$borderThickness=2)
+UpdateElementStyle("external_component", $bgColor=#F8F9F9,$fontColor=#797D7F,$borderColor=#797D7F,$shadowing="false",$shape=RoundedBoxShape(),$borderStyle=SolidLine(),$borderThickness=1)
+UpdateElementStyle("container", $bgColor=#EAF2F8,$fontColor=#2E86C1,$borderColor=#2E86C1,$shadowing="false",$shape=RoundedBoxShape(),$borderStyle=SolidLine(),$borderThickness=2)
+UpdateElementStyle("external_container", $bgColor=#F8F9F9,$fontColor=#797D7F,$borderColor=#797D7F,$shadowing="false",$shape=RoundedBoxShape(),$borderStyle=SolidLine(),$borderThickness=1)
+UpdateBoundaryStyle($elementName=system,$bgColor=#F8F9F9,$fontColor=#797D7F,$borderColor=#797D7F,$shadowing="false",$shape=RoundedBoxShape())
+UpdateBoundaryStyle($elementName=container,$bgColor=#F8F9F9,$fontColor=#797D7F,$borderColor=#797D7F,$shadowing="false",$shape=RoundedBoxShape())
+UpdateBoundaryStyle($elementName=enterprise,$bgColor=#F8F9F9,$fontColor=#797D7F,$borderColor=#797D7F,$shadowing="false",$shape=RoundedBoxShape())
 SHOW_PERSON_PORTRAIT()
 
 title Sequence diagram for Internet Banking System

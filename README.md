@@ -15,7 +15,7 @@ Deployment diagrams. The library generates the following diagram types: PNG, SVG
 > There are benefits to using these tools over the heavier alternatives, including easy version control and the ability to generate the DSLs from many sources. ools in this space that we like include Diagrams, Structurizr DSL, AsciiDoctor Diagram and stables such as WebSequenceDiagrams, PlantUML and the venerable Graphviz. It's also fairly simple to generate your own SVG these days, so don't rule out quickly writing your own tool either. One of our authors wrote a small Ruby script to quickly create SVGs, for example.    
 > [Thoughtworks Technology Radar](https://www.thoughtworks.com/en-br/radar/techniques/diagrams-as-code)
 
-# Getting Started
+## Getting Started
 
 First, you will need the [.NET 5.0+](https://docs.microsoft.com/pt-br/dotnet/standard/net-standard)
 and [Java](https://www.java.com/en/download/) to run C4Sharp. Also, you should install the C4Sharp package in your project.
@@ -29,103 +29,117 @@ This package is available through [Nuget Packages](https://www.nuget.org/package
 To build a diagram using the C4S library we need to identify the structures and their relationships through a class that inherits properties directly from DiagramBuildRunner. See the following example of building a container diagram:
 
 ```C#
-namespace C4Bank.Deposit.Architecture;
-
-public class ContainerDiagram : DiagramBuildRunner
+public class ContainerDiagramSample : ContainerDiagram
 {
-    protected override string Title => "C4Bank Context of Deposit Area";
-    protected override DiagramType DiagramType => DiagramType.Container;
-    
+    protected override string Title => "Container diagram for Internet Banking System";
+
     protected override IEnumerable<Structure> Structures => new Structure[]
     {
-        new Person("Customer", "Customer", "Bank Customer"),
-        new SoftwareSystem("OTBank.Finance", "Finance", "OTBank Finance System", Boundary.External),
-        new SoftwareSystem("C4Bank.Account", "Account", "C4Bank Account System"),
-        new Api<DepositReceived>("Aspnet/C#", "ACL"),
-        new EventStreaming<RegisteredAccount>("kafka", "Partition 01"),
+        Person.None | Boundary.External 
+                    | ("Customer", "Personal Banking Customer", "A customer of the bank, with personal bank accounts."),
         
-        SoftwareSystemBoundary.New("Deposit",
-            new Api<DepositoProcessingWorker>("C#"),
-            new Database<IDepositRepository>("SQL Server", "Deposit Data Base"),
-            new ServerConsole<SynchronizeNewAccountConsumer>("C#", "Kafka Consumer"),
-            new Database<IAccountRepository>("SQL Server", "Account Data Base")
-        ),
+        SoftwareSystem.None | ("BankingSystem", "Internet Banking System", 
+            "Allows customers to view information about their bank accounts, and make payments."),
+        
+        SoftwareSystem.None | Boundary.External 
+                            | ("MailSystem", "E-mail system", "The internal Microsoft Exchange e-mail system."),
+        
+        Bound("c1", "Internet Banking",
+            Container.None | (WebApplication, "WebApp", "WebApp", "C#, WebApi", 
+                "Delivers the static content and the Internet banking SPA"),
+            
+            Container.None | (Spa, "Spa", "Spa", "JavaScript, Angular", 
+                "Delivers the static content and the Internet banking SPA"),
+            
+            Container.None | (Mobile, "MobileApp", "Mobile App", "C#, Xamarin", 
+                "Provides a mobile banking experience"),
+            
+            Container.None | (Database, "SqlDatabase", "SqlDatabase", "SQL Database", 
+                "Stores user registration information, hashed auth credentials, access logs, etc."),   
+            
+            Container.None | (Queue, "RabbitMQ", "RabbitMQ", "RabbitMQ", 
+                "Stores user registration information, hashed auth credentials, access logs, etc."),
+            
+            Container.None | (Api, "BackendApi", "BackendApi", "Dotnet, Docker Container", 
+                "Provides Internet banking functionality via API.")
+        )
     };
 
     protected override IEnumerable<Relationship> Relationships => new[]
     {
-        It("Customer") > It("OTBank.Finance") | "send deposit",
-        It("OTBank.Finance") > It<DepositReceived>() | ("POST", "HTTP"),
-        It<DepositoProcessingWorker>() < It<DepositReceived>() | ("POST", "HTTP"),
-        It<DepositoProcessingWorker>() > It<IDepositRepository>(),
+        this["Customer"] > this["WebApp"] | ("Uses", "HTTPS"),
+        this["Customer"] > this["Spa"] | ("Uses", "HTTPS"),
+        this["Customer"] > this["MobileApp"] | "Uses",
         
-        It("Customer") > It("C4Bank.Account") | "register",
-        It("C4Bank.Account") > It<RegisteredAccount>() | "produces",
-        It<SynchronizeNewAccountConsumer>() > It<RegisteredAccount>() | "consumes",
-        It<SynchronizeNewAccountConsumer>() > It<IAccountRepository>(),
-        It<DepositoProcessingWorker>() > It<IAccountRepository>(),
-    };   
+        this["WebApp"] > this["Spa"] | "Delivers" | Position.Neighbor,
+        this["Spa"] > this["BackendApi"] | ("Uses", "async, JSON/HTTPS"),
+        this["MobileApp"] > this["BackendApi"] | ("Uses", "async, JSON/HTTPS"),
+        this["SqlDatabase"] < this["BackendApi"] | ("Uses", "async, JSON/HTTPS") | Position.Neighbor,
+        this["RabbitMQ"] < this["BackendApi"] | ("Uses", "async, JSON"),
+        
+        this["Customer"] < this["MailSystem"] | "Sends e-mails to",
+        this["MailSystem"] < this["BackendApi"] | ("Sends e-mails using", "sync, SMTP"),
+        this["BackendApi"] > this["BankingSystem"] | ("Uses", "sync/async, XML/HTTPS") | Position.Neighbor
+    };
 }
 ```
+The following code shows how to compile the diagram:
+
+```c#
 
 There are two strategies for compiling diagrams in your project: self-compiling and using the `C4SCLI` tool. 
 
 #### a) self-compiling approach: 
 
 ```c#
-internal static class Program
-{
-    private static void Main()
-    {
-        var diagrams = new[]
-        {
-            new ContainerDiagram().Build(),
-        };
-        
-        new PlantumlSession()
-            .UseDiagramImageBuilder()
-            .UseDiagramSvgImageBuilder()
-            .Export(diagrams);
-    }
-}
-```
-<small>see the complete code [here](./samples/Basic/C4Sharp.Sample/Program.cs)</small>
+using C4Sharp.Diagrams;
+using C4Sharp.Diagrams.Plantuml;
+using C4Sharp.Diagrams.Themes;
+using ModelDiagrams.Diagrams;
 
-#### b) Using the C4SCLI tool:
+var diagrams = new DiagramBuilder[]
+{
+    new ContextDiagramSample(),
+    new ComponentDiagramSample(),
+    new ContainerDiagramSample(),
+    new EnterpriseDiagramSample(),
+    new SequenceDiagramSample(),
+    new DeploymentDiagramSample()
+};
+
+var path = Path.Combine("..", "..", "..", "..", "..", "docs", "images");
+        
+new PlantumlContext()
+    .UseDiagramImageBuilder()
+    .Export(path, diagrams, new DefaultTheme());
+```
+
+The result of the previous code is the following diagram:
+![img](./docs/images/container-diagram-for-internet-banking-system-c4container.png)
+
+### Using the C4SCLI tool:
 
 > [!TIP]\
 > The `C4SCLI` can be used in DevOps pipelines, removing the need to manually compile diagrams. For this, install `C4SCLI` tool and execute de the following command:
 ```shell
 $ c4scli build <solution path> [-o <output path>]
 ```
-see the following sample
 
-```bash
-$ mkdir assets
-$ c4scli build /src/c4sharp.sln -o /c4
-... 
+### Customizing the diagram
 
-C4 diagram PNG files
-C4 diagram generated: file:////c4/internet-banking-system-api-application-c4component.png
+Themes are used to customize the diagram. The following code shows how to use the `ParadisoTheme` theme to compile the diagram:
 
-C4 diagram SVG files
-C4 diagram generated: file:////c4/internet-banking-system-api-application-c4component.svg
-
-C4 diagram MD files
-C4 diagram generated: file:////c4/internet-banking-system-api-application-c4component.mermaid.md
-
-C4 diagram PUML files
-C4 diagram generated: file:////c4/internet-banking-system-api-application-c4component.puml
+```c#
+new PlantumlContext()
+    .UseDiagramImageBuilder()
+    .Export(path, diagrams, new ParadisoTheme());
 ```
 
->[!WARNING]
-> only compatible with projects using c4sharp version 5.0+
+The result of the previous code is the following diagram:
+![img](./docs/images/container-diagram-for-internet-banking-system-v2-c4container.png)
 
-The previous steps will result in the following image:
 
-![img](./docs/images/c4bank-deposit-area-c4container.png)
-
-You can customize the diagram by implementing the SetStyle() method, as in the following example:
+Using the `C4S` library, you can customize the diagram by implementing the SetStyle() method, as in the following example:
 
 ```c#
 protected override IElementStyle? SetStyle()
@@ -182,8 +196,6 @@ Rel_Back(customer, MailSystem, "Sends e-mails to")
 Rel(BankingSystem, MailSystem, "Sends e-mails", "SMTP")
 Rel(BankingSystem, Mainframe, "uses")
 ```
-
-See the complete code [here](./docs/system-enterprise-diagram-for-internet-banking-system-c4context.mermaid.md).
 
 
 # Learn

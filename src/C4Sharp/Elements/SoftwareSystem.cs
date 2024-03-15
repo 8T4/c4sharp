@@ -25,7 +25,15 @@ public sealed record SoftwareSystem(string Alias, string Label) : Structure(Alia
     }  
     
     public static SoftwareSystem operator |(SoftwareSystem a, Boundary boundary) => a with{ Boundary = boundary};
-    public static SoftwareSystem operator |(SoftwareSystem a, (string alias, string label) b) => new (b.alias, b.label);
-    public static SoftwareSystem operator |(SoftwareSystem a, (string alias, string label, string description) b) => new (b.alias, b.label, b.description);
+    
+    public static SoftwareSystem operator |(SoftwareSystem a, (string alias, string label) b) => new (b.alias, b.label)
+    {
+        Boundary = a.Boundary
+    };
+    
+    public static SoftwareSystem operator |(SoftwareSystem a, (string alias, string label, string description) b) => new (b.alias, b.label, b.description)
+    {
+        Boundary = a.Boundary
+    };
     
 }
