@@ -48,6 +48,9 @@ public enum ContainerType
 
     [Description("Database")]
     Database,
+    
+    [Description("Pipeline")]
+    Pipeline,
 
     [Description("")]
     None
