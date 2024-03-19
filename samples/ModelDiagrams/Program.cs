@@ -19,4 +19,5 @@ var path = Path.Combine("..", "..", "..", "..", "..", "docs", "images");
         
 new PlantumlContext()
     .UseDiagramImageBuilder()
+    .UseDiagramSvgImageBuilder()
     .Export(path, diagrams, new ParadisoTheme());
