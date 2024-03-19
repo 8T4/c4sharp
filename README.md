@@ -168,7 +168,7 @@ new PlantumlContext()
 ```
 
 The result of the previous code is the following diagram:
-![img](./docs/images/container-diagram-for-internet-banking-system-c4container.png)
+![img](./docs/images/container-diagram-for-internet-banking-system-c4container.svg)
 
 #### Using the C4SCLI tool:
 
@@ -189,7 +189,7 @@ new PlantumlContext()
 ```
 
 The result of the previous code is the following diagram:
-![img](./docs/images/container-diagram-for-internet-banking-system-v2-c4container.png)
+![img](./docs/images/container-diagram-for-internet-banking-system-v2-c4container.svg)
 
 #### Creating a custom theme
 
