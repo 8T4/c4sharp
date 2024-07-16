@@ -14,9 +14,11 @@ public class ComponentDiagramSample : ComponentDiagram
 {
     protected override string Title => "Internet Banking System API Application";
     protected override DiagramLayout FlowVisualization => DiagramLayout.LeftRight;
+    protected override bool ShowLegend => true;
 
     protected override IEnumerable<Structure> Structures => new Structure[]
     {
+        new Api<PersonController>(),
         MobileApp,
         SqlDatabase,
         Mainframe,
