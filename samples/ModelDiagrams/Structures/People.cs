@@ -5,12 +5,22 @@ namespace ModelDiagrams.Structures;
 
 public static class People
 {
-    public static Person Customer => new ("customer", "Personal Banking Customer", 
-        "A customer of the bank, with personal bank accounts.", Boundary.External);
+    public static Person Customer => new(
+        alias: "customer",
+        label: "Personal Banking Customer",
+        description: "A customer of the bank, with personal bank accounts.",
+        boundary: Boundary.External
+    );
 
-    public static Person InternalCustomer => new Person("internalcustomer", "Personal Banking Customer", 
-        "An customer of the bank, with personal bank accounts.");
+    public static Person InternalCustomer => new(
+        alias: "internalcustomer",
+        label: "Personal Banking Customer",
+        description: "An customer of the bank, with personal bank accounts."
+    );
 
-    public static Person Manager => new ("manager", "Manager Banking Customer", 
-        "A manager of the bank, with personal bank accounts.");
+    public static Person Manager => new(
+        alias: "manager",
+        label: "Manager Banking Customer",
+        description: "A manager of the bank, with personal bank accounts."
+    );
 }

@@ -7,8 +7,8 @@ on:
     branches: [ main ]
     
 env:
-  VERSION: 7.0.${{ github.run_number }}
-  CLI_VERSION: 3.0.${{ github.run_number }}
+  VERSION: 8.0.${{ github.run_number }}
+  CLI_VERSION: 4.0.${{ github.run_number }}
   NUGET_INDEX: https://api.nuget.org/v3/index.json
   BUILD_TYPE: Release 
 
@@ -25,30 +25,22 @@ jobs:
       
     - name: Release CLI version
       run: echo ${{env.CLI_VERSION}}      
-    
-    - name: Setup .NET Core 6.0.x
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 6.0.x
-        
-    - name: Setup .NET Core 7.0.x
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 7.0.x        
         
     - name: Setup .NET Core 8.0.x
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 8.0.x
+        
+    - name: Setup .NET Core 9.0.x
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 9.0.x        
     
     - name: Restore dependencies
       run: dotnet restore
       
     - name: Build
       run: dotnet build --no-restore --configuration Release
-      
-#    - name: Integrated Tests
-#      run: dotnet test ./tests/**/*.IntegratedTests.csproj --no-restore      
 
     - name: Publish DLL Artifact
       if: github.ref == 'refs/heads/main'

@@ -6,7 +6,7 @@ namespace C4Sharp.Commons;
 /// Indentation methods
 /// </summary>
 [ExcludeFromCodeCoverage]
-internal static class TabIndentation
+internal readonly record struct TabIndentation
 {
     /// <summary>
     /// Default indentation.

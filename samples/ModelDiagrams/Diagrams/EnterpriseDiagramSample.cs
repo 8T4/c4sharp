@@ -13,8 +13,8 @@ public class EnterpriseDiagramSample: ContextDiagram
 {
     protected override string Title => "System Enterprise diagram for Internet Banking System";
 
-    protected override IEnumerable<Structure> Structures => new Structure[]
-    {
+    protected override IEnumerable<Structure> Structures =>
+    [
         Customer,
         Bound("enterprise.boundary", "Domain A",
             BankingSystem,
@@ -23,15 +23,15 @@ public class EnterpriseDiagramSample: ContextDiagram
         ),
         Mainframe,
         MailSystem
-    };
+    ];
 
-    protected override IEnumerable<Relationship> Relationships => new[]
-    {
+    protected override IEnumerable<Relationship> Relationships =>
+    [
         Customer > BankingSystem,
         InternalCustomer > BankingSystem,
         Manager > BankingSystem,
         Customer < MailSystem | "Sends e-mails to",
         BankingSystem > MailSystem | ("Sends e-mails", "SMTP") | Neighbor,
-        BankingSystem > Mainframe,
-    };
+        BankingSystem > Mainframe
+    ];
 }

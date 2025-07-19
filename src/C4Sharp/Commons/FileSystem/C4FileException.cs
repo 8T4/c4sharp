@@ -5,7 +5,6 @@ namespace C4Sharp.Commons.FileSystem;
 /// <summary>
 /// C4File Exception
 /// </summary>
-[Serializable]
 [ExcludeFromCodeCoverage]
 public class C4FileException : Exception
 {
@@ -25,16 +24,4 @@ public class C4FileException : Exception
     public C4FileException(string message, Exception innerException) : base(message, innerException)
     {
     }
-
-
-#if NET6
-    /// <summary>
-    /// Constructor
-    /// </summary>
-    /// <param name="info"></param>
-    /// <param name="context"></param>
-    public C4FileException([NotNull] SerializationInfo info, StreamingContext context) : base(info, context)
-    {
-    }
-#endif
 }

@@ -1,8 +1,5 @@
 using System.Text;
-using C4Sharp.Commons.FileSystem;
 using C4Sharp.Elements.Relationships;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace C4Sharp.Diagrams.Plantuml;
 
@@ -16,29 +13,19 @@ public static partial class PlantumlDiagram
     /// </summary>
     /// <param name="diagram"></param>
     /// <returns></returns>
-    public static string ToPumlString(this Diagram diagram) => ToPumlString(diagram, false);
-
-
-    /// <summary>
-    /// Create PUML content from Diagram
-    /// </summary>
-    /// <param name="diagram"></param>
-    /// <param name="useStandardLibrary"></param>
-    /// <returns></returns>
-    public static string ToPumlString(this Diagram diagram, bool useStandardLibrary) => new StringBuilder()
-        .BuildHeader(diagram, useStandardLibrary)
+    public static string ToPumlString(this Diagram diagram) => new StringBuilder()
+        .BuildHeader(diagram)
         .BuildBody(diagram)
         .BuildFooter(diagram)
         .ToString();
 
-    private static StringBuilder BuildHeader(this StringBuilder stream, Diagram diagram, bool useStandardLibrary)
+    private static StringBuilder BuildHeader(this StringBuilder stream, Diagram diagram)
     {
-        var path = GetPumlFilePath(diagram, useStandardLibrary);
         stream.AppendLine($"@startuml {diagram.Slug()}");
-        stream.AppendLine($"!include {path}");
+        stream.AppendLine($"!include <C4/{diagram.Name}>");
         stream.AppendLine();
 
-        BuildStyleSession(stream, diagram);
+        stream.BuildStyleSession(diagram);
 
         if (diagram.LayoutWithLegend && !diagram.ShowLegend)
         {
@@ -68,14 +55,12 @@ public static partial class PlantumlDiagram
         return stream;
     }
 
-    private static StringBuilder BuildStyleSession(this StringBuilder stream, Diagram diagram)
+    private static void BuildStyleSession(this StringBuilder stream, Diagram diagram)
     {
         diagram.Tags?.Items.ToList().ForEach(x => stream.AppendLine(x.Value));
         diagram.Style?.Items.ToList().ForEach(x => stream.AppendLine(x.Value));
         diagram.BoundaryStyle?.Items.ToList().ForEach(x => stream.AppendLine(x.Value));
         diagram.RelTags?.Items.ToList().ForEach(x => stream.AppendLine(x.Value));
-
-        return stream;
     }
 
     private static StringBuilder BuildBody(this StringBuilder stream, Diagram diagram)
@@ -107,16 +92,6 @@ public static partial class PlantumlDiagram
 
         return stream;
     }
-
-    private static string GetPumlFilePath(this Diagram diagram, bool useUrlInclude)
-    {
-        const string standardLibraryBaseUrl = "https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master";
-        var pumlFileName = $"{diagram.Name}.puml";
-
-        return useUrlInclude
-            ? $"{standardLibraryBaseUrl}/{pumlFileName}"
-            : Path.Join(C4SharpDirectory.ResourcesFolderName, pumlFileName);
-    }
 }
 
 /// <summary>
@@ -128,7 +103,6 @@ public static partial class PlantumlDiagram
     /// Create mermaid based on puml content from Diagram
     /// </summary>
     /// <param name="diagram"></param>
-    /// <param name="useStandardLibrary"></param>
     /// <returns></returns>
     public static string ToMermaidString(this Diagram diagram) => new StringBuilder()
         .AppendLine("```mermaid")

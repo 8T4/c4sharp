@@ -9,8 +9,4 @@ internal static class C4SharpDirectory
     /// Default Directory Name
     /// </summary>
     public static string DirectoryName => "c4";
-    /// <summary>
-    /// Default Resource Folder Name
-    /// </summary>
-    public static string ResourcesFolderName => Path.Join("..", ".c4s");
 }
