@@ -1,6 +1,6 @@
 namespace C4Sharp.Diagrams;
 
-public static class DiagramConstants
+public readonly struct DiagramConstants
 {
     public const string Component = "C4_Component";
     public const string Container = "C4_Container";

@@ -6,9 +6,9 @@ namespace C4Sharp.Diagrams.Builders;
 
 public abstract class ComponentDiagram: DiagramBuilder
 {
-    protected override string Title { get; } = "Component Diagram";
+    protected override string Title => "Component Diagram";
     protected override DiagramType DiagramType { get; } = DiagramType.Component;
     
-    protected ContainerBoundary Bound(string tag, string name, params Component[] components) 
+    protected static ContainerBoundary Bound(string tag, string name, params Component[] components) 
         => new(tag, name, components);
 }

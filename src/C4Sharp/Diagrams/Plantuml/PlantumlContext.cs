@@ -8,7 +8,6 @@ namespace C4Sharp.Diagrams.Plantuml;
 
 public partial class PlantumlContext : IDisposable
 {
-    private bool StandardLibraryBaseUrl { get; set; }
     private bool GenerateDiagramImages { get; set; }
     private bool GenerateDiagramSvgImages { get; set; }
     private bool GenerateMermaidFiles { get; set; }
@@ -21,7 +20,6 @@ public partial class PlantumlContext : IDisposable
     public PlantumlContext()
     {
         PlantumlJarPath = null;
-        StandardLibraryBaseUrl = false;
         GenerateDiagramImages = false;
         GenerateDiagramSvgImages = false;
         GenerateMermaidFiles = false;
@@ -33,19 +31,6 @@ public partial class PlantumlContext : IDisposable
             CreateNoWindow = true,
             WindowStyle = ProcessWindowStyle.Hidden,
         };
-    }
-
-    /// <summary>
-    /// The C4Sharp has embedded the current version of C4-PluntUML.
-    /// But, if you want to use the C4-PlantUML up-to-date version from their repo,
-    /// use this method
-    /// </summary>
-    /// <returns>PlantumlSession instance</returns>
-    [Obsolete("Now, we are suporting just embended version")]
-    public PlantumlContext UseStandardLibraryBaseUrl()
-    {
-        StandardLibraryBaseUrl = false;
-        return this;
     }
 
     /// <summary>
@@ -169,37 +154,34 @@ public partial class PlantumlContext
     /// </summary>
     /// <param name="diagram">C4 Diagram</param>
     /// <param name="path">Output path</param>
-    private string SavePumlFiles(Diagram diagram, string path)
+    private void SavePumlFiles(Diagram diagram, string path)
     {
         try
         {
             var filePath = Path.Combine(path, diagram.PumlFileName());
             Directory.CreateDirectory(path);
-            File.WriteAllText(filePath, diagram.ToPumlString(StandardLibraryBaseUrl));
-            return filePath;
+            File.WriteAllText(filePath, diagram.ToPumlString());
         }
         catch (Exception e)
         {
             throw new PlantumlException($"{nameof(PlantumlException)}: Could not save puml file.", e);
         }
     }
-    
+
     /// <summary>
     /// Save puml file. It's creates path if non exists.
     /// </summary>
     /// <param name="diagram">C4 Diagram</param>
     /// <param name="path">Output path</param>
-    private string SaveMermaidFiles(Diagram diagram, string path)
+    private void SaveMermaidFiles(Diagram diagram, string path)
     {
-        if (!GenerateMermaidFiles || diagram.Type.Value == DiagramConstants.Deployment)
-            return string.Empty;
-        
+        if (!GenerateMermaidFiles || diagram.Type.Value == DiagramConstants.Deployment) return;
+
         try
         {
             var filePath = Path.Combine(path, diagram.MermaidFileName());
             Directory.CreateDirectory(path);
             File.WriteAllText(filePath, diagram.ToMermaidString());
-            return filePath;
         }
         catch (Exception e)
         {
@@ -217,7 +199,7 @@ public partial class PlantumlContext
     {
         try
         {
-            PlantumlResources.LoadResources(path);
+            //PlantumlResources.LoadResources(path);
             PlantumlJarPath ??= PlantumlResources.LoadPlantumlJar();
 
             var directory = new DirectoryInfo(path).FullName;
@@ -229,7 +211,7 @@ public partial class PlantumlContext
 
             var results = new StringBuilder();
 
-            var jar = CalculateJarCommand(StandardLibraryBaseUrl, generatedImageFormat, directory);
+            var jar = CalculateJarCommand(generatedImageFormat, directory);
 
             ProcessInfo.Arguments = $"{jar} \"{path}\"";
             ProcessInfo.RedirectStandardOutput = true;
@@ -248,17 +230,14 @@ public partial class PlantumlContext
         }
     }
 
-    private string CalculateJarCommand(bool useStandardLibrary, string generatedImageFormat, string directory)
+    private string CalculateJarCommand(string generatedImageFormat, string directory)
     {
-        const string includeLocalFilesArg = "-DRELATIVE_INCLUDE=\".\"";
-
-        var resourcesOriginArg = useStandardLibrary ? string.Empty : includeLocalFilesArg;
         var imageFormatOutputArg = string.IsNullOrWhiteSpace(generatedImageFormat)
             ? string.Empty
             : $"-t{generatedImageFormat}";
 
         return
-            $"-jar \"{PlantumlJarPath}\" {resourcesOriginArg} {imageFormatOutputArg} -Playout=smetana -verbose -o \"{directory}\" -charset UTF-8";
+            $"-jar \"{PlantumlJarPath}\" {imageFormatOutputArg} -Playout=smetana -verbose -o \"{directory}\" -charset UTF-8";
     }
 
     /// <summary>

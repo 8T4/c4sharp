@@ -3,7 +3,6 @@ using C4Sharp.Diagrams.Builders;
 using C4Sharp.Elements;
 using C4Sharp.Elements.Containers;
 using C4Sharp.Elements.Relationships;
-using static C4Sharp.Elements.Relationships.Boundary;
 using static ModelDiagrams.Structures.Systems;
 using static ModelDiagrams.Structures.Containers;
 using static ModelDiagrams.Structures.Components;
@@ -16,8 +15,8 @@ public class ComponentDiagramSample : ComponentDiagram
     protected override DiagramLayout FlowVisualization => DiagramLayout.LeftRight;
     protected override bool ShowLegend => true;
 
-    protected override IEnumerable<Structure> Structures => new Structure[]
-    {
+    protected override IEnumerable<Structure> Structures =>
+    [
         new Api<PersonController>(),
         MobileApp,
         SqlDatabase,
@@ -27,19 +26,18 @@ public class ComponentDiagramSample : ComponentDiagram
             Accounts,
             Security,
             MainframeFacade
-        ),
-    };
+        )
+    ];
 
-    protected override IEnumerable<Relationship> Relationships => new Relationship[]
-    {
+    protected override IEnumerable<Relationship> Relationships =>
+    [
         Sign > Security,
         Accounts > MainframeFacade,
         Security > SqlDatabase | ("Read & write to", "JDBC"),
         MainframeFacade > Mainframe | ("Uses", "XML/HTTPS"),
-
         SpaApp > Sign | ("Uses", "JSON/HTTPS"),
         SpaApp > Accounts | ("Uses", "JSON/HTTPS"),
         MobileApp > Sign | ("Uses", "JSON/HTTPS"),
         MobileApp > Accounts | ("Uses", "JSON/HTTPS")
-    };
+    ];
 }

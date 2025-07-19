@@ -16,66 +16,68 @@ namespace C4Sharp.Elements;
 public record Component(string Alias, string Label) : Structure(Alias, Label)
 {
     public string? Technology { get; init; }
-    public ComponentType ComponentType { get; init; } = ComponentType.None;
+    public ComponentType Type { get; init; } = ComponentType.None;
     public static Component None => new("none", "None");
-    
-    public Component(StructureIdentity alias, string label): this(alias.Value, label)
-    {
-        ComponentType = ComponentType.None;
-    }    
 
-    public Component(string alias, string label, string technology): this(alias, label)
+    public Component(StructureIdentity alias, string label) : this(alias.Value, label)
+    {
+        Type = ComponentType.None;
+    }
+
+    public Component(string alias, string label, string technology) : this(alias, label)
     {
         Technology = technology;
-    }    
-
-    public Component(string alias, string label, ComponentType componentType, string technology): this(alias, label, technology)
-    {
-        ComponentType = componentType;
     }
-    
-    public Component(string alias, string label, string technology, string description): this(alias, label)
+
+    public Component(string alias, string label, ComponentType type, string technology) : this(alias, label, technology)
+    {
+        Type = type;
+    }
+
+    public Component(string alias, string label, string technology, string description) : this(alias, label)
     {
         Technology = technology;
         Description = description;
     }
-    
-    public Component(string alias, string label, ComponentType componentType, string technology, string description): this(alias, label, technology, description)
+
+    public Component(string alias, string label, ComponentType type, string technology, string description) : this(alias, label, technology, description)
     {
-        ComponentType = componentType;
-    } 
-    
-    public static Component operator |(Component a, Boundary boundary) => a with{ Boundary = boundary};
-    public static Component operator |(Component a, ComponentType b) => a with{ ComponentType = b };
-    public static Component operator |(Component a, (string alias, string label) b) => new (b.alias, b.label)
+        Type = type;
+    }
+
+    public static Component operator |(Component a, Boundary boundary) => a with { Boundary = boundary };
+    public static Component operator |(Component a, ComponentType b) => a with { Type = b };
+
+    public static Component operator |(Component a, (string alias, string label) b) => new(b.alias, b.label)
     {
         Boundary = a.Boundary,
-        ComponentType = a.ComponentType
+        Type = a.Type
     };
-    public static Component operator |(Component a, (string alias, string label, string technology) b) => new Component(b.alias, b.label, b.technology)
+
+    public static Component operator |(Component a, (string alias, string label, string technology) b) => new (b.alias, b.label, b.technology)
     {
         Boundary = a.Boundary,
-        ComponentType = a.ComponentType
+        Type = a.Type
     };
-    public static Component operator |(Component a, (string alias, string label, string technology , string description) b) => new (b.alias, b.label, b.technology, b.description)
+
+    public static Component operator |(Component a, (string alias, string label, string technology, string description) b) => new(b.alias, b.label, b.technology, b.description)
     {
         Boundary = a.Boundary,
-        ComponentType = a.ComponentType
-    };   
-    
+        Type = a.Type
+    };
 }
 
 public record Component<T> : Component
 {
-    public Component():base(StructureIdentity.New<T>(), typeof(T).ToNamingConvention())
+    public Component() : base(StructureIdentity.New<T>(), typeof(T).ToNamingConvention())
     {
     }
 
-    public Component(string technology): base(StructureIdentity.New<T>().Value, typeof(T).ToNamingConvention(), technology)
+    public Component(string technology) : base(StructureIdentity.New<T>().Value, typeof(T).ToNamingConvention(), technology)
     {
     }
-    
-    public Component(string technology, string description): base(StructureIdentity.New<T>().Value, typeof(T).ToNamingConvention(), technology, description)
+
+    public Component(string technology, string description) : base(StructureIdentity.New<T>().Value, typeof(T).ToNamingConvention(), technology, description)
     {
-    }     
+    }
 }

@@ -1,20 +1,24 @@
 namespace C4Sharp.Diagrams.Plantuml.Constants;
 
-public class BorderStyle
+public readonly record struct BorderStyle(string Value)
 {
     /// <summary>
     /// This call returns the name of the dashed line and can be used as ?lineStyle argument.
     /// </summary>
-    public static BorderStyle SolidLine => new() { Value = "SolidLine()" };
+    public static BorderStyle SolidLine => new("SolidLine()");
+
     /// <summary>
     /// This call returns the name of the dotted line and can be used as ?lineStyle argument.
     /// </summary>
-    public static BorderStyle DashedLine => new() { Value = "DashedLine()" };
+    public static BorderStyle DashedLine => new("DashedLine()");
+
     /// <summary>
     /// This call returns the name of the bold line and can be used as ?lineStyle argument.
     /// </summary>
-    public static BorderStyle DottedLine => new() { Value = "DottedLine()" };
-    public static BorderStyle BoldLine => new() { Value = "BoldLine()" };
+    public static BorderStyle DottedLine => new("DottedLine()");
 
-    public string Value { get; private init; } = string.Empty;    
+    /// <summary>
+    /// This call returns the name of the bold line and can be used as ?lineStyle argument.
+    /// </summary>
+    public static BorderStyle BoldLine => new("BoldLine()");
 }

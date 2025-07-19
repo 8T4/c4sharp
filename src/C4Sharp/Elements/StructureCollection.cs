@@ -9,7 +9,7 @@ internal class StructureCollection
     public void AddRange(IEnumerable<Structure> structures)
     {
         var enumerable = structures as Structure[] ?? structures.ToArray();
-        if (!enumerable.Any())
+        if (enumerable.Length == 0)
         {
             return;
         }
