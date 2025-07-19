@@ -1,6 +1,6 @@
 namespace C4Sharp.Diagrams.Plantuml.Constants;
 
-public readonly record struct ElementName(string Name)
+public record struct ElementName(string Name)
 {
     public static ElementName Person => new("person");
     public static ElementName ExternalPerson => new("external_person");
