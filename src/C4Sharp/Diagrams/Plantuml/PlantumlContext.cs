@@ -199,7 +199,6 @@ public partial class PlantumlContext
     {
         try
         {
-            //PlantumlResources.LoadResources(path);
             PlantumlJarPath ??= PlantumlResources.LoadPlantumlJar();
 
             var directory = new DirectoryInfo(path).FullName;

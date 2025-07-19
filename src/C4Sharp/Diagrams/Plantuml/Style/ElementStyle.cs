@@ -26,7 +26,6 @@ public class ElementStyle : IElementStyle
     {
         string?[] styles =
         [
-            $"$elementName={elementName.Name}",
             bgColor is not null ? $"$bgColor={bgColor}" : null,
             fontColor is not null ? $"$fontColor={fontColor}" : null,
             borderColor is not null ? $"$borderColor={borderColor}" : null,

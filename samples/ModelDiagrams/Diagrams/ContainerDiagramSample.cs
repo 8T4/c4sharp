@@ -30,7 +30,7 @@ public class ContainerDiagramSample : ContainerDiagram
         ),
 
         Bound("c1", "Internet Banking",
-            Container.Undefined | (
+            Container.None | (
                 type: WebApplication,
                 alias: "WebApp",
                 label: "WebApp",

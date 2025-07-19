@@ -24,7 +24,6 @@ public record Container : Structure
     public Container this[string instanceName] => GetInstance(instanceName);
     
     public static Container None => new("None", "None", ContainerType.None, "None");
-    public static Container Undefined => new("None", "None", ContainerType.None, "None");
 
     public Container(string alias, string label) 
         : base(alias, label)
