@@ -14,16 +14,16 @@ public class ContextDiagramSample : ContextDiagram
     protected override IEnumerable<Structure> Structures => new Structure[]
     {
         Customer,
-        BankingSystem,
-        Mainframe,
-        MailSystem
+        BankingSystem//,
+        //Mainframe,
+        //MailSystem
     };
 
     protected override IEnumerable<Relationship> Relationships => new[]
     {
-        Customer > BankingSystem,
-        Customer < MailSystem | "Sends e-mails to",
-        BankingSystem > MailSystem | ("Sends e-mails", "SMTP") | Neighbor,
-        BankingSystem > Mainframe
+        Customer > BankingSystem//,
+        //Customer < MailSystem | "Sends e-mails to",
+        //BankingSystem > MailSystem | ("Sends e-mails", "SMTP") | Neighbor,
+        //BankingSystem > Mainframe
     };
 }

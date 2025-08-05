@@ -1,0 +1,145 @@
+{
+  "title": "Healthcare Solution Architecture",
+  "slug": "healthcare-solution-architecture",
+  "structures": [
+    {
+      "alias": "member_portal",
+      "label": "Member Portal",
+      "description": "Cloud-native frontend for member interaction. Benefits: Personalized engagement, scalable access, secure communication. Tools: React/Angular/Vue.js, Azure App Service/AWS Amplify/GCP Firebase Hosting, OAuth2/OpenID Connect, Azure AD B2C/AWS Cognito.",
+      "type": "SoftwareSystem"
+    },
+    {
+      "alias": "integration_layer",
+      "label": "Integration Layer", 
+      "description": "Connects cloud portal to on-prem systems ABC and XYZ. Benefits: Real-time data sync, secure API access, ETL capabilities. Tools: Azure API Management/AWS API Gateway, Apache NiFi/Azure Data Factory/Talend, Kafka/Azure Event Grid/AWS EventBridge, MuleSoft/Boomi/WSO2.",
+      "type": "SoftwareSystem"
+    },
+    {
+      "alias": "service_orchestration",
+      "label": "Service Orchestration Layer",
+      "description": "Coordinates internal microservices and workflows. Benefits: Efficient service communication, modularity, fault isolation. Tools: Kubernetes/Docker Swarm, Istio/Linkerd, Camunda/Temporal/Apache Airflow.",
+      "type": "SoftwareSystem"
+    },
+    {
+      "alias": "ai_decision_engine",
+      "label": "AI Decision Support Engine",
+      "description": "Provides predictive insights and care recommendations. Benefits: Improved targeting, proactive outreach, personalized care. Tools: Azure Machine Learning/AWS SageMaker/Google Vertex AI, Python (scikit-learn, TensorFlow, PyTorch), MLflow/DVC.",
+      "type": "SoftwareSystem"
+    },
+    {
+      "alias": "care_coordination",
+      "label": "Care Coordination Workflow Engine",
+      "description": "Automates case management and alerts. Benefits: Reduced manual effort, faster response, better resource allocation. Tools: Salesforce Health Cloud/Microsoft Dynamics 365/ServiceNow Health IT, Custom microservices with workflow logic, BPMN engines like Camunda or Zeebe.",
+      "type": "SoftwareSystem"
+    },
+    {
+      "alias": "data_lake",
+      "label": "Data Lake & Analytics",
+      "description": "Centralized data storage and reporting. Benefits: Historical analysis, model training, compliance reporting. Tools: Azure Data Lake/AWS S3/Google Cloud Storage, Snowflake/BigQuery/Redshift, Power BI/Tableau/Looker.",
+      "type": "SoftwareSystem"
+    },
+    {
+      "alias": "security_compliance",
+      "label": "Security & Compliance Layer",
+      "description": "Ensures secure data flow and regulatory alignment. Benefits: POPIA/GDPR compliance, encryption, access control. Tools: Azure Key Vault/AWS KMS/HashiCorp Vault, TLS 1.2+/1.3 AES-256 encryption, SIEM tools like Splunk Sentinel, Compliance frameworks POPIA GDPR HIPAA.",
+      "type": "SoftwareSystem"
+    },
+    {
+      "alias": "monitoring_scalability",
+      "label": "Monitoring & Scalability",
+      "description": "Tracks system health and performance. Benefits: Autoscaling, uptime assurance, proactive issue detection. Tools: Prometheus + Grafana/Azure Monitor/CloudWatch, Elastic Stack (ELK)/Fluentd, Auto-scaling groups/Kubernetes HPA.",
+      "type": "SoftwareSystem"
+    },
+    {
+      "alias": "change_management",
+      "label": "Change Management",
+      "description": "Supports adoption and stakeholder alignment. Benefits: Training, feedback loops, smoother transition to digital workflows. Tools: Prosci ADKAR/Kotter's 8-Step Model, Confluence/SharePoint/LMS platforms, Feedback tools Microsoft Forms SurveyMonkey.",
+      "type": "SoftwareSystem"
+    },
+    {
+      "alias": "healthcare_member",
+      "label": "Healthcare Member",
+      "description": "End user accessing healthcare services through the member portal. Receives personalized care recommendations and manages health information.",
+      "type": "Person"
+    },
+    {
+      "alias": "care_manager",
+      "label": "Care Manager",
+      "description": "Healthcare professional managing member care coordination. Uses AI insights and workflow automation for proactive care management.",
+      "type": "Person"
+    },
+    {
+      "alias": "system_admin",
+      "label": "System Administrator",
+      "description": "Technical administrator responsible for system monitoring, security compliance, and change management processes.",
+      "type": "Person"
+    }
+  ],
+  "relationships": [
+    {
+      "from": "healthcare_member",
+      "to": "member_portal",
+      "label": "Accesses healthcare services"
+    },
+    {
+      "from": "care_manager",
+      "to": "care_coordination",
+      "label": "Manages care workflows"
+    },
+    {
+      "from": "system_admin",
+      "to": "monitoring_scalability",
+      "label": "Monitors system health"
+    },
+    {
+      "from": "member_portal",
+      "to": "integration_layer",
+      "label": "Requests member data"
+    },
+    {
+      "from": "integration_layer",
+      "to": "service_orchestration",
+      "label": "Routes to microservices"
+    },
+    {
+      "from": "service_orchestration",
+      "to": "ai_decision_engine",
+      "label": "Requests AI insights"
+    },
+    {
+      "from": "service_orchestration",
+      "to": "care_coordination",
+      "label": "Triggers care workflows"
+    },
+    {
+      "from": "ai_decision_engine",
+      "to": "data_lake",
+      "label": "Accesses training data"
+    },
+    {
+      "from": "care_coordination",
+      "to": "data_lake",
+      "label": "Stores workflow metrics"
+    },
+    {
+      "from": "security_compliance",
+      "to": "member_portal",
+      "label": "Enforces security policies"
+    },
+    {
+      "from": "security_compliance",
+      "to": "integration_layer",
+      "label": "Secures API access"
+    },
+    {
+      "from": "monitoring_scalability",
+      "to": "service_orchestration",
+      "label": "Tracks microservice health"
+    },
+    {
+      "from": "change_management",
+      "to": "healthcare_member",
+      "label": "Provides training support"
+    }
+  ]
+}

@@ -8,6 +8,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="NewFolder\**" />
+      <EmbeddedResource Remove="NewFolder\**" />
+      <None Remove="NewFolder\**" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\..\src\C4Sharp\C4Sharp.csproj" />
     </ItemGroup>
 
