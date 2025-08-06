@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>C4Sharp - simple .NET superset of C4-PlantUML</Title>
         <Authors>yanjustino, leisiamedeiros</Authors>
@@ -11,12 +11,13 @@
         <RepositoryUrl>https://github.com/8T4/c4sharp</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>c4, diagrams</PackageTags>
-        <PackageVersion>7.0.0</PackageVersion>
+        <PackageVersion>8.0.0</PackageVersion>
         <PackageIconUrl>https://github.com/8T4/c4sharp/blob/main/LICENSE</PackageIconUrl>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Nullable>enable</Nullable>
+        <LangVersion>13</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
@@ -32,7 +33,7 @@
 
     <ItemGroup Label="Embedded Resource For C4 Plunt UML and Plantuml">
         <None Remove="Resources\*.puml" />
-        <None Remove="Resources\plantuml.jar" />
+        <None Remove="Resources\plantuml.jar" Label="plantuml - 1.2025.4"/>
 
         <EmbeddedResource Include="Resources\*.puml" />
         <EmbeddedResource Include="Resources\icon.png" />

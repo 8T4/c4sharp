@@ -11,19 +11,19 @@ public class ContextDiagramSample : ContextDiagram
 {
     protected override string Title => "Component diagram for Internet Banking System";
     
-    protected override IEnumerable<Structure> Structures => new Structure[]
-    {
+    protected override IEnumerable<Structure> Structures =>
+    [
         Customer,
         BankingSystem//,
         //Mainframe,
         //MailSystem
-    };
+    ];
 
     protected override IEnumerable<Relationship> Relationships => new[]
     {
-        Customer > BankingSystem//,
-        //Customer < MailSystem | "Sends e-mails to",
-        //BankingSystem > MailSystem | ("Sends e-mails", "SMTP") | Neighbor,
-        //BankingSystem > Mainframe
+        Customer > BankingSystem,
+        Customer < MailSystem | "Sends e-mails to",
+        BankingSystem > MailSystem | ("Sends e-mails", "SMTP") | Neighbor,
+        BankingSystem > Mainframe
     };
 }

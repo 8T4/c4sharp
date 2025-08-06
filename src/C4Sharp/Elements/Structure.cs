@@ -23,7 +23,7 @@ public abstract record Structure
     /// <param name="alias">Should be unique</param>
     /// <param name="label"></param>
     protected Structure(string alias, string label, string[]? tags = null) => 
-        (Alias, Label, Tags) = (alias, label, tags ?? Array.Empty<string>());
+        (Alias, Label, Tags) = (alias, label, tags ?? []);
 
     protected Structure(StructureIdentity identity, string label, string[]? tags = null) 
         : this(identity.Value, label, tags)

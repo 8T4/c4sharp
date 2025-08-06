@@ -26,6 +26,11 @@ public static class Systems
     public static SoftwareSystem PowerAutomate =>
         new("PowerAutomate", "Power Automate + PD Worker Service",
             "Fetches/imports CSV/XLS or ERA files from SharePoint/SFTP into SQL.", Boundary.External);
+    public static SoftwareSystem BankingSystem => new(
+        alias: "BankingSystem",
+        label: "Internet Banking System",
+        description: "Allows customers to view information about their bank accounts, and make payments."
+    );
 
     public static SoftwareSystem SqlDataWarehouse =>
         new("SqlDataWarehouse", "SQL Data Warehouse",

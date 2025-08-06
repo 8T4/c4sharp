@@ -8,23 +8,6 @@ internal static class PlantumlResources
     /// <summary>
     /// Load all C4_Plantuml files
     /// </summary>
-    public static void LoadResources(string path)
-    {
-        var local = string.IsNullOrEmpty(path)
-            ? Path.Join(C4SharpDirectory.DirectoryName, C4SharpDirectory.ResourcesFolderName)
-            : Path.Join(path, C4SharpDirectory.ResourcesFolderName);
-
-        LoadResource(local, "C4.puml");
-        LoadResource(local, "C4_Component.puml");
-        LoadResource(local, "C4_Container.puml");
-        LoadResource(local, "C4_Context.puml");
-        LoadResource(local, "C4_Deployment.puml");
-        LoadResource(local, "C4_Sequence.puml");
-    }
-    
-    /// <summary>
-    /// Load all C4_Plantuml files
-    /// </summary>
     public static void LoadHtmlResources(string path)
     {
         LoadResource(path, "ds.js");

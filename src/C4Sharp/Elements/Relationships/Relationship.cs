@@ -59,7 +59,7 @@ public record Relationship
         Direction = direction;
         Protocol = protocol;
         Position = position;
-        Tags = Array.Empty<string>();
+        Tags = [];
     }
     
     /// <summary>
@@ -80,7 +80,7 @@ public record Relationship
         Direction = direction;
         Protocol = protocol;
         Position = position;
-        Tags = Array.Empty<string>();
+        Tags = [];
     }    
 
     /// <summary>
@@ -107,7 +107,7 @@ public record Relationship
     }
 
     public Relationship AddTags(params string[] values) => this with { Tags = values };
-    public Relationship ClearTags() => this with { Tags = Array.Empty<string>() };
+    public Relationship ClearTags() => this with { Tags = [] };
 
     public static Relationship operator |(Relationship a, string value)
     {

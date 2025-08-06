@@ -46,3 +46,4 @@ foreach (var diagramBuilder in diagrams)
 
 Console.WriteLine($"\nC4 diagrams generated in: {outputPath}");
 Console.WriteLine("PUML files created successfully!");
+

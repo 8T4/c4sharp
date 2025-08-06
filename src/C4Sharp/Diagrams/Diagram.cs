@@ -8,38 +8,19 @@ namespace C4Sharp.Diagrams;
 /// Visualising this hierarchy of abstractions is then done by creating a collection of Context, Container,
 /// Component and (optionally) Code (e.g. UML class) diagrams. This is where the C4 model gets its name from.
 /// </summary>
-public record Diagram
+public record Diagram(DiagramType Type)
 {
-    internal string Name { get; }
-    public bool LayoutWithLegend { get; init; }
-    public bool ShowLegend { get; init; }
-    public bool LayoutAsSketch { get; init; }
+    internal string Name { get; } = Type.Value;
+    public bool LayoutWithLegend { get; init; } = true;
+    public bool ShowLegend { get; init; } = false;
+    public bool LayoutAsSketch { get; init; } = false;
     public string? Title { get; init; }
-    public string? Description { get; init; }
-    public DiagramLayout FlowVisualization { get; init; }
-    public DiagramType Type { get; }
-    public IEnumerable<Structure> Structures { get; init; }
-    public IEnumerable<Relationship> Relationships { get; init; }
+    public string? Description { get; init; } = string.Empty;
+    public DiagramLayout FlowVisualization { get; init; } = DiagramLayout.TopDown;
+    public IEnumerable<Structure> Structures { get; init; } = [];
+    public IEnumerable<Relationship> Relationships { get; init; } = [];
     public IElementStyle? Style { get; init; }
     public IBoundaryStyle? BoundaryStyle { get; init; }
     public IElementTag? Tags { get; init; }
     public IRelationshipTag? RelTags { get; init; }
-
-    /// <summary>
-    /// Constructor 
-    /// </summary>
-    /// <param name="type"></param>
-    public Diagram(DiagramType type)
-    {
-        Type = type;
-        LayoutWithLegend = true;
-        Description = string.Empty;
-        Title = string.Empty;
-        LayoutAsSketch = false;
-        ShowLegend = false;
-        FlowVisualization = DiagramLayout.TopDown;
-        Name = type.Value;
-        Structures = Array.Empty<Structure>();
-        Relationships = Array.Empty<Relationship>();
-    }
 }

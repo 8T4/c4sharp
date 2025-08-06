@@ -4,9 +4,6 @@ using C4Sharp.Elements.Relationships;
 
 namespace C4Sharp.Diagrams;
 
-[Obsolete("This class is obsolete, use DiagramBuilder instead.")]
-public abstract class DiagramBuildRunner : DiagramBuilder { }
-
 /// <summary>
 /// Base class to build diagrams
 /// </summary>

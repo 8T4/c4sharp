@@ -1,5 +1,5 @@
 @startuml internet-banking-system-api-application-c4component
-!include ../.c4s/C4_Component.puml
+!include <C4/C4_Component>
 
 UpdateElementStyle("system", $bgColor=#D4E6F1,$fontColor=#1A5276,$borderColor=#1A5276,$shadowing="false",$shape=RoundedBoxShape(),$borderStyle=SolidLine(),$borderThickness=2)
 UpdateElementStyle("external_system", $bgColor=#F8F9F9,$fontColor=#797D7F,$borderColor=#797D7F,$shadowing="false",$shape=RoundedBoxShape(),$borderStyle=SolidLine(),$borderThickness=1)
@@ -16,6 +16,7 @@ LAYOUT_LEFT_RIGHT()
 
 title Internet Banking System API Application
 
+Container(ModelDiagrams.PersonController, "Person Controller", "Api", "Person Controller")
 Container(MobileApp, "MobileApp", "Mobile:C#, Xamarin", "Provides a limited subset of the Internet banking functionality to customers via their mobile device")
 ContainerDb(Database, "SqlDatabase", "Database:SQL Database", "Stores user registration information, hashed auth credentials, access logs, etc.")
 System_Ext(Mainframe, "Mainframe Banking System", "Stores all of the core banking information about customers, accounts, transactions, etc.")
@@ -36,4 +37,6 @@ Rel(Spa, sign, "Uses", "JSON/HTTPS")
 Rel(Spa, accounts, "Uses", "JSON/HTTPS")
 Rel(MobileApp, sign, "Uses", "JSON/HTTPS")
 Rel(MobileApp, accounts, "Uses", "JSON/HTTPS")
+
+SHOW_LEGEND()
 @enduml

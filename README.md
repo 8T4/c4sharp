@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://raw.githubusercontent.com/8T4/c4sharp/main/docs/images/8t4-c4-brand-2.png" alt="logo" width='680'>  
+<img src="https://raw.githubusercontent.com/8T4/c4sharp/main/docs/images/8t4-c4-brand-2.png" alt="logo" width='128'>  
 </p>
 
 C4Sharp (`C4S`) is a .net library for building diagrams as code, based on [C4 Model](https://c4model.com/). It works
@@ -17,7 +17,7 @@ Deployment diagrams. The library generates the following diagram types: PNG, SVG
 
 ## Getting Started
 
-First, you will need the [.NET 5.0+](https://docs.microsoft.com/pt-br/dotnet/standard/net-standard)
+First, you will need the [.NET 8.0+](https://docs.microsoft.com/pt-br/dotnet/standard/net-standard)
 and [Java](https://www.java.com/en/download/) to run C4Sharp. Also, you should install the C4Sharp package in your project.
 This package is available through [Nuget Packages](https://www.nuget.org/packages/C4Sharp).
 
@@ -31,55 +31,89 @@ This package is available through [Nuget Packages](https://www.nuget.org/package
 To build a diagram using the C4S library we need to identify the structures and their relationships through a class that inherits properties directly from `DiagramBuilder` (_ContainerDiagram, ComponentDiagram, ContextDiagram, SequenceDiagram, DeploymentDiagram_). See the following example of building a container diagram:
 
 
-```C#
+```csharp
 public class ContainerDiagramSample : ContainerDiagram
 {
-    protected override string Title => "Container diagram for Internet Banking System";
+    protected override string Title => "Container diagram for Internet Banking System v2";
 
-    protected override IEnumerable<Structure> Structures => new Structure[]
-    {
-        Person.None | Boundary.External 
-                    | ("Customer", "Personal Banking Customer", "A customer of the bank, with personal bank accounts."),
-        
-        SoftwareSystem.None | ("BankingSystem", "Internet Banking System", 
-            "Allows customers to view information about their bank accounts, and make payments."),
-        
-        SoftwareSystem.None | Boundary.External 
-                            | ("MailSystem", "E-mail system", "The internal Microsoft Exchange e-mail system."),
-        
+    protected override IEnumerable<Structure> Structures =>
+    [
+        Person.None | Boundary.External | (
+            alias: "Customer",
+            label: "Personal Banking Customer",
+            description: "A customer of the bank, with personal bank accounts."
+        ),
+
+        SoftwareSystem.None | (
+            alias: "BankingSystem",
+            label: "Internet Banking System",
+            description: "Allows customers to view information about their bank accounts, and make payments."
+        ),
+
+        SoftwareSystem.None | Boundary.External | (
+            alias: "MailSystem",
+            label: "E-mail system",
+            description: "The internal Microsoft Exchange e-mail system."
+        ),
+
         Bound("c1", "Internet Banking",
-            Container.None | (WebApplication, "WebApp", "WebApp", "C#, WebApi", 
-                "Delivers the static content and the Internet banking SPA"),
-            
-            Container.None | (Spa, "Spa", "Spa", "JavaScript, Angular", 
-                "Delivers the static content and the Internet banking SPA"),
-            
-            Container.None | (Mobile, "MobileApp", "Mobile App", "C#, Xamarin", 
-                "Provides a mobile banking experience"),
-            
-            Container.None | (Database, "SqlDatabase", "SqlDatabase", "SQL Database", 
-                "Stores user registration information, hashed auth credentials, access logs, etc."),   
-            
-            Container.None | (Queue, "RabbitMQ", "RabbitMQ", "RabbitMQ", 
-                "Stores user registration information, hashed auth credentials, access logs, etc."),
-            
-            Container.None | (Api, "BackendApi", "BackendApi", "Dotnet, Docker Container", 
-                "Provides Internet banking functionality via API.")
+            Container.Undefined | (
+                type: WebApplication,
+                alias: "WebApp",
+                label: "WebApp",
+                technology: "C#, WebApi",
+                description: "Delivers the static content and the Internet banking SPA"
+            ),
+            Container.None | (
+                type: Spa,
+                alias: "Spa",
+                label: "Spa",
+                technology: "JavaScript, Angular",
+                description: "Delivers the static content and the Internet banking SPA"
+            ),
+            Container.None | (
+                type: Mobile,
+                alias: "MobileApp",
+                label: "Mobile App",
+                technology: "C#, Xamarin",
+                description: "Provides a mobile banking experience"
+            ),
+            Container.None | (
+                type: Database,
+                alias: "SqlDatabase",
+                label: "SqlDatabase",
+                technology: "SQL Database",
+                description: "Stores user registration information, hashed auth credentials, access logs, etc."
+            ),
+            Container.None | (
+                type: Queue,
+                alias: "RabbitMQ",
+                label: "RabbitMQ",
+                technology: "RabbitMQ",
+                description: "Stores user registration information, hashed auth credentials, access logs, etc."
+            ),
+            Container.None | (
+                type: Api,
+                alias: "BackendApi",
+                label: "BackendApi",
+                technology: "Dotnet, Docker Container",
+                description: "Provides Internet banking functionality via API."
+            )
         )
-    };
+    ];
 
     protected override IEnumerable<Relationship> Relationships => new[]
     {
         this["Customer"] > this["WebApp"] | ("Uses", "HTTPS"),
         this["Customer"] > this["Spa"] | ("Uses", "HTTPS"),
         this["Customer"] > this["MobileApp"] | "Uses",
-        
+
         this["WebApp"] > this["Spa"] | "Delivers" | Position.Neighbor,
         this["Spa"] > this["BackendApi"] | ("Uses", "async, JSON/HTTPS"),
         this["MobileApp"] > this["BackendApi"] | ("Uses", "async, JSON/HTTPS"),
         this["SqlDatabase"] < this["BackendApi"] | ("Uses", "async, JSON/HTTPS") | Position.Neighbor,
         this["RabbitMQ"] < this["BackendApi"] | ("Uses", "async, JSON"),
-        
+
         this["Customer"] < this["MailSystem"] | "Sends e-mails to",
         this["MailSystem"] < this["BackendApi"] | ("Sends e-mails using", "sync, SMTP"),
         this["BackendApi"] > this["BankingSystem"] | ("Uses", "sync/async, XML/HTTPS") | Position.Neighbor
@@ -93,25 +127,50 @@ you can create structures that will be used in the diagram, as in the following 
 
 ```c#
 
-//Person
-public static Person Customer => new ("customer", "Personal Banking Customer", 
-    "A customer of the bank, with personal bank accounts.", Boundary.External);
+public static class People
+{
+    public static Person Customer => new(
+        alias: "customer",
+        label: "Personal Banking Customer",
+        description: "A customer of the bank, with personal bank accounts.",
+        boundary: Boundary.External
+    );
 
-public static Person InternalCustomer => new Person("internalcustomer", "Personal Banking Customer", 
-    "An customer of the bank, with personal bank accounts.");
+    public static Person InternalCustomer => new(
+        alias: "internalcustomer",
+        label: "Personal Banking Customer",
+        description: "An customer of the bank, with personal bank accounts."
+    );
 
-public static Person Manager => new ("manager", "Manager Banking Customer", 
-    "A manager of the bank, with personal bank accounts.");
+    public static Person Manager => new(
+        alias: "manager",
+        label: "Manager Banking Customer",
+        description: "A manager of the bank, with personal bank accounts."
+    );
+}
 
-//SoftwareSystem
-public static SoftwareSystem BankingSystem => new("BankingSystem", "Internet Banking System",
-    "Allows customers to view information about their bank accounts, and make payments.");
+public static class Systems
+{
+    public static SoftwareSystem BankingSystem => new(
+        alias: "BankingSystem",
+        label: "Internet Banking System",
+        description: "Allows customers to view information about their bank accounts, and make payments."
+    );
 
-public static SoftwareSystem Mainframe => new("Mainframe", "Mainframe Banking System",
-    "Stores all of the core banking information about customers, accounts, transactions, etc.", Boundary.External);
+    public static SoftwareSystem Mainframe => new(
+        alias: "Mainframe",
+        label: "Mainframe Banking System",
+        description: "Stores all of the core banking information about customers, accounts, transactions, etc.",
+        boundary: Boundary.External
+    );
 
-public static SoftwareSystem MailSystem => new ("MailSystem", "E-mail system", 
-    "The internal Microsoft Exchange e-mail system.", Boundary.External);
+    public static SoftwareSystem MailSystem => new(
+        alias: "MailSystem",
+        label: "E-mail system",
+        description: "The internal Microsoft Exchange e-mail system.",
+        boundary: Boundary.External
+    );
+}
 
 
 ```
