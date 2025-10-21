@@ -31,7 +31,7 @@ public class ElementStyle : IElementStyle
             borderColor is not null ? $"$borderColor={borderColor}" : null,
             $"$shadowing=\"{shadowing.ToString().ToLower()}\"",
             shape is not null ? $"$shape={shape.Value}" : null,
-            borderStyle is not null ? $"$borderStyle={borderStyle.Value}" : null,
+            borderStyle is not null ? $"$borderStyle={borderStyle.Value.Value}" : null,
             borderThickness is not null ? $"$borderThickness={borderThickness}" : null
         ];
         
