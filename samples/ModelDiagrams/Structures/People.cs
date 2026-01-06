@@ -23,4 +23,12 @@ public static class People
         label: "Manager Banking Customer",
         description: "A manager of the bank, with personal bank accounts."
     );
+    public static Person FinanceTeam = new Person(
+           "Finance Team",
+           "Human actors verifying and approving exceptions");
+    public static Person MedicalAidSchemes = new Person(
+              "Medical Aid Schemes",
+              "External providers of ERA files");
+
+
 }
