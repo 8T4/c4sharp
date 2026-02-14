@@ -1,0 +1,52 @@
+@startuml pharmacy-direct---existing-container-diagram-c4container
+!include ..\.c4s\C4_Container.puml
+
+UpdateElementStyle("system", $bgColor=#D4E6F1,$fontColor=#1A5276,$borderColor=#1A5276,$shadowing="false",$shape=RoundedBoxShape(),$borderStyle=SolidLine(),$borderThickness=2)
+UpdateElementStyle("external_system", $bgColor=#F8F9F9,$fontColor=#797D7F,$borderColor=#797D7F,$shadowing="false",$shape=RoundedBoxShape(),$borderStyle=SolidLine(),$borderThickness=1)
+UpdateElementStyle("person", $bgColor=#797D7F,$fontColor=#797D7F,$borderColor=#797D7F,$shadowing="false",$shape=RoundedBoxShape(),$borderStyle=SolidLine(),$borderThickness=2)
+UpdateElementStyle("component", $bgColor=#FAE5D3,$fontColor=#CA6F1E,$borderColor=#CA6F1E,$shadowing="false",$shape=RoundedBoxShape(),$borderStyle=SolidLine(),$borderThickness=2)
+UpdateElementStyle("external_component", $bgColor=#F8F9F9,$fontColor=#797D7F,$borderColor=#797D7F,$shadowing="false",$shape=RoundedBoxShape(),$borderStyle=SolidLine(),$borderThickness=1)
+UpdateElementStyle("container", $bgColor=#EAF2F8,$fontColor=#2E86C1,$borderColor=#2E86C1,$shadowing="false",$shape=RoundedBoxShape(),$borderStyle=SolidLine(),$borderThickness=2)
+UpdateElementStyle("external_container", $bgColor=#F8F9F9,$fontColor=#797D7F,$borderColor=#797D7F,$shadowing="false",$shape=RoundedBoxShape(),$borderStyle=SolidLine(),$borderThickness=1)
+UpdateBoundaryStyle($elementName=system,$bgColor=#F8F9F9,$fontColor=#797D7F,$borderColor=#797D7F,$shadowing="false",$shape=RoundedBoxShape())
+UpdateBoundaryStyle($elementName=container,$bgColor=#F8F9F9,$fontColor=#797D7F,$borderColor=#797D7F,$shadowing="false",$shape=RoundedBoxShape())
+UpdateBoundaryStyle($elementName=enterprise,$bgColor=#F8F9F9,$fontColor=#797D7F,$borderColor=#797D7F,$shadowing="false",$shape=RoundedBoxShape())
+SHOW_PERSON_PORTRAIT()
+LAYOUT_TOP_DOWN()
+
+title Pharmacy Direct - Existing Container Diagram
+
+Person_Ext(FinanceTeam, "Finance Team (Manual)", "Human actors verifying/approving exceptions")
+System_Ext(MedicalAidSchemes, "Medical Aid Schemes", "External providers of ERA files")
+System_Ext(Bank, "Banking System", "Provides Bank CSV/XLS")
+System_Ext(SFTP, "BI Solutions / Allegra SFTP", "ERA files are placed here by Allegra/BI Solutions")
+
+System_Boundary(pd, "Pharmacy Direct System") {
+    Container(PowerAutomateWorker, "Power Automate + PD Worker Service", "Api:Fetch/import CSV/XLS or ERA files from SharePoint/SFTP into SQL", "")
+    ContainerDb(SqlDataWarehouse, "SQL Data Warehouse", "Database:Stores ERA lines, Bank lines, claims, etc.", "")
+    Container(RemittanceApiGateway, "Remittance API Gateway", "Api:Receives consolidated or partial payloads, publishes to queue", "")
+    ContainerQueue(RabbitQueue, "RabbitMQ Queue", "Queue:Broker for remittance messages to the processor", "")
+    Container(RemittanceProcessor, "Remittance Processor Service", "Api:Consumes messages, updates claims/payment tables", "")
+    Container(AllegraSystem, "Allegra Debtors System", "Web Application:Debtors/Claims system used by PD", "")
+    Container(PastelAccounting, "Pastel Accounting System", "Web Application:Used by Finance for GL exports", "")
+    Container(PowerBITracker, "Remittance Advice Tracker (Power BI)", "Web Application:BI dashboards & real-time insights", "")
+}
+
+
+Rel(MedicalAidSchemes, SFTP, "Provide ERA files", "SFTP")
+Rel(Bank, PowerAutomateWorker, "Send Bank CSV/XLS", "SharePoint/Automate")
+Rel(SFTP, PowerAutomateWorker, "ERA .csv/.txt for PD Worker to process")
+Rel(PowerAutomateWorker, SqlDataWarehouse, "Parse & load ERA & Bank data")
+Rel(SqlDataWarehouse, AllegraSystem, "Partially processed lines")
+Rel(AllegraSystem, FinanceTeam, "Manual exception review")
+Rel(FinanceTeam, AllegraSystem, "Approve/adjust allocations")
+Rel(RemittanceApiGateway, RabbitQueue, "Publish incoming payload")
+Rel(RabbitQueue, RemittanceProcessor, "Consume remittance messages")
+Rel(RemittanceProcessor, SqlDataWarehouse, "Update claims/payment tables")
+Rel(RemittanceProcessor, AllegraSystem, "Apply reconciliations")
+Rel(SqlDataWarehouse, PowerBITracker, "Data source (Remittance Advice Tracker)")
+Rel(AllegraSystem, PastelAccounting, "Export to GL")
+Rel(PastelAccounting, PowerAutomateWorker, "Uploads Pastel CSV to PD environment")
+Rel(PowerAutomateWorker, SqlDataWarehouse, "Import Pastel data")
+Rel(PowerBITracker, FinanceTeam, "Dashboards & insights")
+@enduml

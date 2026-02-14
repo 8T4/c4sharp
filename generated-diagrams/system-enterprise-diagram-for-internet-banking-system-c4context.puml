@@ -1,0 +1,39 @@
+@startuml system-enterprise-diagram-for-internet-banking-system-c4context
+!include ..\.c4s\C4_Context.puml
+
+UpdateElementStyle("system", $bgColor=#D4E6F1,$fontColor=#1A5276,$borderColor=#1A5276,$shadowing="false",$shape=RoundedBoxShape(),$borderStyle=SolidLine(),$borderThickness=2)
+UpdateElementStyle("external_system", $bgColor=#F8F9F9,$fontColor=#797D7F,$borderColor=#797D7F,$shadowing="false",$shape=RoundedBoxShape(),$borderStyle=SolidLine(),$borderThickness=1)
+UpdateElementStyle("person", $bgColor=#797D7F,$fontColor=#797D7F,$borderColor=#797D7F,$shadowing="false",$shape=RoundedBoxShape(),$borderStyle=SolidLine(),$borderThickness=2)
+UpdateElementStyle("component", $bgColor=#FAE5D3,$fontColor=#CA6F1E,$borderColor=#CA6F1E,$shadowing="false",$shape=RoundedBoxShape(),$borderStyle=SolidLine(),$borderThickness=2)
+UpdateElementStyle("external_component", $bgColor=#F8F9F9,$fontColor=#797D7F,$borderColor=#797D7F,$shadowing="false",$shape=RoundedBoxShape(),$borderStyle=SolidLine(),$borderThickness=1)
+UpdateElementStyle("container", $bgColor=#EAF2F8,$fontColor=#2E86C1,$borderColor=#2E86C1,$shadowing="false",$shape=RoundedBoxShape(),$borderStyle=SolidLine(),$borderThickness=2)
+UpdateElementStyle("external_container", $bgColor=#F8F9F9,$fontColor=#797D7F,$borderColor=#797D7F,$shadowing="false",$shape=RoundedBoxShape(),$borderStyle=SolidLine(),$borderThickness=1)
+UpdateBoundaryStyle($elementName=system,$bgColor=#F8F9F9,$fontColor=#797D7F,$borderColor=#797D7F,$shadowing="false",$shape=RoundedBoxShape())
+UpdateBoundaryStyle($elementName=container,$bgColor=#F8F9F9,$fontColor=#797D7F,$borderColor=#797D7F,$shadowing="false",$shape=RoundedBoxShape())
+UpdateBoundaryStyle($elementName=enterprise,$bgColor=#F8F9F9,$fontColor=#797D7F,$borderColor=#797D7F,$shadowing="false",$shape=RoundedBoxShape())
+SHOW_PERSON_PORTRAIT()
+LAYOUT_TOP_DOWN()
+
+title System Enterprise diagram for Internet Banking System
+
+Person_Ext(customer, "Personal Banking Customer", "A customer of the bank, with personal bank accounts.")
+
+Enterprise_Boundary(enterprise.boundary, "Domain A") {
+    System(Banking System, "Provides bank statements in CSV/XLS", "")
+    
+Enterprise_Boundary(enterprise.boundary.1, "Domain Internal Users") {
+    Person(internalcustomer, "Personal Banking Customer", "An customer of the bank, with personal bank accounts.")
+}
+
+    
+Enterprise_Boundary(enterprise.boundary.2, "Domain Managers") {
+    Person(manager, "Manager Banking Customer", "A manager of the bank, with personal bank accounts.")
+}
+
+}
+
+
+Rel(customer, Banking System, "uses")
+Rel(internalcustomer, Banking System, "uses")
+Rel(manager, Banking System, "uses")
+@enduml
