@@ -112,7 +112,7 @@ public partial class PlantumlContext : IDisposable
     /// <param name="theme"></param>
     /// ReSharper disable once MemberCanBePrivate.Global
     public void Export(string path, IEnumerable<IDiagramBuilder> diagrams, IDiagramTheme? theme = null) => 
-        InternalExport(path, diagrams.Select(d => d.Build(theme)));
+        InternalExport(path, diagrams.Select(d => d.Build(theme ?? new DefaultTheme())));
 
     /// <summary>
     /// It creates a Puml file into the default directory "./c4"
